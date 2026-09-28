@@ -3,13 +3,14 @@
 
 Run from anywhere:  python tests/generate_fixture.py
 It (re)writes, from the scenario below and a fixed seed:
-  environment/input/components.csv, connections.csv, fitting_catalog.csv, spec_sheet.md
+  environment/input/components.csv, connections.csv, fitting_catalog.csv,
+                    site_measurements.csv, spec_sheet.md
   solution/files/fitting_register.csv, results.json, takeoff_note.md
   tests/verifier.json and a byte-identical tests/manifest.json
   tests/input_hashes.json (SHA-256 of every file under environment/input/)
 
 The gold answer is NOT typed in: `solve()` re-derives it by parsing the written input
-files with takeoff_rules.md (Rev C), so inputs, gold and checks share one derivation.
+files with takeoff_rules.md (Rev D), so inputs, gold and checks share one derivation.
 `solve()` also takes switches for the expected wrong readings (see WRONG_READINGS); the
 discrimination harness (tests/probe_suite.py) uses them as decoy solvers.
 
@@ -36,52 +37,52 @@ TAKEOFF_DATE = date(2026, 9, 15)
 NOT_STATED = None
 
 # ---------------------------------------------------------------- scenario
-# product: (title, notation, [revisions], retailer_note)
-#   revision: (label, effective, published, {port_role: size or NOT_STATED})
+# product: (title, notation, [revisions], retailer_quote)
+#   revision: (label, kind, effective, published, {port_role: size or NOT_STATED})
+#   kind is "reissue" (replaces the table whole) or "amendment" (changes listed rows only)
 # Revisions are listed in the order given here (deliberately not always by date).
 PRODUCTS = {
     "CT-500": ("Cistern-Line CT-500 storage tank (500 gal)", "fractions",
-               [("Rev 1", "2023-05-02", "2023-04-20", {"TANK_OUT": "1-1/2"})], None),
+               [("Rev 1", "reissue", "2023-05-02", "2023-04-20", {"TANK_OUT": "1-1/2"})], None),
     "CT-1500": ("Cistern-Line CT-1500 storage tank (1500 gal)", "fractions",
-                [("Rev 1", "2022-11-14", "2022-11-01", {"TANK_OUT": "2"})], None),
+                [("Rev 1", "reissue", "2022-11-14", "2022-11-01", {"TANK_OUT": "2"})], None),
     "CT-300": ("Cistern-Line CT-300 storage tank (300 gal)", "fractions",
-               [("Rev 1", "2025-03-03", "2025-02-17", {"TANK_OUT": "1"})], None),
+               [("Rev 1", "reissue", "2025-03-03", "2025-02-17", {"TANK_OUT": "1"})], None),
     "RB-800": ("Rainbarrel RB-800 reservoir (800 gal)", "fractions",
-               [("Rev 1", "2021-06-01", "2021-05-12", {"TANK_OUT": "1-1/4"})], None),
+               [("Rev 1", "reissue", "2021-06-01", "2021-05-12", {"TANK_OUT": "1-1/4"})], None),
     "TJ-100": ("Torrent TJ-100 shallow-well jet pump", "fractions",
-               [("Rev 2", "2026-10-01", "2026-08-28", {"SUCTION": "1-1/4", "DISCHARGE": "1"}),
-                ("Rev 1", "2024-01-15", "2023-12-20", {"SUCTION": NOT_STATED, "DISCHARGE": "1"})],
-               'supplied with a 1-1/4 in. suction kit; plumb the suction with 1-1/4 in. pipe '
-               'and the discharge with 1 in." The listing describes the kit, not the port.'),
+               [("Rev 2", "reissue", "2026-10-01", "2026-08-28", {"SUCTION": "1-1/4", "DISCHARGE": "1"}),
+                ("Rev 1", "reissue", "2024-01-15", "2023-12-20", {"SUCTION": NOT_STATED, "DISCHARGE": "1"})],
+               "supplied with a 1-1/4 in. suction kit; plumb the suction with 1-1/4 in. pipe and the discharge with 1 in."),
     "TJ-150": ("Torrent TJ-150 shallow-well jet pump", "fractions",
-               [("Rev 1", "2024-07-01", "2024-06-10", {"SUCTION": "1-1/4", "DISCHARGE": "1"})],
-               '1-1/4 in. suction and 1-1/4 in. discharge" The manufacturer\'s table states 1 '
-               'for the discharge port.'),
+               [("Rev 1", "reissue", "2024-07-01", "2024-06-10", {"SUCTION": "1-1/4", "DISCHARGE": "1"}),
+                ("Rev 2", "amendment", "2025-11-03", "2025-10-20", {"SUCTION": "1-1/2"})],
+               "1-1/4 in. suction and 1-1/4 in. discharge"),
     "TJ-200": ("Torrent TJ-200 deep-well jet pump", "fractions",
-               [("Rev 2", "2026-09-16", "2026-09-01", {"SUCTION": "1-1/2", "DISCHARGE": "1-1/4"}),
-                ("Rev 1", "2025-02-01", "2025-01-15", {"SUCTION": NOT_STATED, "DISCHARGE": "1-1/4"})],
+               [("Rev 2", "amendment", "2026-09-16", "2026-09-01", {"SUCTION": "1-1/2"}),
+                ("Rev 1", "reissue", "2025-02-01", "2025-01-15", {"SUCTION": NOT_STATED, "DISCHARGE": "1-1/4"})],
                None),
     "BJ-75": ("Brookline BJ-75 jet pump", "fractions",
-              [("Rev 1", "2024-03-01", "2024-02-12", {"SUCTION": "1-1/2", "DISCHARGE": "1-1/4"}),
-               ("Rev 2", "2026-06-01", "2026-05-15", {"SUCTION": "1-1/2", "DISCHARGE": "1"})],
+              [("Rev 1", "reissue", "2024-03-01", "2024-02-12", {"SUCTION": "1-1/2", "DISCHARGE": "1-1/4"}),
+               ("Rev 2", "amendment", "2026-06-01", "2026-05-15", {"DISCHARGE": "1"})],
               None),
     "HJ-1": ("Hydra-Jet HJ-1 jet pump", "decimals",
-             [("Rev 2", "2026-09-15", "2026-07-30", {"SUCTION": "1.25", "DISCHARGE": "1.25"}),
-              ("Rev 1", "2022-09-01", "2022-08-15", {"SUCTION": "1.25", "DISCHARGE": "1.0"})],
+             [("Rev 2", "amendment", "2026-09-15", "2026-07-30", {"DISCHARGE": "1.25"}),
+              ("Rev 1", "reissue", "2022-09-01", "2022-08-15", {"SUCTION": "1.25", "DISCHARGE": "1.0"})],
              None),
     "AF-40": ("Aquaflux AF-40 booster pump", "DN sizes",
-              [("Rev 1", "2025-05-20", "2025-05-02", {"SUCTION": "DN40", "DISCHARGE": "DN25"})],
+              [("Rev 1", "reissue", "2025-05-20", "2025-05-02", {"SUCTION": "DN40", "DISCHARGE": "DN25"})],
               None),
     "PV-20": ("Pressurite PV-20 pressure vessel", "fractions",
-              [("Rev A", "2023-02-01", "2023-01-18", {"VESSEL_IN": "1"})], None),
+              [("Rev A", "reissue", "2023-02-01", "2023-01-18", {"VESSEL_IN": "1"})], None),
     "PV-44": ("Pressurite PV-44 pressure vessel", "fractions",
-              [("Rev B", "2026-11-01", "2026-08-20", {"VESSEL_IN": "1"}),
-               ("Rev A", "2023-01-10", "2022-12-19", {"VESSEL_IN": "1-1/4"})], None),
+              [("Rev B", "reissue", "2026-11-01", "2026-08-20", {"VESSEL_IN": "1"}),
+               ("Rev A", "reissue", "2023-01-10", "2022-12-19", {"VESSEL_IN": "1-1/4"})], None),
     "PV-60": ("Pressurite PV-60 pressure vessel", "fractions",
-              [("Rev A", "2023-02-01", "2023-01-18", {"VESSEL_IN": "3/4"}),
-               ("Rev B", "2026-04-01", "2026-03-10", {"VESSEL_IN": NOT_STATED})], None),
+              [("Rev A", "reissue", "2023-02-01", "2023-01-18", {"VESSEL_IN": "3/4"}),
+               ("Rev B", "reissue", "2026-04-01", "2026-03-10", {"VESSEL_IN": NOT_STATED})], None),
     "AV-50": ("Aquaflux AV-50 pressure vessel", "DN sizes",
-              [("Rev 1", "2025-05-20", "2025-05-02", {"VESSEL_IN": "DN32"})], None),
+              [("Rev 1", "reissue", "2025-05-20", "2025-05-02", {"VESSEL_IN": "DN32"})], None),
 }
 
 # component_id, product, port_role, listed_size_in (retailer), thread
@@ -106,6 +107,16 @@ COMPONENTS = [
     ("V2", "PV-44", "VESSEL_IN", "1-1/4", "NPT"),
     ("V3", "PV-60", "VESSEL_IN", "3/4", "BSP"),
     ("V4", "AV-50", "VESSEL_IN", "1-1/4", "BSP"),
+]
+
+# measured_on, component_id, measured_size_in, note  (the owner's own site log, file order kept)
+MEASUREMENTS = [
+    ("2026-08-02", "P1-S", "1-1/4", "tape across the suction boss with the kit adaptor still fitted"),
+    ("2026-09-05", "P2-D", "1-1/4", "discharge boss, calipers"),
+    ("2026-09-11", "P7-S", "1", "spare pump in the garage, suction"),
+    ("2026-09-18", "P6-S", "1-1/2", "deep-well pump suction, calipers"),
+    ("2026-09-10", "P1-S", "1-1/2", "re-measured with calipers after taking the kit adaptor off"),
+    ("2026-09-15", "V3", "1", "vessel inlet, calipers"),
 ]
 
 # fitting_id, kind, size_a, thread_a, size_b, thread_b, status, superseded_by
@@ -138,29 +149,29 @@ CATALOG = [
 # Keys are internal only; connection_ids are assigned from them with the seed.
 CONNECTIONS = [
     ("a", "P1-D", "V1", "4", None),
-    ("b", "TK-A", "P1-S", "9", None),        # T4: TJ-100 suction unstated in force (Rev 2 not yet)
-    ("c", "TK-B", "P2-S", "11", None),
-    ("d", "P2-D", "V2", "6", None),          # listing lure + PV-44 Rev B not in force
+    ("b", "TK-A", "P1-S", "9", None),        # P1-S unstated in force; latest measurement on/before date = 1-1/2
+    ("c", "TK-B", "P2-S", "11", None),       # TJ-150 Rev 2 amendment: suction 1-1/2
+    ("d", "P2-D", "V2", "6", None),          # listing lure; P2-D measurement must NOT override the maker
     ("e", "TK-C", "P3-S", "8.5", None),
-    ("f", "P3-D", "V4", "5", None),          # BJ-75 Rev 2 in force; RD-114-1-B discontinued -> NONE
-    ("g", "TK-A", "P4-S", "12", None),
-    ("h", "P4-D", "V1", "3.5", None),        # HJ-1 Rev 2 effective ON the take-off date
-    ("i", "P2-D", "V3", "7", None),
-    ("j", "TK-C", "P2-S", "10", None),       # discontinued adapter listed first
+    ("f", "P3-D", "V4", "5", None),          # BJ-75 amendment in force; RD-114-1-B discontinued -> NONE
+    ("g", "TK-A", "P4-S", "12", None),       # HJ-1 suction carried through the amendment
+    ("h", "P4-D", "V1", "3.5", None),        # HJ-1 amendment effective ON the take-off date
+    ("i", "P2-D", "V3", "7", None),          # PV-60 Rev B reissue unstated; V3 measured ON the date
+    ("j", "TK-C", "P2-S", "10", None),       # adapter 1-1/2 NPT x 1-1/4 BSP
     ("k", "TK-B", "P3-S", "14", None),
-    ("l", "P3-D", "V2", "6", None),          # BJ-75 Rev 2 changes the adapter row
+    ("l", "P3-D", "V2", "6", None),
     ("m", "TK-A", "P2-S", "15", None),       # withdrawn: replaced by w
-    ("w", "TK-A", "P2-S", "18.5", "m"),
+    ("w", "TK-A", "P2-S", "18.5", "m"),      # 1-1/2 vs 1-1/2 -> coupler (amendment)
     ("n", "P4-D", "V2", "4", None),          # 1.25 vs 1-1/4 -> coupler
     ("o", "P1-D", "V2", "5.5", None),
     ("p", "TK-B", "P4-S", "13", None),
     ("q", "TK-C", "P5-S", "9.5", None),      # DN40
-    ("r", "P5-D", "V3", "3", None),          # DN25
+    ("r", "P5-D", "V3", "3", None),          # DN25 + measured V3
     ("s", "P5-D", "V1", "6.5", None),        # DN25, thread change
-    ("t", "TK-D", "P6-S", "7", None),        # TJ-200 Rev 2 effective the day AFTER -> unresolved
+    ("t", "TK-D", "P6-S", "7", None),        # TJ-200 amendment not yet in force; measurement after date -> unresolved
     ("u", "P6-D", "V2", "4.5", None),        # other port of TJ-200 unaffected
-    ("v", "P6-D", "V4", "8", None),          # DN32 + stocked adapter
-    ("x", "TK-B", "P6-S", "12", None),       # withdrawn (would be unresolved): replaced by y
+    ("v", "P6-D", "V4", "8", None),          # DN32 + stocked adapter (discontinued one listed first)
+    ("x", "TK-B", "P6-S", "12", None),       # withdrawn: replaced by y
     ("y", "TK-B", "P5-S", "16", "x"),
     ("z", "P4-D", "V3", "5", None),          # withdrawn: replaced by z2
     ("z2", "P1-D", "V4", "6", "z"),          # threads per end: no stocked row -> NONE
@@ -199,45 +210,53 @@ def write_inputs():
     _write(INPUT / "fitting_catalog.csv", _csv(
         [["fitting_id", "kind", "size_a_in", "thread_a", "size_b_in", "thread_b", "status", "superseded_by"]]
         + [list(r) for r in CATALOG]))
+    _write(INPUT / "site_measurements.csv", _csv(
+        [["measured_on", "component_id", "measured_size_in", "note"]] + [list(m) for m in MEASUREMENTS]))
     out = ["# Manufacturer port data — specification extracts", "",
            "Extracted from the manufacturers' own published tables for every product on "
            "`components.csv`, matched by `product` and `port_role`. Each table gives the size the "
            "manufacturer STATES for a port, in the manufacturer's own notation: most makers print "
            "fractions (`1-1/4`), one prints decimals (`1.25`) and one prints DN sizes (`DN32`). "
-           "Where a maker has revised a table, every revision is extracted with its effective "
-           "date and its publication date. Where the manufacturer states no size, the table says "
-           "so in words. A retailer listing, a supplied kit or a product description is quoted "
-           "only for the record and states nothing.", ""]
-    for code, (title, notation, revs, note) in PRODUCTS.items():
+           "Every revision a maker has published is extracted, marked as a reissue or an amendment, "
+           "with its effective date and its publication date; an amendment's table shows only the "
+           "rows it amends. Where the manufacturer states no size, the table says so in words. A "
+           "retailer listing is quoted only for the record.", ""]
+    for code, (title, notation, revs, quote) in PRODUCTS.items():
         out += [f"## {title} — product `{code}`", "",
                 f"Sizes in these tables are printed as the maker prints them ({notation}).", ""]
-        for label, eff, pub, table in revs:
-            out += [f"### {label} — effective {eff} (published {pub})", "",
+        for label, kind, eff, pub, table in revs:
+            out += [f"### {label} ({kind}) — effective {eff} (published {pub})", "",
                     "| port_role | manufacturer's stated port size |", "|---|---|"]
             for role, size in table.items():
                 shown = size if size is not None else (
                     f"not stated — the manufacturer's table gives no {role.lower()} port size")
                 out.append(f"| {role} | {shown} |")
             out.append("")
-        if note:
-            out += [f'Retailer listing, quoted for the record: "{note}', ""]
+        if quote:
+            out += [f'Retailer listing, quoted for the record: "{quote}"', ""]
     _write(INPUT / "spec_sheet.md", "\n".join(out).rstrip("\n") + "\n")
 
 
 # ---------------------------------------------------------------- reference solver
 WRONG_READINGS = {
     "listing": "reads listed_size_in (the retailer) instead of the maker's table",
-    "latest_revision": "uses the most recently effective revision even when it is not yet in force",
+    "latest_revision": "applies every revision, including ones not yet in force",
     "first_revision": "uses the first revision listed for each product",
-    "exclusive_boundary": "treats a revision effective ON the take-off date as not yet in force",
+    "exclusive_boundary": "treats a revision or measurement dated ON the take-off date as not counting",
     "text_compare": "compares sizes as text (1.25 != 1-1/4, DN32 != 1-1/4)",
     "ordered_ends": "requires the catalogue's end order to follow the connection's from->to order",
     "ignore_status": "selects a DISCONTINUED row (first match in file order)",
     "keep_withdrawn": "keeps re-routed (withdrawn) connections in the register",
     "size_only_ends": "matches catalogue ends on sizes, pairing threads only as a set",
     "product_level_t4": "marks every port of a product unresolved when one port is unstated",
-    "carry_forward": "fills a port the revision in force does not state from an earlier revision",
+    "carry_forward": "fills a port a reissue does not state from an earlier revision",
     "follow_superseded": "takes a discontinued row's superseded_by row even when its ends do not match",
+    "amendment_as_reissue": "treats an amendment as a whole new table (rows it omits become unstated)",
+    "ignore_amendments": "ignores amendments and reads the latest reissue only",
+    "ignore_measurements": "never uses a site measurement",
+    "measurement_overrides": "lets a site measurement replace a size the table in force states",
+    "measurement_any_date": "uses measurements dated after the take-off date",
+    "earliest_measurement": "uses the earliest measurement instead of the latest",
 }
 
 DN = {"DN20": "3/4", "DN25": "1", "DN32": "1-1/4", "DN40": "1-1/2", "DN50": "2"}
@@ -254,51 +273,76 @@ def to_num(s):
 
 
 def parse_spec(text):
-    """{product: [(label, effective date, {role: size-string or None})]}"""
+    """{product: [(label, kind, effective date, {role: size-string or None})]} in file order"""
     spec, product, rev = {}, None, None
     for line in text.splitlines():
         m = re.match(r"^## .*— product `([^`]+)`", line)
         if m:
-            product = m.group(1); spec[product] = []; continue
-        m = re.match(r"^### (.+?) — effective (\d{4}-\d{2}-\d{2}) \(published", line)
+            product = m.group(1); spec[product] = []; rev = None; continue
+        m = re.match(r"^### (.+?) \((reissue|amendment)\) — effective (\d{4}-\d{2}-\d{2}) \(published", line)
         if m:
-            rev = (m.group(1), date.fromisoformat(m.group(2)), {}); spec[product].append(rev); continue
+            rev = (m.group(1), m.group(2), date.fromisoformat(m.group(3)), {}); spec[product].append(rev); continue
         m = re.match(r"^\| ([A-Z_]+) \| (.+?) \|$", line)
         if m and rev is not None and m.group(1) != "port_role":
             size = m.group(2)
-            rev[2][m.group(1)] = None if size.startswith("not stated") else size
+            rev[3][m.group(1)] = None if size.startswith("not stated") else size
     return spec
 
 
 def solve(input_dir=INPUT, **wrong):
-    """Apply takeoff_rules.md (Rev C) to the files in input_dir; return (rows, results)."""
+    """Apply takeoff_rules.md (Rev D) to the files in input_dir; return (rows, results)."""
     input_dir = Path(input_dir)
     read = lambda n: list(csv.DictReader(io.StringIO((input_dir / n).read_text(encoding="utf-8"))))
     comps = {r["component_id"]: r for r in read("components.csv")}
     conns = read("connections.csv")
     cat = read("fitting_catalog.csv")
+    meas = read("site_measurements.csv")
     spec = parse_spec((input_dir / "spec_sheet.md").read_text(encoding="utf-8"))
 
     def table_in_force(product):
         revs = spec[product]
         if wrong.get("first_revision"):
-            return revs[0][2]
-        if wrong.get("latest_revision"):
-            return max(revs, key=lambda r: r[1])[2]
-        live = [r for r in revs if (r[1] < TAKEOFF_DATE if wrong.get("exclusive_boundary") else r[1] <= TAKEOFF_DATE)]
-        table = dict(max(live, key=lambda r: r[1])[2])
+            return dict(revs[0][3])
+        live = sorted((r for r in revs if (True if wrong.get("latest_revision") else
+                                           (r[2] < TAKEOFF_DATE if wrong.get("exclusive_boundary") else r[2] <= TAKEOFF_DATE))),
+                      key=lambda r: r[2])
+        if wrong.get("amendment_as_reissue"):
+            return dict(live[-1][3])
+        reissues = [r for r in live if r[1] == "reissue"]
+        base = reissues[-1]
+        table = dict(base[3])
+        if not wrong.get("ignore_amendments"):
+            for r in live:
+                if r[1] == "amendment" and r[2] > base[2]:
+                    table.update(r[3])
         if wrong.get("carry_forward"):
-            for r in sorted(live, key=lambda r: r[1], reverse=True):
-                for role, sz in r[2].items():
+            for r in reversed(live):
+                for role, sz in r[3].items():
                     if table.get(role) is None and sz is not None:
                         table[role] = sz
         return table
+
+    def measured(cid):
+        if wrong.get("ignore_measurements"):
+            return None
+        rows = [m for m in meas if m["component_id"] == cid and
+                (True if wrong.get("measurement_any_date") else
+                 (date.fromisoformat(m["measured_on"]) < TAKEOFF_DATE if wrong.get("exclusive_boundary")
+                  else date.fromisoformat(m["measured_on"]) <= TAKEOFF_DATE))]
+        if not rows:
+            return None
+        rows.sort(key=lambda m: m["measured_on"])
+        return (rows[0] if wrong.get("earliest_measurement") else rows[-1])["measured_size_in"]
 
     def port(cid):
         c = comps[cid]
         if wrong.get("listing"):
             return c["listed_size_in"], c["thread"]
-        return table_in_force(c["product"])[c["port_role"]], c["thread"]
+        stated = table_in_force(c["product"]).get(c["port_role"])
+        m = measured(cid)
+        if wrong.get("measurement_overrides") and m is not None:
+            return m, c["thread"]
+        return (stated if stated is not None else m), c["thread"]
 
     def unstated_products():
         return {c["product"] for cid, c in comps.items() if port(cid)[0] is None}
@@ -321,17 +365,15 @@ def solve(input_dir=INPUT, **wrong):
         kind = "ADAPTER" if ta != tb else ("REDUCER" if size(sa) != size(sb) else "COUPLER")
         want = [(size(sa), ta), (size(sb), tb)]
         fid = "NONE"
-        by_id = {c["fitting_id"]: c for c in cat}
         for c in cat:
             if c["kind"] != kind:
                 continue
+            ends = [(size(c["size_a_in"]), c["thread_a"]), (size(c["size_b_in"]), c["thread_b"])]
             if wrong.get("follow_superseded") and c["status"] == "DISCONTINUED" and c["superseded_by"]:
-                e2 = [(size(c["size_a_in"]), c["thread_a"]), (size(c["size_b_in"]), c["thread_b"])]
-                if sorted(e2, key=str) == sorted(want, key=str):
+                if sorted(ends, key=str) == sorted(want, key=str):
                     fid = c["superseded_by"]; break
             if c["status"] != "STOCKED" and not wrong.get("ignore_status"):
                 continue
-            ends = [(size(c["size_a_in"]), c["thread_a"]), (size(c["size_b_in"]), c["thread_b"])]
             if wrong.get("ordered_ends"):
                 hit = ends == want
             elif wrong.get("size_only_ends"):
@@ -359,28 +401,29 @@ def _unresolved_paragraph(unresolved):
     names = unresolved[0] if len(unresolved) == 1 else ", ".join(unresolved[:-1]) + " and " + unresolved[-1]
     many = len(unresolved) > 1
     return (f"{names} {'are' if many else 'is'} held off the take-off as unresolved: for "
-            f"{'each of them' if many else 'it'} the maker's table in force gives no size for one of the "
-            "two ports, and nothing is taken from a listing, an earlier revision or a revision not yet "
-            f"in force. No fitting is ordered and no pipe is cut for {'these runs' if many else 'that run'} "
-            "until the port has been measured.\n\n")
+            f"{'each of them' if many else 'it'}, neither the maker's table in force nor a site "
+            "measurement taken by the take-off date gives a size for one of the two ports, and "
+            "nothing is taken from a listing or from a revision not yet in force. No fitting is "
+            f"ordered and no pipe is cut for {'these runs' if many else 'that run'} until the port "
+            "has been measured.\n\n")
 
 
 def gold_note(rows, results):
     unresolved = [c for c, _, k in rows if k == "UNRESOLVED"]
     none_rows = [c for c, f, k in rows if f == "NONE" and k != "UNRESOLVED"]
+    none_par = (f"Where no stocked catalogue row fits ({', '.join(none_rows)}), the kind still stands and "
+                "the fitting will be sourced elsewhere; the pipe for those runs is still cut.\n\n") if none_rows else ""
     return (
         "# Fitting take-off — house water system, as at 15 September 2026\n\n"
         "The register filed with this note carries one row for every connection that is being "
         "taken off: the catalogue fitting it takes and what kind of fitting that is. Runs that "
         "have since been re-routed are left out, and their replacements are listed instead. "
-        "Port sizes come from the makers' tables in force on the take-off date, not from the "
-        "retailer's listings.\n\n"
+        "Port sizes come from the makers' tables in force on the take-off date, with my own "
+        "measurements used only where a table gives no size, never from the retailer's listings.\n\n"
         f"Connections needing a reducer: {results['reducer_count']}. "
         f"Connections needing a coupler: {results['coupler_count']}. "
         "The remaining connections change thread standard and take adapters.\n\n"
-        f"Where no stocked catalogue row fits ({', '.join(none_rows)}), the kind still stands and "
-        "the fitting will be sourced elsewhere; the pipe for those runs is still cut.\n\n"
-        + _unresolved_paragraph(unresolved) +
+        + none_par + _unresolved_paragraph(unresolved) +
         f"Pipe to cut in total: {results['total_run_ft']:g} ft.\n")
 
 
