@@ -57,7 +57,7 @@ I re-derived every one of the 16 gold rows by hand. All are correct: 9 REDUCER, 
 | K1 | **Pass band.** Trainer Guidelines say 5 runs and ≤50%. The brief and the Standard (Q1) say 4 runs, 1–3 of 4 passing. The client's script still fails a task at >2 passes. | **Lead:** 1/4 or 2/4 is safe. 3/4 may or may not be accepted, but we can try submitting it. **So: stop hardening at 1/4 or 2/4. If you land on 3/4, you may submit it, but expect a possible rejection.** |
 | K2 | **Checks file.** The brief says rewrite `verifier.json` as `manifest.json`; the Standard v2 ships `verifier.json`. | **Lead: ship both, byte-identical.** Nothing is rewritten or renamed. The engine, `score.py` and `test_outputs.py` load `verifier.json`, as the Standard says. `tests/manifest.json` exists only because the upload validator rejects a bundle without it ("tests/manifest.json must contain a nonempty native assertion list"). Our generator writes both files in the same run so they cannot drift, and the zip preflight fails if they differ (Phases 5b, 6 and 8). |
 | K3 | **Golden trajectory.** The brief calls it the "required Oracle asset". PKG-8 says it must be a **real model run scoring 1.0, never the oracle**. The mined `solution/golden_trajectory.json` is a synthetic list of 10 `printf` commands. | Replace it with the `agent/trajectory.json` of a passing GLM run (Phase 8), and make `solve.sh`'s emit step tolerate the ATIF format. |
-| K4 | **"Secondary" verifiers.** This package has no `"category": "secondary"`. It has `metadata.tag: "incidental"`, 6 of 13 checks, all on the note. | Treat `incidental` as secondary: nothing non-core ships. **The lead has not answered yet whether to keep the note-content ask.** Default: promote the note count and unresolved checks to **core, with loose matching**, and drop the word-count floor together with its ask (Phase 3). |
+| K4 | **"Secondary" verifiers.** This package has no `"category": "secondary"`. It has `metadata.tag: "incidental"`, 6 of 13 checks, all on the note. | **Decided:** treat `incidental` as secondary; nothing non-core ships. The note's facts become **core checks with loose matching** (exact spec in Phase 3, step 4). Delete `note_exists`, `note_prose_floor` (and remove the "sixty words" ask) and both `*_exactly_one` hedge checks. |
 | K7 | **`result.json` fields.** The gate wants `model`, `overall_pass`, `reward`, `final_answer` and judge provenance. | **Lead:** harbor does not write them. Harbor's native `result.json` only has the trial identity, config, agent and environment setup, `agent_result`, `exception_info`, timestamps, and `verifier_result` with a bare `rewards` object. **`tools/annotate_rollout.py`** adds five fields without touching harbor's own. The same script also derives `verifier/reward.json` and `verifier/verifier_summary.json` from harbor's `reward.txt` and `score.json` (harbor writes neither). See Phase 8. |
 | K5 | **Oracle evidence.** The brief says ship none. The Standard says Turing adds `oracle/`. | Either way, **delete** `evaluations/oracle/` and `evaluations/nop/`. |
 | K6 | **Stability.** | Ship no `stability/` folder. Delivery Gate finding R3 is expected; mark it reviewed with "Turing runs stability". |
@@ -268,8 +268,16 @@ The goal is a **clean, fair, 1.0-oracle package** before any GLM run, so the fir
    - Delete every incidental check.
    - Merge `register_table_trap_c03` into `register_table`.
    - Fold `register_exists` and `results_exists` into content checks.
-   - Keep the note counts as core with a simple, tolerant pattern: label word within a sentence of the number, any order, digits or word, case-insensitive. Don't use the 700-character hedge regex.
-   - Keep `note_unresolved` as core, but loosen it to "C-03 and 'unresolved' in the same paragraph".
+   - The note checks, all **core**:
+
+     | Check | Passes when (case-insensitive) | Fails on (breaking suite) |
+     |---|---|---|
+     | `note_reducer` | "reducer" or "reducers" appears in the same sentence as the reducer count, written as digits (`9`, `9.0`) or as a word (`nine`), in either order | wrong number, number missing, label missing |
+     | `note_coupler` | same as above, for "coupler(s)" and the coupler count | same |
+     | `note_unresolved` (one check per unresolved ID) | the ID exactly as spelled (`C-03`) and the word "unresolved" appear in the same paragraph, with no other connection ID between them | ID missing, only "unresolved" in the note, ID attributed to a different kind |
+
+   - Delete `note_exists` (the content checks already need the file), `note_prose_floor`, and both `*_exactly_one` hedge checks. A hedged figure still fails, because the correct number must stand beside the label.
+   - In `submission_format.md`, rewrite the note section as three plain sentences: state the reducer count, state the coupler count, and name each unresolved connection by its `connection_id` saying it is unresolved. Remove the "sixty words" requirement.
    - Every check's `why_justification` must quote the sentence it enforces (DIS-2, VER-15).
    - After every edit, copy the result over `tests/manifest.json` byte-for-byte (`copy /y tests\verifier.json tests\manifest.json`) until the generator does this for you (K2).
 5. **`tests/test.sh`.** This script runs inside the Linux container, so it stays bash and **must be saved with LF endings**. Harden it:
@@ -594,9 +602,7 @@ Every note names specific files, runs or checks. PASS means nothing was changed.
 
 ## Open questions for your lead
 
-The pass band (K1), the checks files (K2) and the `result.json` fields (K7) are answered and folded in above.
-
-1. **Note checks (K4):** promote to core, or drop the note-content ask? This is still open. The default in this plan is to promote them, with loose matching.
+All answered and folded in above: the pass band (K1), the checks files (K2), the note checks (K4) and the `result.json` fields (K7). Step-by-step actions are in `CHECKLIST.md`.
 
 ---
 
