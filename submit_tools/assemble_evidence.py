@@ -34,6 +34,20 @@ DIFFICULTY_ONLY = ["verifier/verifier_summary.json"]
 KEY_SHAPE = re.compile(r"sk-[A-Za-z0-9_\-]{8,}")
 
 
+# harness internals that the accepted bundles do not ship (opencode's own database, git
+# snapshots and raw log, the trial log and lock): about 5 MB per run, no evidence value
+PRUNE = ["agent/opencode", "agent/opencode.txt", "agent/setup", "trial.log", "lock.json"]
+
+
+def prune(run):
+    for rel in PRUNE:
+        p = run / rel
+        if p.is_dir():
+            shutil.rmtree(p, ignore_errors=True)
+        elif p.is_file():
+            p.unlink()
+
+
 def trials(job):
     out = [p for p in Path(job).iterdir() if p.is_dir() and (p / "result.json").is_file()]
     return sorted(out, key=lambda p: p.name.lower())
@@ -124,11 +138,13 @@ def main():
     for i, t in enumerate(diff, 1):
         dst = ev / "difficulty" / f"r{i}"
         shutil.copytree(t, dst)
+        prune(dst)
         print(f"difficulty/r{i}  <- {t.name}  reward {reward_of(t)}  {'CRASHED' if (t / 'exception.txt').exists() else ''}")
     solv = [t for t in trials(a.solvability_job) if reward_of(t) == 1.0 and not (t / "exception.txt").exists()]
     if not solv:
         sys.exit(f"no reward-1.0 trial in {a.solvability_job}")
     shutil.copytree(solv[0], ev / "solvability" / "r1")
+    prune(ev / "solvability" / "r1")
     print(f"solvability/r1 <- {solv[0].name}  reward 1.0")
     shutil.copy2(solv[0] / "agent" / "trajectory.json", task / "solution" / "golden_trajectory.json")
     print("solution/golden_trajectory.json <- solvability/r1/agent/trajectory.json")
