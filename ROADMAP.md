@@ -234,7 +234,7 @@ This is the highest-value step. The findings below are already checked against t
 
 | Where | Defect | Rule |
 |---|---|---|
-| **Every text file (39)** | **CRLF line endings.** Under bash, `solve.sh` stops at `set -euo pipefail` and writes nothing, and `test.sh`'s continuation lines break too. The oracle cannot reach 1.0 as shipped. Fixed on Day 1 (see `DAY1_STEPS.md` step 6). | FIX-10, HAR-10 |
+| **Every text file (39)** | **CRLF line endings.** Under bash, `solve.sh` stops at `set -euo pipefail` and writes nothing, and `test.sh`'s continuation lines break too. Harbor on Windows still scored the mined oracle 1.0 (it appears to cope with the CRLF scripts), but plain Linux bash does not, and the client replays the oracle on Linux. Converted to LF on Day 1 (see `DAY1_STEPS.md` step 6). | FIX-10, HAR-10 |
 | `task.toml` | `artifacts = []` | TOML-4 |
 | `task.toml` | `network_mode = "public"` with no judge; should be `"no-network"` | ENV-4 |
 | `task.toml` | `schema_version = "1.3"`; check that it loads under your harbor version | TOML-1 |

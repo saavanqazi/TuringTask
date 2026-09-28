@@ -376,7 +376,7 @@ Mined version: file list in scratch/mined_inventory.txt (unzipped from the track
 
 | # | Date | File(s) | Before (mined) | After | Why | Re-check |
 |---|---|---|---|---|---|---|
-| 1 | YYYY-MM-DD | every text file (39) | CRLF line endings | LF | solve.sh stops at `set -euo pipefail` under bash and writes no deliverable; test.sh continuation lines break the same way; FIX-10 requires LF | oracle-mined-crlf: <your result> -> oracle-lf: 1.0 |
+| 1 | YYYY-MM-DD | every text file (39) | CRLF line endings | LF | FIX-10 requires LF inputs. Under plain Linux bash, the CRLF solve.sh stops at `set -euo pipefail` and writes nothing. Harbor on Windows still scored the mined oracle 1.0, but the client replays the oracle on Linux. | oracle-mined-crlf: 1.0 (harbor/Windows) -> oracle-lf: 1.0 |
 ```
 
 Save and close.
