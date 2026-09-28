@@ -78,7 +78,8 @@ PRODUCTS = {
               [("Rev B", "2026-11-01", "2026-08-20", {"VESSEL_IN": "1"}),
                ("Rev A", "2023-01-10", "2022-12-19", {"VESSEL_IN": "1-1/4"})], None),
     "PV-60": ("Pressurite PV-60 pressure vessel", "fractions",
-              [("Rev A", "2023-02-01", "2023-01-18", {"VESSEL_IN": "3/4"})], None),
+              [("Rev A", "2023-02-01", "2023-01-18", {"VESSEL_IN": "3/4"}),
+               ("Rev B", "2026-04-01", "2026-03-10", {"VESSEL_IN": NOT_STATED})], None),
     "AV-50": ("Aquaflux AV-50 pressure vessel", "DN sizes",
               [("Rev 1", "2025-05-20", "2025-05-02", {"VESSEL_IN": "DN32"})], None),
 }
@@ -121,7 +122,8 @@ CATALOG = [
     ("RD-114-1-N", "REDUCER", "1-1/4", "NPT", "1", "NPT", "STOCKED", ""),
     ("RD-1-34-N", "REDUCER", "1", "NPT", "3/4", "NPT", "STOCKED", ""),
     ("RD-112-114-B", "REDUCER", "1-1/2", "BSP", "1-1/4", "BSP", "STOCKED", ""),
-    ("RD-114-1-B", "REDUCER", "1-1/4", "BSP", "1", "BSP", "DISCONTINUED", ""),
+    ("RD-114-1-B", "REDUCER", "1-1/4", "BSP", "1", "BSP", "DISCONTINUED", "RD-114-34-B"),
+    ("RD-114-34-B", "REDUCER", "1-1/4", "BSP", "3/4", "BSP", "STOCKED", ""),
     ("RD-1-34-B", "REDUCER", "1", "BSP", "3/4", "BSP", "STOCKED", ""),
     ("AD-1N-34B", "ADAPTER", "1", "NPT", "3/4", "BSP", "STOCKED", ""),
     ("AD-114B-114N", "ADAPTER", "1-1/4", "BSP", "1-1/4", "NPT", "DISCONTINUED", "AD-114N-114B"),
@@ -234,6 +236,8 @@ WRONG_READINGS = {
     "keep_withdrawn": "keeps re-routed (withdrawn) connections in the register",
     "size_only_ends": "matches catalogue ends on sizes, pairing threads only as a set",
     "product_level_t4": "marks every port of a product unresolved when one port is unstated",
+    "carry_forward": "fills a port the revision in force does not state from an earlier revision",
+    "follow_superseded": "takes a discontinued row's superseded_by row even when its ends do not match",
 }
 
 DN = {"DN20": "3/4", "DN25": "1", "DN32": "1-1/4", "DN40": "1-1/2", "DN50": "2"}
@@ -282,7 +286,13 @@ def solve(input_dir=INPUT, **wrong):
         if wrong.get("latest_revision"):
             return max(revs, key=lambda r: r[1])[2]
         live = [r for r in revs if (r[1] < TAKEOFF_DATE if wrong.get("exclusive_boundary") else r[1] <= TAKEOFF_DATE)]
-        return max(live, key=lambda r: r[1])[2]
+        table = dict(max(live, key=lambda r: r[1])[2])
+        if wrong.get("carry_forward"):
+            for r in sorted(live, key=lambda r: r[1], reverse=True):
+                for role, sz in r[2].items():
+                    if table.get(role) is None and sz is not None:
+                        table[role] = sz
+        return table
 
     def port(cid):
         c = comps[cid]
@@ -311,9 +321,14 @@ def solve(input_dir=INPUT, **wrong):
         kind = "ADAPTER" if ta != tb else ("REDUCER" if size(sa) != size(sb) else "COUPLER")
         want = [(size(sa), ta), (size(sb), tb)]
         fid = "NONE"
+        by_id = {c["fitting_id"]: c for c in cat}
         for c in cat:
             if c["kind"] != kind:
                 continue
+            if wrong.get("follow_superseded") and c["status"] == "DISCONTINUED" and c["superseded_by"]:
+                e2 = [(size(c["size_a_in"]), c["thread_a"]), (size(c["size_b_in"]), c["thread_b"])]
+                if sorted(e2, key=str) == sorted(want, key=str):
+                    fid = c["superseded_by"]; break
             if c["status"] != "STOCKED" and not wrong.get("ignore_status"):
                 continue
             ends = [(size(c["size_a_in"]), c["thread_a"]), (size(c["size_b_in"]), c["thread_b"])]
@@ -338,6 +353,18 @@ WORDS = "zero one two three four five six seven eight nine ten eleven twelve thi
         "fifteen sixteen seventeen eighteen nineteen twenty".split()
 
 
+def _unresolved_paragraph(unresolved):
+    if not unresolved:
+        return "No connection is held off the take-off.\n\n"
+    names = unresolved[0] if len(unresolved) == 1 else ", ".join(unresolved[:-1]) + " and " + unresolved[-1]
+    many = len(unresolved) > 1
+    return (f"{names} {'are' if many else 'is'} held off the take-off as unresolved: for "
+            f"{'each of them' if many else 'it'} the maker's table in force gives no size for one of the "
+            "two ports, and nothing is taken from a listing, an earlier revision or a revision not yet "
+            f"in force. No fitting is ordered and no pipe is cut for {'these runs' if many else 'that run'} "
+            "until the port has been measured.\n\n")
+
+
 def gold_note(rows, results):
     unresolved = [c for c, _, k in rows if k == "UNRESOLVED"]
     none_rows = [c for c, f, k in rows if f == "NONE" and k != "UNRESOLVED"]
@@ -353,11 +380,7 @@ def gold_note(rows, results):
         "The remaining connections change thread standard and take adapters.\n\n"
         f"Where no stocked catalogue row fits ({', '.join(none_rows)}), the kind still stands and "
         "the fitting will be sourced elsewhere; the pipe for those runs is still cut.\n\n"
-        f"{' and '.join(unresolved)} {'are' if len(unresolved) > 1 else 'is'} held off the take-off "
-        "as unresolved: the pump maker's table in force gives no suction port size, and nothing "
-        "is taken from a listing or from a revision not yet in force. No fitting is ordered and no "
-        "pipe is cut for "
-        f"{'these runs' if len(unresolved) > 1 else 'that run'} until the port has been measured.\n\n"
+        + _unresolved_paragraph(unresolved) +
         f"Pipe to cut in total: {results['total_run_ft']:g} ft.\n")
 
 

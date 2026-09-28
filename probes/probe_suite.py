@@ -154,14 +154,14 @@ other = next(r[0] for r in rows[1:] if r[2] == "REDUCER")
 N_pass = {
     "plain words": f"{gen.WORDS[R].capitalize()} connections need reducers and {gen.WORDS[C]} need couplers.\n\n{ids} are unresolved for now.\n",
     "label after number, digits": f"We need {R} reducer fittings plus {C} couplers.\n\nUnresolved: {', '.join(UNRESOLVED)}. Their ports must be measured.\n",
-    "bulleted": f"- reducer count: {R}\n- coupler count: {C}\n\n- {UNRESOLVED[0]}: fitting_kind `UNRESOLVED`\n- {UNRESOLVED[-1]}: fitting_kind `UNRESOLVED`\n",
+    "bulleted": f"- reducer count: {R}\n- coupler count: {C}\n\n" + "".join(f"- {u}: fitting_kind `UNRESOLVED`\n" for u in UNRESOLVED),
     "CRLF + BOM": f"﻿Reducers: {R}.\r\nCouplers: {C}.\r\n\r\n{ids} are unresolved.\r\n",
 }
 N_fail = {
     "wrong reducer number": (f"Reducers: {R + 1}. Couplers: {C}.\n\n{ids} are unresolved.\n", ["note_reducer_count"]),
     "coupler number in another sentence": (f"Reducers: {R}. We need couplers. There are {C}.\n\n{ids} are unresolved.\n", ["note_coupler_count"]),
-    "an unresolved id missing": (f"Reducers: {R}. Couplers: {C}.\n\n{UNRESOLVED[0]} is unresolved.\n", [f"note_unresolved_{UNRESOLVED[-1]}"]),
-    "a non-unresolved id in between": (f"Reducers: {R}. Couplers: {C}.\n\n{UNRESOLVED[0]}, then {other}; {UNRESOLVED[-1]} is unresolved.\n", [f"note_unresolved_{UNRESOLVED[0]}"]),
+    "an unresolved id missing": (f"Reducers: {R}. Couplers: {C}.\n\n{', '.join(UNRESOLVED[:-1])} are unresolved.\n", [f"note_unresolved_{UNRESOLVED[-1]}"]),
+    "a non-unresolved id in between": (f"Reducers: {R}. Couplers: {C}.\n\n{UNRESOLVED[0]}, then {other}; {', '.join(UNRESOLVED[1:])} are unresolved.\n", [f"note_unresolved_{UNRESOLVED[0]}"]),
     "ids in another paragraph": (f"Reducers: {R}. Couplers: {C}. See {ids}.\n\nTwo runs are unresolved.\n", [f"note_unresolved_{c}" for c in UNRESOLVED]),
 }
 for label, note in N_pass.items():
