@@ -298,7 +298,7 @@ The goal is a **clean, fair, 1.0-oracle package** before any GLM run, so the fir
    - Document the reward shape as **binary (all core checks must pass)** once incidental checks are gone (HAR-2).
 6. **`task.toml`:**
    - `artifacts = ["/app/fitting_register.csv", "/app/takeoff_note.md", "/app/results.json"]` at top level.
-   - `network_mode = "no-network"`.
+   - `network_mode` stays `"public"`. `"no-network"` was tried and blocks the opencode agent's own setup (apt-get nodejs/npm) and its calls to the GLM proxy (job glm-smoke-day2). This is recorded as an ENV-4 exception.
    - Keep the `obi/<folder>` name and the `non-connector` / `offline` keywords.
    - Verify it loads by actually running harbor on it, not by eye.
 7. **`Dockerfile`:**
