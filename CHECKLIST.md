@@ -55,7 +55,7 @@ All commands are CMD. Open a new CMD window and run the `call …harbor-env.cmd`
    ```bat
    cd /d C:\turing\work
    git init
-   echo * text eol=lf> .gitattributes
+   (echo * -text)> .gitattributes
    git add -A
    git commit -m "mined baseline"
    ```
@@ -67,7 +67,7 @@ All commands are CMD. Open a new CMD window and run the `call …harbor-env.cmd`
 - [ ] 14. Get `tools\annotate_rollout.py`, the zip preflight and the review form link from your lead, and save them under `C:\turing\tools\`.
 
 ### D. Baseline (30 min)
-- [ ] 15. Run the oracle on the mined package; it must print `1.0`:
+- [ ] 15. Run the oracle on the mined package, convert CRLF to LF, and run it again. The exact commands are in `DAY1_STEPS.md` step 6. The first run is expected to fail, because every file has CRLF endings; after the conversion it must print `1.0`. The basic oracle command is:
 
    ```bat
    call "%USERPROFILE%\.config\harbor\harbor-env.cmd"

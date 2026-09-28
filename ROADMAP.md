@@ -134,7 +134,7 @@ Every command below is CMD syntax. Appendix A lists the differences from the Lin
    git config --global core.autocrlf false
    ```
 
-   - In `C:\turing\work`, add a `.gitattributes` containing `* text eol=lf` (it stays outside the zip).
+   - In `C:\turing\work`, add a `.gitattributes` containing `* -text`, so Git stores bytes exactly as they are and never converts line endings (it stays outside the zip).
    - In VS Code, set `"files.eol": "\n"`.
    - Don't edit task files in plain Notepad unless it shows "Unix (LF)" in the status bar.
 8. **Python venv for local probes** (quote the version specifiers, because `<` and `>` are redirection in CMD):
@@ -152,7 +152,7 @@ Every command below is CMD syntax. Appendix A lists the differences from the Lin
 - The curl check shows `200`.
 - `harbor --version` is ≥ 0.20.0.
 - The key lives only in `harbor-env.cmd`, outside the task folder and outside git.
-- `.gitattributes` forces LF.
+- `.gitattributes` contains `* -text`, so Git never converts line endings.
 
 ---
 
@@ -234,6 +234,7 @@ This is the highest-value step. The findings below are already checked against t
 
 | Where | Defect | Rule |
 |---|---|---|
+| **Every text file (39)** | **CRLF line endings.** Under bash, `solve.sh` stops at `set -euo pipefail` and writes nothing, and `test.sh`'s continuation lines break too. The oracle cannot reach 1.0 as shipped. Fixed on Day 1 (see `DAY1_STEPS.md` step 6). | FIX-10, HAR-10 |
 | `task.toml` | `artifacts = []` | TOML-4 |
 | `task.toml` | `network_mode = "public"` with no judge; should be `"no-network"` | ENV-4 |
 | `task.toml` | `schema_version = "1.3"`; check that it loads under your harbor version | TOML-1 |
