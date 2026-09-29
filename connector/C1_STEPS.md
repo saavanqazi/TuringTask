@@ -2,13 +2,15 @@
 
 Goal of this round: set the machine up, get the task's **oracle to 1.0 on your machine exactly as mined**, and **probe the gym and its four doors as the agent user**. No task edits yet. Send me the outputs marked **SEND**.
 
-Your machine: 95.8 GB free disk (enough; the image is about 50 GB), 16 GB RAM, harbor 0.23.0.
+Your machine: 95.8 GB free disk (enough; the image is about 50 GB), 16 GB RAM (tight: Docker capped at 10 GB, one trial at a time), harbor 0.23.0. Everything here is CMD; you never need a WSL terminal.
 
 ---
 
-## 1. Give Docker 12 GB, not all 16
+## 1. Cap Docker's memory at 10 GB
 
-The handbook warns that giving Docker all 16 GB of a 16 GB host kills the host.
+Your laptop has 16 GB, with about 12 GB already in use by Windows and open apps. Giving Docker all of it can freeze or kill the host (Handbook §7), so cap it at 10 GB and run one trial at a time.
+
+Docker Desktop runs its Linux engine inside WSL2 in the background. You never open a WSL terminal: everything below is CMD. This file only sets how much memory that background engine may use.
 
 ```bat
 notepad %USERPROFILE%\.wslconfig
@@ -18,7 +20,7 @@ Put exactly this in the file and save:
 
 ```
 [wsl2]
-memory=12GB
+memory=10GB
 swap=8GB
 ```
 
@@ -31,10 +33,16 @@ wsl --shutdown
 Restart Docker Desktop, wait for the whale icon to settle, then run:
 
 ```bat
-docker info | findstr /c:"Total Memory"
+docker info | findstr /c:"Total Memory" /c:"Operating System"
 ```
 
-It should show about 11.7 GiB.
+- It should show about 9.7 GiB.
+- If it still shows about 15 GiB, Docker Desktop is on the Hyper-V backend and ignores `.wslconfig`. Set the memory in Docker Desktop → Settings → Resources → Memory = 10 GB instead.
+
+**Before every build, oracle or GLM run, close Chrome, Teams and other heavy apps.**
+- Each task container gets 4 GB, and all 12 gyms boot inside it.
+- The runs need about 6 GB free on Windows.
+- A container killed for lack of memory (exit code 137) is not a task failure. Free memory and re-run it.
 
 ## 2. Registry access and the exact image
 
