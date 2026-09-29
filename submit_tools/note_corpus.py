@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+"""note_corpus.py - every note phrasing raised by the Delivery Gate (rounds 1-4) plus the five
+shipped GLM notes, with the note checks each must fail. Run: python tests/note_corpus.py ."""
 import sys, shutil, tempfile, pathlib
-T=sys.argv[1]; sys.path.insert(0,T+'/tests')
+T=sys.argv[1] if len(sys.argv) > 1 else str(pathlib.Path(__file__).resolve().parent.parent); sys.path.insert(0,T+'/tests')
 from rl_world_verifiers.models import VerifierSpec, effective_weights
 from rl_world_verifiers.sources.registry import SourceRegistry
 from rl_world_verifiers.verifiers import verify_definition
@@ -38,6 +41,18 @@ cases=[  # (label, note, expected failing checks)
  ("a further 8 adapters after","11 connections need a reducer and 3 need a coupler; a further 8 take an adapter."+U, []),
  ("reducers are needed on","Reducers are needed on 11 connections, couplers on 3."+U, []),
  ("unresolved first", K+"Two runs remain unresolved: C-10 and C-24.\n", []),
+ ("r4 'with' joiner (gate)", K+"C-10 with C-24 are unresolved.\n", []),
+ ("r4 'plus' joiner", K+"C-10 plus C-24 are unresolved.\n", []),
+ ("r4 'along with' joiner", K+"C-10 along with C-24 are unresolved.\n", []),
+ ("r4 'together with' joiner", K+"C-10 together with C-24 remain unresolved.\n", []),
+ ("r4 'as well as' joiner", K+"C-10 as well as C-24 are unresolved.\n", []),
+ ("r4 'and connection' joiner", K+"Connections C-10 and connection C-24 are unresolved.\n", []),
+ ("r4 ', along with' joiner", K+"C-10, along with C-24, is unresolved.\n", []),
+ ("r4 'or' joiner", K+"Neither port is known, so C-10 or C-24 cannot be fitted: both unresolved.\n", []),
+ ("r4 unresolved first, 'with'", K+"Unresolved: C-24 with C-10.\n", []),
+ ("r4 en dash joiner", K+"C-10 \u2013 C-24: unresolved.\n", []),
+ ("r4 'with' + non-unresolved id", K+"C-10 with C-06 and C-24 are unresolved.\n", U10),
+ ("r4 status words still break the list", K+"C-10 is resolved, C-24 unresolved.\n", U10),
 ]
 for r in ['r1','r2','r3','r4']:
     cases.append((f"shipped difficulty/{r}", open(f"{T}/evaluations/difficulty/{r}/artifacts/app/takeoff_note.md").read(), None))
