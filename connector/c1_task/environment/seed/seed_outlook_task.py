@@ -4,8 +4,11 @@
 Patches the gym's synthetic snapshot, Synthetic_db.db, which every /reset copies into the
 per-run database, for Jack Spencer (user 46):
   * seven inbox messages (some people answer meeting invitations by email, some more than once);
-  * his copy of OKR Planning: a note that it was moved on 28 April, created/modified times to
-    match, and response times on its attendees (two answered before the move, two after).
+  * his copies of OKR Planning and of the 6 May Weekly Pipeline Review: a note that each was moved
+    (with the Pacific time of the move), created/modified times to match, and UTC response times
+    on their attendees, some before and some after the move. Every before/after is the same
+    whether Pacific time is taken as UTC-7 (correct, daylight time) or UTC-8; it only flips if the
+    UTC clock time is read as if it were Pacific.
 The build fails (non-zero exit) if the snapshot has drifted from the rows this task was
 designed against, if any new id or timestamp collides, or if the rows are not visible
 afterwards. Re-running it on an already patched snapshot also fails.
@@ -20,17 +23,30 @@ INBOX = "AFB284B4386E878EFB2144F05C52DA"
 TEMPLATE_ID = "AAMkD61867BD0A78844C3815861A41BA"  # Charlotte's existing message; also her latest (21 May)
 JACK_HENRY_MSG = "AAMkDDFB4210A30B7656D7D0057D2820"
 OKR = "AE3EC3B6C974C7331A84246F23D559"
+WPR6 = "AE0B85738C75DE79357B3C2BCF0910"
 
-MOVE_NOTE = ("OKR Planning for Jack Spencer. Moved on 28 April: this was Wednesday 29 April 10:00; "
-             "it is now Thursday 30 April 13:25.")
-OKR_CREATED = "2026-04-24 17:00:00"
-OKR_MODIFIED = "2026-04-28 18:00:00"   # the move (11:00 Pacific, 28 April)
-# (name, address) -> response time; the responses themselves are unchanged
-OKR_RESPONSE_TIMES = {
-    ("Diego Alvarez", "diego.alvarez@contoso.example"): "2026-04-27 16:50:00",   # tentative
-    ("Jack Henry", "jack.henry@contoso.example"): "2026-04-27 15:30:00",         # accepted, before the move
-    ("Jack Spencer", "eugene.dunn@pinwheellabs.com"): "2026-04-29 09:00:00",     # accepted, after the move
-    ("Isla Hughes", "eugene.dunn@pinwheellabs.com"): "2026-04-29 09:05:00",      # accepted, after the move
+# event id -> (subject, body, created UTC, modified UTC = the move, {(name, address): response time UTC})
+MOVES = {
+    OKR: ("OKR Planning",
+          "OKR Planning for Jack Spencer. Moved on 28 April at 11:00 Pacific: this was Wednesday 29 April 10:00; "
+          "it is now Thursday 30 April 13:25.",
+          "2026-04-24 17:00:00", "2026-04-28 18:00:00", {
+              ("Jack Spencer", "jack.spencer@contoso.example"): "2026-04-24 17:00:00",   # organizer
+              ("Diego Alvarez", "diego.alvarez@contoso.example"): "2026-04-27 16:50:00",  # tentative
+              ("Jack Henry", "jack.henry@contoso.example"): "2026-04-28 17:40:00",        # accepted 10:40 PDT: before
+              ("Jack Spencer", "eugene.dunn@pinwheellabs.com"): "2026-04-28 19:20:00",    # accepted 12:20 PDT: after
+              ("Isla Hughes", "eugene.dunn@pinwheellabs.com"): "2026-04-28 19:35:00",     # accepted 12:35 PDT: after
+          }),
+    WPR6: ("Weekly Pipeline Review",
+           "Weekly Tuesday 10:00 review of active opportunities, forecast call, and at-risk deals. Moved on 1 May at "
+           "16:00 Pacific: this week's was Tuesday 5 May 10:00; it is now Wednesday 6 May 08:00.",
+           "2026-04-24 17:30:00", "2026-05-01 23:00:00", {
+               ("Jack Spencer", "jack.spencer@contoso.example"): "2026-04-24 17:30:00",    # organizer
+               ("Diego Alvarez", "diego.alvarez@contoso.example"): "2026-05-01 22:30:00",  # accepted 15:30 PDT: before
+               ("Jenna White", "jenna.white@contoso.example"): "2026-05-02 00:40:00",      # accepted 17:40 PDT: after
+               ("Jared Ellis", "jared.ellis@contoso.example"): "2026-05-02 01:15:00",      # accepted 18:15 PDT: after
+               ("Jack Spencer", "kenneth.hall@pemberleybank.com"): "2026-05-02 01:30:00",  # accepted 18:30 PDT: after
+           }),
 }
 
 CH_CONV = "CONV9C1F7E32B5A48D06C3F1A9E52D87"
@@ -44,8 +60,8 @@ MESSAGES = [
     {"id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14", "conversation_id": "CONV2E9B4D17A6C05F83E2B9D1C47A68",
      "internet_message_id": "<M942.0@contoso.example>", "reply_to": None,
      "from_name": "Diego Alvarez", "from_address": "diego.alvarez@contoso.example", "subject": "This week",
-     "text": "Hi Jack, count me in for Wednesday's planning session, I'll bring the draft objectives. Still not sure about the feature brainstorm on Friday; I'll let you know once the release date firms up. Diego",
-     "received": "2026-04-27 16:42:00"},
+     "text": "Hi Jack, count me in for tomorrow's planning session, I'll bring the draft objectives. Still not sure about the feature brainstorm on Friday; I'll let you know once the release date firms up. Diego",
+     "received": "2026-04-28 17:52:00"},
     {"id": "AAMkC4E7A19B2D6F038E5A7C1B9D2F63", "conversation_id": CH_CONV,
      "internet_message_id": "<M943.0@contoso.example>", "reply_to": None,
      "from_name": "Charlotte Palmer", "from_address": "charlotte.palmer@contoso.example", "subject": "Friday afternoon",
@@ -69,8 +85,8 @@ MESSAGES = [
     {"id": "AAMk3B9D5F28A1C74E0B6D3F8A2C5E91", "conversation_id": CH_CONV,
      "internet_message_id": "<M947.0@contoso.example>", "reply_to": "AAMkC4E7A19B2D6F038E5A7C1B9D2F63",
      "from_name": "Charlotte Palmer", "from_address": "charlotte.palmer@contoso.example", "subject": "RE: Friday afternoon",
-     "text": "Hi Jack, the site visit might be cancelled, so maybe I can make the learning session this afternoon after all. I'll confirm once I hear back. Charlotte",
-     "received": "2026-05-01 15:05:00"},
+     "text": "Hi Jack, the site visit might be cancelled, so maybe I can make tomorrow's learning session after all. I'll confirm once I hear back. Charlotte",
+     "received": "2026-05-01 04:30:00"},
 ]
 
 
@@ -94,21 +110,29 @@ if cur.execute("SELECT COUNT(*) FROM mail_folders WHERE id=? AND user_id=? AND w
 jh = cur.execute("SELECT from_address FROM messages WHERE id=? AND user_id=?", (JACK_HENRY_MSG, USER_ID)).fetchone()
 if jh is None or jh[0] != "jack.henry@contoso.example":
     fail("Jack Henry's message missing")
-okr = cur.execute("SELECT subject, user_id, is_organizer, is_cancelled, body_content FROM events WHERE id=?", (OKR,)).fetchone()
-if okr is None or okr["subject"] != "OKR Planning" or okr["user_id"] != USER_ID or not okr["is_organizer"] or okr["is_cancelled"]:
-    fail("OKR Planning event drifted")
-if "Moved on" in (okr["body_content"] or ""):
-    fail("OKR Planning already patched")
-expected = {("Jack Spencer", ME, "required", "organizer"),
-            ("Diego Alvarez", "diego.alvarez@contoso.example", "required", "tentativelyAccepted"),
-            ("Jack Henry", "jack.henry@contoso.example", "required", "accepted"),
-            ("Jack Miller", "jack.miller@contoso.example", "optional", "notResponded"),
-            ("Jack Spencer", "eugene.dunn@pinwheellabs.com", "required", "accepted"),
-            ("Isla Hughes", "eugene.dunn@pinwheellabs.com", "required", "accepted")}
-got = {(r[0], r[1].lower(), r[2], r[3]) for r in
-       cur.execute("SELECT name, address, attendee_type, response FROM event_attendees WHERE event_id=?", (OKR,))}
-if got != expected:
-    fail(f"OKR Planning attendees drifted: {sorted(got)}")
+EXPECTED_ATTENDEES = {
+    OKR: {("Jack Spencer", ME, "required", "organizer"),
+          ("Diego Alvarez", "diego.alvarez@contoso.example", "required", "tentativelyAccepted"),
+          ("Jack Henry", "jack.henry@contoso.example", "required", "accepted"),
+          ("Jack Miller", "jack.miller@contoso.example", "optional", "notResponded"),
+          ("Jack Spencer", "eugene.dunn@pinwheellabs.com", "required", "accepted"),
+          ("Isla Hughes", "eugene.dunn@pinwheellabs.com", "required", "accepted")},
+    WPR6: {("Jack Spencer", ME, "required", "organizer"),
+           ("Diego Alvarez", "diego.alvarez@contoso.example", "required", "accepted"),
+           ("Jenna White", "jenna.white@contoso.example", "required", "accepted"),
+           ("Jared Ellis", "jared.ellis@contoso.example", "required", "accepted"),
+           ("Jack Spencer", "kenneth.hall@pemberleybank.com", "required", "accepted")},
+}
+for ev_id, (subject, _, _, _, _) in MOVES.items():
+    ev = cur.execute("SELECT subject, user_id, is_organizer, is_cancelled, body_content FROM events WHERE id=?", (ev_id,)).fetchone()
+    if ev is None or ev["subject"] != subject or ev["user_id"] != USER_ID or not ev["is_organizer"] or ev["is_cancelled"]:
+        fail(f"{subject} event {ev_id} drifted")
+    if "Moved on" in (ev["body_content"] or ""):
+        fail(f"{subject} already patched")
+    got = {(r[0], r[1].lower(), r[2], r[3]) for r in
+           cur.execute("SELECT name, address, attendee_type, response FROM event_attendees WHERE event_id=?", (ev_id,))}
+    if got != EXPECTED_ATTENDEES[ev_id]:
+        fail(f"{subject} attendees drifted: {sorted(got)}")
 tpl = cur.execute("SELECT * FROM messages WHERE id=?", (TEMPLATE_ID,)).fetchone()
 if tpl is None or tpl["from_address"] != "charlotte.palmer@contoso.example":
     fail("template message missing")
@@ -155,14 +179,16 @@ for m in MESSAGES:
                 (m["id"], "Jack Spencer", ME))
 cur.execute("UPDATE mail_folders SET total_item_count = total_item_count + ? WHERE id=?", (len(MESSAGES), INBOX))
 
-# 3b. OKR Planning: the move note, and times that place each answer before or after it
-cur.execute("UPDATE events SET body_preview=?, body_content=?, body_content_type='text', created_datetime=?, last_modified_datetime=? WHERE id=?",
-            (MOVE_NOTE, MOVE_NOTE, ts_like(ev_tpl, OKR_CREATED), ts_like(ev_tpl, OKR_MODIFIED), OKR))
-for (name, addr), when in OKR_RESPONSE_TIMES.items():
-    n = cur.execute("UPDATE event_attendees SET response_time=? WHERE event_id=? AND name=? AND lower(address)=?",
-                    (ts_like(ev_tpl, when), OKR, name, addr)).rowcount
-    if n != 1:
-        fail(f"response time for {name} <{addr}> matched {n} rows")
+# 3b. the two moved meetings: the move note, and times that place each answer before or after it
+for ev_id, (subject, note, created, modified, times) in MOVES.items():
+    cur.execute("UPDATE events SET body_preview=?, body_content=?, body_content_type='text', created_datetime=?, "
+                "last_modified_datetime=?, response_status_time=? WHERE id=?",
+                (note[:512], note, ts_like(ev_tpl, created), ts_like(ev_tpl, modified), ts_like(ev_tpl, created), ev_id))
+    for (name, addr), when in times.items():
+        n = cur.execute("UPDATE event_attendees SET response_time=? WHERE event_id=? AND name=? AND lower(address)=?",
+                        (ts_like(ev_tpl, when), ev_id, name, addr)).rowcount
+        if n != 1:
+            fail(f"{subject}: response time for {name} <{addr}> matched {n} rows")
 con.commit()
 
 # 4. post-conditions
@@ -173,9 +199,10 @@ for m in MESSAGES:
                       "JOIN message_recipients r ON r.message_id=m.id WHERE m.id=?", (m["id"],)).fetchall()
     if [tuple(g) for g in got] != [(INBOX, m["from_address"], ME)]:
         fail(f"post-check: {m['id']} not visible as expected: {[tuple(g) for g in got]}")
-if "Moved on 28 April" not in cur.execute("SELECT body_content FROM events WHERE id=?", (OKR,)).fetchone()[0]:
-    fail("post-check: move note")
+for ev_id, (subject, note, *_rest) in MOVES.items():
+    if cur.execute("SELECT body_content FROM events WHERE id=?", (ev_id,)).fetchone()[0] != note:
+        fail(f"post-check: move note on {subject}")
 if cur.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
     fail("integrity_check")
 con.close()
-print(f"seeded {len(MESSAGES)} messages and the OKR Planning move into user {USER_ID}'s data in {DB}")
+print(f"seeded {len(MESSAGES)} messages and {len(MOVES)} meeting moves into user {USER_ID}'s data in {DB}")

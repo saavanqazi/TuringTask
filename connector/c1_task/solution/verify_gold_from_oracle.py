@@ -67,13 +67,16 @@ def main():
     events = payload_of([s for s in traj if s.get("name") == "search_calendar"][0])["value"]
     run = [e for e in events if e.get("isOrganizer") and not e.get("isCancelled")]
     # the move the plan declares must be what the served calendar shows
+    # moves are keyed by event id: two meetings share the subject Weekly Pipeline Review
     moved = {}
     for mv in plan.get("moves", []):
-        ev = next((e for e in run if e["subject"] == mv["meeting"]), None)
+        ev = next((e for e in run if e["subject"] == mv["meeting"]
+                   and e["start"]["dateTime"].startswith(mv.get("start", ""))), None)
         note = json.dumps((ev or {}).get("body") or {}) + json.dumps((ev or {}).get("bodyPreview") or "")
         if ev is None or mv["note"] not in note or not str(ev.get("lastModifiedDateTime", "")).startswith(mv["moved_at"][:13]):
             print(f"MISMATCH move of {mv['meeting']} not served as declared", file=sys.stderr); bad["move"] = True
-        moved[mv["meeting"]] = mv["moved_at"]
+            continue
+        moved[ev["id"]] = mv["moved_at"]
     # what the invitations say: not responded / tentative, or a firm answer given before a move
     pending = set()
     for e in run:
@@ -82,7 +85,8 @@ def main():
             if addr == me or a.get("type") != "required":
                 continue
             resp, when = a["status"]["response"], a["status"].get("time") or ""
-            stale = e["subject"] in moved and resp in ("accepted", "declined") and when < moved[e["subject"]]
+            # both sides are UTC ("...Z"), so a string comparison orders them correctly
+            stale = e["id"] in moved and resp in ("accepted", "declined") and when < moved[e["id"]]
             if resp in ("notResponded", "tentativelyAccepted") or stale:
                 pending.add((e["subject"], e["start"]["dateTime"], addr))
     # every message the replay's per-person searches returned, by sender
@@ -106,8 +110,9 @@ def main():
         key = (ans["from"], ans["meeting"])
         if key not in latest_answer or m["receivedDateTime"] > latest_answer[key][0]:
             latest_answer[key] = (m["receivedDateTime"], ans["answer"])
+    moved_by_subject = {e["subject"]: moved[e["id"]] for e in run if e["id"] in moved}
     for (who, meeting), (when, answer) in latest_answer.items():
-        if meeting in moved and when < moved[meeting]:
+        if meeting in moved_by_subject and when < moved_by_subject[meeting]:
             continue
         if answer in ("yes", "no"):
             pending = {p for p in pending if not (p[0] == meeting and p[2] == who)}

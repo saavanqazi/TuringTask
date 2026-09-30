@@ -2,7 +2,7 @@
   {
     "id": "read_calendar",
     "depends_on": [],
-    "purpose": "Every event between 27 April and 17 May 2026 with isOrganizer, the description (OKR Planning's move note), lastModifiedDateTime and each attendee's response and response time. The range is required - an undated search_calendar fails on this gym.",
+    "purpose": "Every event between 27 April and 17 May 2026 with isOrganizer, the description (the move notes on OKR Planning and the 6 May Weekly Pipeline Review, in Pacific time), and each attendee's response with its UTC response time. The range is required - an undated search_calendar fails on this gym.",
     "name": "search_calendar",
     "server": "outlook-gym",
     "arguments": {
@@ -18,7 +18,7 @@
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Charlotte has not responded to Learning Time. Her mail: two emails about it (a no, then a later maybe - the maybe counts) and her latest email of all, 21 May.",
+    "purpose": "Charlotte has not responded to Learning Time. Her mail: a no (29 April), then at 04:30Z on 1 May - Thursday 30 April 21:30 Pacific - a maybe about 'tomorrow's learning session', i.e. Friday's Learning Time; the maybe counts. Her latest email of all is 21 May.",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -32,7 +32,7 @@
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Diego is tentative on OKR Planning and the brainstorm. His only email (27 April) says yes to 'Wednesday's planning session' - before the 28 April move, so it no longer counts - and is still unsure about the brainstorm.",
+    "purpose": "Diego is tentative on OKR Planning and the brainstorm. His only email (17:52Z = 10:52 Pacific on 28 April) says yes to 'tomorrow's planning session' - Wednesday, the old slot, before the 11:00 move - so it no longer counts; he is still unsure about the brainstorm.",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -46,7 +46,7 @@
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Jack Henry accepted OKR Planning on 27 April, before it was moved, so he owes a new answer. Has he emailed, and what is his latest email?",
+    "purpose": "Jack Henry accepted OKR Planning at 17:40Z = 10:40 Pacific on 28 April, before the 11:00 move, so he owes a new answer. Has he emailed, and what is his latest email?",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -75,13 +75,13 @@
       "read_calendar",
       "mail_from_diego_alvarez"
     ],
-    "purpose": "Diego owes OKR Planning (his yes predates the move) and the brainstorm: one draft on his latest email",
+    "purpose": "Diego owes OKR Planning (his yes predates the move), the brainstorm (a maybe) and the 6 May Weekly Pipeline Review (accepted 15:30 Pacific, before the 16:00 move): one draft on his latest email",
     "name": "draft_email",
     "server": "outlook-gym",
     "arguments": {
       "reply_to_email_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
       "subject": "RE: This week",
-      "body": "Hi Diego - OKR Planning moved to Thursday 30 April at 13:25 after you wrote, so I need a fresh answer for the new time, and I still don't have one for Brainstorm: New Feature on Friday. Could you accept or decline both so I know who to expect? Thanks, Jack"
+      "body": "Hi Diego - a few answers I still need from you. OKR Planning moved to Thursday 30 April at 13:25 just after you wrote, and the 6 May Weekly Pipeline Review moved to Wednesday 08:00 after you accepted it, so I need fresh answers for both new times; and I don't have a firm answer yet for Brainstorm: New Feature on Friday. Could you accept or decline all three? Thanks, Jack"
     }
   },
   {

@@ -13,7 +13,8 @@ someone has told me in an email that they will or won't be at one of these meeti
 answer, whatever the invitation shows. A maybe is not an answer, and if someone has emailed me about
 a meeting more than once, only their latest email about it counts. If I moved a meeting after
 someone answered it, on the invitation or by email, that answer was for the old time and no longer
-counts.
+counts. I work in Pacific time: any day or time that I or anyone else writes ("tomorrow", "11:00")
+is Pacific time, whatever time zone a timestamp is shown in.
 
 How you work is checked as well as what you answer: I expect to see the attendee responses read off
 the calendar, and my mail checked for each person before anything is drafted.

@@ -2,16 +2,16 @@
   "json_path": "metrics.json",
   "json": {
     "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 3,
+    "meetings_still_owed_an_answer": 4,
     "people_to_chase": 3,
-    "answers_still_owed": 4,
+    "answers_still_owed": 5,
     "people_to_chase_who_already_emailed_me": 3
   },
   "gold": {
     "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 3,
+    "meetings_still_owed_an_answer": 4,
     "people_to_chase": 3,
-    "answers_still_owed": 4,
+    "answers_still_owed": 5,
     "people_to_chase_who_already_emailed_me": 3
   },
   "acting_user_email": "jack.spencer@contoso.example",
@@ -19,7 +19,13 @@
     {
       "meeting": "OKR Planning",
       "moved_at": "2026-04-28T18:00:00Z",
-      "note": "Moved on 28 April"
+      "note": "Moved on 28 April at 11:00 Pacific"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "start": "2026-05-06",
+      "moved_at": "2026-05-01T23:00:00Z",
+      "note": "Moved on 1 May at 16:00 Pacific"
     }
   ],
   "email_answers": [
@@ -28,7 +34,7 @@
       "from": "diego.alvarez@contoso.example",
       "meeting": "OKR Planning",
       "answer": "yes",
-      "quote": "count me in for Wednesday's planning session"
+      "quote": "count me in for tomorrow's planning session"
     },
     {
       "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
@@ -49,7 +55,7 @@
       "from": "charlotte.palmer@contoso.example",
       "meeting": "Learning Time",
       "answer": "maybe",
-      "quote": "maybe I can make the learning session this afternoon after all"
+      "quote": "maybe I can make tomorrow's learning session after all"
     },
     {
       "message_id": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594",
@@ -80,7 +86,8 @@
     "needles": {
       "diego.alvarez@contoso.example": [
         "Brainstorm",
-        "OKR"
+        "OKR",
+        "Pipeline"
       ],
       "jack.henry@contoso.example": [
         "OKR"

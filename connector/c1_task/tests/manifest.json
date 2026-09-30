@@ -95,7 +95,7 @@
           {
             "name": "metrics_meetings_i_am_running",
             "metadata": {
-              "how_justification": "Reads meetings_i_am_running and requires 5 - the events in the window he organised, none cancelled: OKR Planning 2026-04-30 (moved there from 29 April); Learning Time 2026-05-01; Brainstorm: New Feature 2026-05-01 (Pacific); Weekly Pipeline Review 2026-05-02; Weekly Pipeline Review 2026-05-06.",
+              "how_justification": "Reads meetings_i_am_running and requires 5 - the events in the window he organised, none cancelled: OKR Planning 2026-04-30; Learning Time 2026-05-01; Brainstorm: New Feature 2026-05-01; Weekly Pipeline Review 2026-05-02; Weekly Pipeline Review 2026-05-06 (all Pacific).",
               "why_justification": "Counting every event in the window, including invitations from other people, answers 11; collapsing the two Weekly Pipeline Reviews into one answers 4."
             },
             "source": {
@@ -122,7 +122,7 @@
     },
     {
       "name": "metrics_meetings_still_owed_an_answer",
-      "description": "Reads metrics.json key meetings_still_owed_an_answer and requires 3.",
+      "description": "Reads metrics.json key meetings_still_owed_an_answer and requires 4.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -132,7 +132,7 @@
       "requirement_id": "meetings_still_owed_an_answer",
       "evidence_span": "How many of them are still owed an\nanswer by at least one required attendee.",
       "metadata": {
-        "why_justification": "Ignoring the move answers 2; taking Charlotte's first email instead of her latest answers 2; counting Jared Ellis's decline as missing adds 1."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3."
       },
       "verifier_spec": {
         "task_id": "metrics_meetings_still_owed_an_answer",
@@ -140,8 +140,8 @@
           {
             "name": "metrics_meetings_still_owed_an_answer",
             "metadata": {
-              "how_justification": "Reads meetings_still_owed_an_answer and requires 3 - OKR Planning (moved on 28 April: Jack Henry's acceptance and Diego Alvarez's emailed 'count me in' both came on 27 April, before the move), Learning Time (Charlotte Palmer's latest email is a maybe), Brainstorm: New Feature (Diego Alvarez 'still not sure'). Jack Miller's latest email answers the brainstorm, and Jared Ellis declined.",
-              "why_justification": "Ignoring the move answers 2; taking Charlotte's first email instead of her latest answers 2; counting Jared Ellis's decline as missing adds 1."
+              "how_justification": "Reads meetings_still_owed_an_answer and requires 4 - OKR Planning (moved 28 April 11:00 Pacific; Jack Henry accepted at 17:40Z = 10:40 Pacific and Diego's 'count me in for tomorrow's planning session' was sent at 17:52Z = 10:52 Pacific, both before it), Learning Time (Charlotte's latest email, sent Thursday 30 April 21:30 Pacific, is a maybe about 'tomorrow's learning session'), Brainstorm: New Feature (Diego 'still not sure'), Weekly Pipeline Review 6 May (moved 1 May 16:00 Pacific; Diego accepted at 22:30Z = 15:30 Pacific, before it).",
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3."
             },
             "source": {
               "type": "file",
@@ -155,7 +155,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 3,
+              "expected": 4,
               "deterministic": {
                 "path": "$.meetings_still_owed_an_answer",
                 "comparison": "equals"
@@ -177,7 +177,7 @@
       "requirement_id": "people_to_chase",
       "evidence_span": "How many people I need to chase.",
       "metadata": {
-        "why_justification": "Ignoring the move answers 2 (Jack Henry and Diego's OKR answer kept); ignoring the email answers answers 4 (Jack Miller kept); taking earliest instead of latest emails swaps Charlotte for Jack Miller (same count, wrong drafts)."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept)."
       },
       "verifier_spec": {
         "task_id": "metrics_people_to_chase",
@@ -186,7 +186,7 @@
             "name": "metrics_people_to_chase",
             "metadata": {
               "how_justification": "Reads people_to_chase and requires 3 - Diego Alvarez, Jack Henry, Charlotte Palmer.",
-              "why_justification": "Ignoring the move answers 2 (Jack Henry and Diego's OKR answer kept); ignoring the email answers answers 4 (Jack Miller kept); taking earliest instead of latest emails swaps Charlotte for Jack Miller (same count, wrong drafts)."
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept)."
             },
             "source": {
               "type": "file",
@@ -212,7 +212,7 @@
     },
     {
       "name": "metrics_answers_still_owed",
-      "description": "Reads metrics.json key answers_still_owed and requires 4.",
+      "description": "Reads metrics.json key answers_still_owed and requires 5.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -222,7 +222,7 @@
       "requirement_id": "answers_still_owed",
       "evidence_span": "How many answers are still\nowed, counting a person once for each meeting they have not answered.",
       "metadata": {
-        "why_justification": "Ignoring the move answers 2; applying the move to invitation answers but not to Diego's pre-move email answers 3; ignoring the email answers answers 5."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4."
       },
       "verifier_spec": {
         "task_id": "metrics_answers_still_owed",
@@ -230,8 +230,8 @@
           {
             "name": "metrics_answers_still_owed",
             "metadata": {
-              "how_justification": "Reads answers_still_owed and requires 4 - Diego Alvarez on OKR Planning; Jack Henry on OKR Planning; Charlotte Palmer on Learning Time; Diego Alvarez on Brainstorm: New Feature.",
-              "why_justification": "Ignoring the move answers 2; applying the move to invitation answers but not to Diego's pre-move email answers 3; ignoring the email answers answers 5."
+              "how_justification": "Reads answers_still_owed and requires 5 - Diego Alvarez on OKR Planning, Brainstorm: New Feature and the 6 May Weekly Pipeline Review; Jack Henry on OKR Planning; Charlotte Palmer on Learning Time.",
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4."
             },
             "source": {
               "type": "file",
@@ -245,7 +245,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 4,
+              "expected": 5,
               "deterministic": {
                 "path": "$.answers_still_owed",
                 "comparison": "equals"
@@ -267,7 +267,7 @@
       "requirement_id": "people_to_chase_who_already_emailed_me",
       "evidence_span": "how many of the people I\nneed to chase have already emailed me at some point",
       "metadata": {
-        "why_justification": "Ignoring the move answers 2; never reading the mailbox answers 0."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; never reading the mailbox answers 0."
       },
       "verifier_spec": {
         "task_id": "metrics_people_to_chase_who_already_emailed_me",
@@ -276,7 +276,7 @@
             "name": "metrics_people_to_chase_who_already_emailed_me",
             "metadata": {
               "how_justification": "Reads people_to_chase_who_already_emailed_me and requires 3 - Diego Alvarez, Jack Henry and Charlotte Palmer all have mail in his mailbox.",
-              "why_justification": "Ignoring the move answers 2; never reading the mailbox answers 0."
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; never reading the mailbox answers 0."
             },
             "source": {
               "type": "file",
@@ -302,18 +302,18 @@
     },
     {
       "name": "own_draft_to_diego_alvarez_naming_their_meetings",
-      "description": "A draft whose only recipient is Diego Alvarez and whose subject or body names Brainstorm: New Feature and OKR Planning. Measured on the seed: 0 rows (the acting user has no drafts).",
+      "description": "A draft whose only recipient is Diego Alvarez and whose subject or body names OKR Planning, Brainstorm: New Feature and the Weekly Pipeline Review. Measured on the seed: 0 rows (the acting user has no drafts).",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%') AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%')",
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%') AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%') AND (lower(coalesce(m.subject,'')) LIKE '%pipeline%' OR lower(coalesce(m.body_content,'')) LIKE '%pipeline%')",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_drafts",
       "evidence_span": "draft a note to each person I need to chase, one draft per person, naming the meetings they\nhave not answered",
       "metadata": {
-        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Diego Alvarez. The draft must name the meeting(s) that person has not answered (matched on 'brainstorm', 'okr', case-insensitive, in subject or body); other wording is free."
+        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Diego Alvarez. The draft must name the meetings he has not answered (matched on 'brainstorm', 'okr' and 'pipeline', case-insensitive, in subject or body); other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -507,5 +507,5 @@
       }
     }
   ],
-  "instruction_sha256": "a4cceb73d475f735de017e3fa3d881ba4c727463e5c466832bf8069b2e819a31"
+  "instruction_sha256": "8e4dbb419817f993a6ddf5c9ff71c6fa1408e6d61638232d477f4ba6648d1e1c"
 }

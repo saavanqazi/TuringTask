@@ -101,3 +101,51 @@ The wording-level discriminators were too easy. My prediction of 1–2/4 was wro
 **How to read the result:**
 - **0/4:** check each failure is W14–W17, then soften one lever. The first to soften: say in the instruction that moves are noted in the meeting's description.
 - **3–4/4:** discard the task, as agreed.
+
+---
+
+# Round 4: prediction before the battery on hardening 3 (2026-09-30)
+
+**Battery on hardening 2 (`glm-c1-h2`):** 4/4 strict passes, task_checksum `52921f29…`. The oracle scored 1.0 on the same checksum.
+
+Every run solved it in 9–15 tool calls and 2.4k–5.1k completion tokens:
+- it read the move note and the response times;
+- it ordered the emails by date;
+- it put Charlotte's draft on her 21 May email.
+
+Every date comparison was a whole day apart (27 April versus 28 April), so no clock time or time zone ever mattered. My prediction of 1–2/4 was wrong again: GLM is strong at small-context rule application.
+
+**Change (hardening 3): the same rules, but every comparison that decides an answer is same-day and needs a time zone conversion.** The tools show timestamps in UTC (`…Z`). The instruction says every day and time people write is Pacific, "whatever time zone a timestamp is shown in".
+
+**The OKR Planning move:** 28 April at 11:00 Pacific. Two answers are just before it:
+- Jack Henry's acceptance at 17:40Z (10:40 Pacific);
+- Diego's emailed "count me in for tomorrow's planning session" at 17:52Z (10:52 Pacific). "Tomorrow" is Wednesday, the old slot.
+
+The acceptances at 19:20Z and 19:35Z are after it.
+
+**A second move:** the 6 May Weekly Pipeline Review moved on 1 May at 16:00 Pacific.
+- Diego accepted at 22:30Z (15:30 Pacific), before the move, so he owes it again.
+- The others accepted after the move (00:40Z to 01:30Z on 2 May).
+
+**Charlotte's latest email:** sent 2026-05-01T04:30Z, which is Thursday 30 April 21:30 Pacific: "maybe I can make tomorrow's learning session after all". Tomorrow is Friday, Learning Time, and it is a maybe, so she still owes. Read by the UTC date, "tomorrow" would be Saturday.
+
+**Fairness:** every before/after gives the same answer under UTC−7 (correct, daylight time) and UTC−8. Only reading the UTC clock time as Pacific flips it. I verified this against the seed.
+
+**New gold:** 5/4/3/5/3.
+
+**The wrong readings and what they produce:**
+
+| # | Wrong reading | Figures | Draft effect |
+|---|---|---|---|
+| W18 | UTC clock times read as Pacific | 5/1/1/1/1 | Diego only, for the brainstorm |
+| W19 | 6 May move missed | 5/3/3/4/3 | Diego's draft lacks the pipeline review |
+| W20 | Charlotte's "tomorrow" by the UTC date | 5/3/2/4/2 | no Charlotte draft |
+| W21 | both moves ignored | 5/2/2/2/2 | — |
+
+All the earlier traps still apply: latest email of any subject, and "I'll try" is a maybe.
+
+**Prediction: 1/4 or 2/4.** Each run has to make three independent time zone judgments correctly, plus spot the second move note. If GLM converts correctly about 60–70% of the time on each, a strict pass comes out around 25–40%.
+
+**How to read the result:**
+- **0/4:** check that every failure is one of W18–W21, not a tool or data problem, then soften one trap. The first to soften: Charlotte's email names "Friday" instead of "tomorrow".
+- **3–4/4:** stop and discard. Three hardening rounds is the honest limit for this data.

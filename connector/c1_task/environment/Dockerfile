@@ -24,8 +24,8 @@ COPY _app/tests/ /app/tests/
 
 COPY mcp/proxy/ /opt/proxy/
 
-# Build-time seed (Handbook 8.1): seven inbox messages for the acting user and the move of his
-# OKR Planning meeting, written into the outlook gym's synthetic snapshot that every /reset
+# Build-time seed (Handbook 8.1): seven inbox messages for the acting user and the moves of two
+# of his meetings, written into the outlook gym's synthetic snapshot that every /reset
 # copies. The script asserts the snapshot it patches and fails the build on drift or collision;
 # its directory is removed afterwards.
 COPY seed/ /tmp/task-seed/
