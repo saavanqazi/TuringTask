@@ -1,0 +1,6 @@
+# ATTRIBUTION: lifted from rl-harbor-platform/harbor-task-template/environment/mcp/proxy/requirements.txt
+# (FROZEN — do not edit; mirror upstream).
+mcp==1.26.0
+httpx==0.28.1
+uvicorn[standard]==0.41.0
+starlette==0.52.1

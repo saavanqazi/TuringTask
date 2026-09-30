@@ -1,0 +1,83 @@
+schema_version = "1.1"
+
+[task]
+name = "harbor/the-meetings-still-waiting-on-a-yes"
+description = "the meetings still waiting on a yes"
+keywords = [ "harbor",]
+
+[[task.authors]]
+name = "OBI RL Gym"
+email = "obi-rl-gym@turing.com"
+
+[metadata]
+scenario_name = "the meetings still waiting on a yes"
+scenario_description = "=== INTENT ===\nInvitation follow-up on the outlook gym: of the meetings the acting user organised in a three-week window, which are still\nwaiting on a proper answer from a required attendee, reading answers from both the invitation and his mail, who owes one, and has\nthat person written to him before. Ends in one draft per person, placed on their own latest email. Mined from seed\ne9ccc5d8-a2dd-4a56-ad19-29d70593e96a (outlook, inbox-triage-summarization), where the client asked which of their emails still needed a\nresponse. Kept: the who-still-owes-an-answer judgement and staging the follow-up rather than sending it. Dropped: the seed's own inbox.\nHardened (trainer, 2026-09-30): answers given by email count, stated in the instruction; five inbox messages are seeded at build time.\n\n=== CONNECTOR ===\noutlook-gym on container port 8014. Acting user Jack Spencer (id 46, jack.spencer@contoso.example), authenticated by his users.api_key\nthrough header x-outlook-user-token. Tools: search_calendar, search_email, draft_email.\n\n=== HOPS ===\nhops=5 chain_depth=3 over 6 steps.\n  search_calendar  1   (root - the range is stated in the prompt)\n  search_email     3   (one per candidate from the calendar; each address comes from the attendee list)\n  draft_email      2   (recipient and parent message from that person's mail read)\n  Longest path: read_calendar -> mail_from_jack_miller -> draft_jack_miller = 3.\n\n=== HIDDEN RULES ===\n(the prompt defines what counts as an answer, including answers by email; the agent must find the rest)\n  - ANSWERS LIVE IN TWO PLACES. The invitation shows a response; an email can override it. Diego Alvarez wrote \"count me in for\n    Thursday's planning session\" (OKR Planning is Thursday 30 April) and \"still not sure about the feature brainstorm on Friday\".\n    Charlotte Palmer wrote she \"won't be able to make Friday's learning session\" (Learning Time, Friday 1 May).\n  - A MAYBE IS NOT AN ANSWER. Jack Miller wrote \"I'll try to make the feature brainstorm on Friday but I can't promise\".\n  - THE EMAILS NAME MEETINGS BY DAY AND KIND, NOT BY TITLE. Matching them to events needs the weekday of each event.\n  - MOST RECENT EMAIL. Jack Miller has two emails; the draft goes on the later one (\"Friday evening\"), not \"Discovery call prep\".\n  - DECLINED IS AN ANSWER EITHER WAY. Jared Ellis declined Weekly Pipeline Review (2 May) and then emailed that he can make it.\n  - HE IS ON HIS OWN ATTENDEE LIST, and six of the eleven events in the window were organised by someone else.\n  - AN UNDATED CALENDAR SEARCH FAILS on this gym; the stated range has to be passed.\n\n=== GOLD ===\n(grader metadata, NOT shown to the agent; derived from the seeded snapshot and re-derived from the oracle replay by\nsolution/verify_gold_from_oracle.py.)\n\n{\n  \"meetings_i_am_running\": 5,\n  \"meetings_still_owed_an_answer\": 1,\n  \"people_to_chase\": 2,\n  \"answers_still_owed\": 2,\n  \"people_to_chase_who_already_emailed_me\": 2\n}\n\n  OKR Planning               2026-04-30  Diego Alvarez=tentativelyAccepted/required but \"count me in\" by email -> answered\n  Learning Time              2026-05-01  Charlotte Palmer=notResponded/required but \"won't be able to make\" by email -> answered\n  Brainstorm: New Feature    2026-05-01  Diego Alvarez=tentativelyAccepted/required + \"still not sure\" -> OWES; Jack Miller=tentativelyAccepted/required + \"I'll try\" -> OWES\n  Weekly Pipeline Review     2026-05-02  Jared Ellis=declined/required (answered)\n  Weekly Pipeline Review     2026-05-06  all required accepted\n\nWrite-back: drafts to diego.alvarez@contoso.example on CONV2E9B4D17A6C05F83E2B9D1C47A68 (reply to AAMk8B3F6D20E1A94C7B5E0F2A9C6D14) and\njack.miller@contoso.example on CONV4F8D2A63C9E17B05D4A8F2C61E39 (reply to AAMkE2A9C5F71B3D48A6E0C2F7B1D594). Seed: no drafts, 2 sent messages from him.\n\n=== DECOYS ===\n  meetings_still_owed_an_answer = 1\n      ignore the email answers                                                    -> 3\n      treat a maybe as an answer                                                  -> 0\n  people_to_chase = 2\n      ignore the email answers (keep Charlotte)                                   -> 3\n      treat Jack Miller's \"I'll try\" as an answer                                 -> 1\n  answers_still_owed = 2\n      ignore the email answers                                                    -> 4\n      apply Diego's \"count me in\" to both of his meetings                         -> 1\n  people_to_chase_who_already_emailed_me = 2\n      keep Charlotte in the chase set                                             -> 3\n  write-back\n      a draft to Charlotte, who answered by email                                 -> 3 recipients\n      Jack Miller's draft on \"Discovery call prep\" or a new message               -> thread row 0\n      send instead of draft                                                       -> sent count > 2\n\n=== SEED ===\ne9ccc5d8-a2dd-4a56-ad19-29d70593e96a (outlook, inbox-triage-summarization), drawn from 12_trajectories_mask_pii.jsonl.\nBuild-time seed environment/seed/seed_outlook_mail.py adds five inbox messages for user 46 to Synthetic_db.db (Jack Miller x2,\nDiego Alvarez, Charlotte Palmer, Jared Ellis) and fails the build on drift or collision.\n"
+
+source_task_id = "e9ccc5d8-a2dd-4a56-ad19-29d70593e96a"
+domain = "Productivity & Collaboration"
+subdomain = "meeting follow-up"
+state_snapshot_enabled = false
+# metadata.agent left unset: setting it to "oracle" lets test_outputs.py score
+# a crashed agent against golden_trajectory.json.
+
+[[metadata.mcp_servers_extended]]
+name = "outlook-gym"
+image = "us-central1-docker.pkg.dev/delivery-g-obi/connectors-rl-gym/connectors-harness@sha256:b1374cd8a392ea66f9a649e700a1498e8fcb03ee35776362db7cc15dc3049b89"
+host_port = 8014
+container_port = 8014
+remote_url_env = "OUTLOOK_GYM_MCP_REMOTE_URL"
+auth_header_name = "x-outlook-user-token"
+access_token = "c776aa4f208079cef19594d00c80557e6a17f0cdd8b0e5977aab2c688085bca7"
+db_id_header_name = "x-database-id"
+reset_on_run = true
+
+[verifier]
+timeout_sec = 1500.0
+
+[agent]
+timeout_sec = 4800.0
+# Non-root agent user; /app is root-only so the agent can't read
+# task.toml/solution/tests off disk.
+user = "rlgymagent"
+
+[environment]
+build_timeout_sec = 1200.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 65536
+gpus = 0
+allow_internet = true
+
+[[environment.mcp_servers]]
+name = "outlook-gym"
+transport = "streamable-http"
+url = "http://localhost:7000/mcp/outlook-gym"
+args = []
+
+[metadata.verifier_judge]
+# JUDGE_MODEL can override the default without editing the generated package.
+# Do not hardcode a model id here: different deployments resolve different ids.
+model = "${JUDGE_MODEL:-openai/zai-org/GLM-5.2}"
+api_key_env = "OPENAI_API_KEY"
+temperature = 0.0
+max_tokens = 65536
+
+[verifier.env]
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+OPENAI_BASE_URL = "${OPENAI_BASE_URL:-}"
+JUDGE_MODEL = "${JUDGE_MODEL:-openai/zai-org/GLM-5.2}"
+
+[environment.healthcheck]
+command = "curl -fsS --max-time 3 http://localhost:7000/health"
+interval_sec = 15.0
+timeout_sec = 120.0
+retries = 150
+start_period_sec = 30.0
+start_interval_sec = 15.0
+
+[environment.env]
+HARBOR_MCP_MODE = "${HARBOR_MCP_MODE:-docker}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+GEMINI_API_KEY = "${GEMINI_API_KEY:-}"
+OUTLOOK_GYM_MCP_REMOTE_URL = "${OUTLOOK_GYM_MCP_REMOTE_URL:-}"
+OUTLOOK_GYM_MCP_REMOTE_URL_TOKEN = "${OUTLOOK_GYM_MCP_REMOTE_URL_TOKEN:-}"

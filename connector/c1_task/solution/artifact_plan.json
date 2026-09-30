@@ -1,0 +1,66 @@
+{
+  "json_path": "metrics.json",
+  "json": {
+    "meetings_i_am_running": 5,
+    "meetings_still_owed_an_answer": 1,
+    "people_to_chase": 2,
+    "answers_still_owed": 2,
+    "people_to_chase_who_already_emailed_me": 2
+  },
+  "gold": {
+    "meetings_i_am_running": 5,
+    "meetings_still_owed_an_answer": 1,
+    "people_to_chase": 2,
+    "answers_still_owed": 2,
+    "people_to_chase_who_already_emailed_me": 2
+  },
+  "acting_user_email": "jack.spencer@contoso.example",
+  "email_answers": [
+    {
+      "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
+      "from": "diego.alvarez@contoso.example",
+      "meeting": "OKR Planning",
+      "answer": "yes",
+      "quote": "count me in for Thursday's planning session"
+    },
+    {
+      "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
+      "from": "diego.alvarez@contoso.example",
+      "meeting": "Brainstorm: New Feature",
+      "answer": "maybe",
+      "quote": "Still not sure about the feature brainstorm on Friday"
+    },
+    {
+      "message_id": "AAMkC4E7A19B2D6F038E5A7C1B9D2F63",
+      "from": "charlotte.palmer@contoso.example",
+      "meeting": "Learning Time",
+      "answer": "no",
+      "quote": "I won't be able to make Friday's learning session"
+    },
+    {
+      "message_id": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594",
+      "from": "jack.miller@contoso.example",
+      "meeting": "Brainstorm: New Feature",
+      "answer": "maybe",
+      "quote": "I'll try to make the feature brainstorm on Friday but I can't promise"
+    }
+  ],
+  "write_back": {
+    "chase": [
+      "diego.alvarez@contoso.example",
+      "jack.miller@contoso.example"
+    ],
+    "reply_on": {
+      "diego.alvarez@contoso.example": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
+      "jack.miller@contoso.example": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594"
+    },
+    "needles": {
+      "diego.alvarez@contoso.example": [
+        "Brainstorm"
+      ],
+      "jack.miller@contoso.example": [
+        "Brainstorm"
+      ]
+    }
+  }
+}

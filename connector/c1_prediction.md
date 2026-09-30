@@ -30,3 +30,37 @@ Written 2026-09-29, before any GLM run on this task (Handbook §2.3).
 - **Result:** the rules are all written in the prompt as field-level tests. `type` == required and `response` in {notResponded, tentativelyAccepted} are exactly the "mechanical threshold" of Handbook §2.1. So I expect **3/4 or 4/4 strict passes**.
 - **Most likely failures:** W7 (the reply-on-thread mechanics of `draft_email`) and W1/W5 (`isOrganizer`).
 - **What the evidence would tell us:** if the battery is 3–4/4, the task needs an interpretive discriminator (Handbook §2.2), not more rules. If failures appear on W7 only, the difficulty is tool mechanics rather than reasoning, and I'll check that it's a fair failure: the `draft_email` schema documents `reply_to_email_id`.
+
+---
+
+# Round 2: prediction before the battery on the hardened version (2026-09-30)
+
+**Battery on fix 2 (`glm-c1-smoke`):** 4/4 strict passes, task_checksum `14fc64ff…`. It matched the round-1 prediction.
+
+In all four runs the model:
+- made one ranged calendar read;
+- made per-person `from:` searches, used only to check whether each person had ever emailed (no email body was read);
+- wrote 5/3/3/4/1 and three drafts, with Charlotte's as a reply on her thread.
+
+The task was solvable with field-level checks alone.
+
+**Change (hardening 1):**
+- one instruction sentence: email answers count, whatever the invitation shows; a maybe is not an answer;
+- five seeded inbox messages;
+- new gold 5/1/2/2/2, with both drafts as replies on each person's latest email.
+
+**Discriminators:**
+- the email refers to meetings by weekday and kind ("Thursday's planning session", "Friday's learning session", "the feature brainstorm on Friday");
+- firm answer versus maybe ("count me in" / "won't be able to make" versus "still not sure" / "I'll try … can't promise");
+- one email carrying two answers of different strength (Diego's);
+- the latest of two emails (Jack Miller's).
+
+**Prediction: 1/4 or 2/4.** The expected failures:
+- W10: the model keeps the old "has this person ever emailed" reading and never applies the email answers (3/3/4/3). This is the most likely, because the round-1 runs never read email bodies.
+- W11: the model treats Jack Miller's "I'll try" as an answer (1 person / 1 answer).
+- W12: the model applies Diego's "count me in" to both of his meetings (answers 1).
+- W13: the model puts Jack Miller's draft on the "Discovery call prep" thread.
+
+**How to read the result:**
+- **0/4:** check that every failure is one of W10–W13 and not a tool or data problem (the probe confirms the emails are served).
+- **3–4/4:** the discriminator is still mechanical, and the next lever is precision (exact lists).

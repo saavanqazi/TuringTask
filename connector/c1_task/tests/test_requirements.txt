@@ -1,0 +1,3 @@
+# ATTRIBUTION: lifted from rl-harbor-platform/harbor-task-template/tests/test_requirements.txt
+# (FROZEN — do not edit; mirror upstream).
+litellm==1.82.0
