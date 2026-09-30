@@ -66,27 +66,51 @@ def main():
     bad = {}
     events = payload_of([s for s in traj if s.get("name") == "search_calendar"][0])["value"]
     run = [e for e in events if e.get("isOrganizer") and not e.get("isCancelled")]
-    # what the invitations alone say
-    pending = {(e["subject"], e["start"]["dateTime"], a["emailAddress"]["address"].lower())
-               for e in run for a in e.get("attendees", [])
-               if a["emailAddress"]["address"].lower() != me and a.get("type") == "required"
-               and a["status"]["response"] in ("notResponded", "tentativelyAccepted")}
+    # the move the plan declares must be what the served calendar shows
+    moved = {}
+    for mv in plan.get("moves", []):
+        ev = next((e for e in run if e["subject"] == mv["meeting"]), None)
+        note = json.dumps((ev or {}).get("body") or {}) + json.dumps((ev or {}).get("bodyPreview") or "")
+        if ev is None or mv["note"] not in note or not str(ev.get("lastModifiedDateTime", "")).startswith(mv["moved_at"][:13]):
+            print(f"MISMATCH move of {mv['meeting']} not served as declared", file=sys.stderr); bad["move"] = True
+        moved[mv["meeting"]] = mv["moved_at"]
+    # what the invitations say: not responded / tentative, or a firm answer given before a move
+    pending = set()
+    for e in run:
+        for a in e.get("attendees", []):
+            addr = a["emailAddress"]["address"].lower()
+            if addr == me or a.get("type") != "required":
+                continue
+            resp, when = a["status"]["response"], a["status"].get("time") or ""
+            stale = e["subject"] in moved and resp in ("accepted", "declined") and when < moved[e["subject"]]
+            if resp in ("notResponded", "tentativelyAccepted") or stale:
+                pending.add((e["subject"], e["start"]["dateTime"], addr))
     # every message the replay's per-person searches returned, by sender
     mail = defaultdict(list)
     for s in traj:
         if s.get("name") == "search_email":
             for m in payload_of(s).get("value", []):
                 sender = ((m.get("from") or {}).get("emailAddress") or {}).get("address", "").lower()
-                mail[sender].append(m)
+                if all(m.get("id") != x.get("id") for x in mail[sender]):
+                    mail[sender].append(m)
     by_id = {m["id"]: m for ms in mail.values() for m in ms}
-    # the email answers the plan declares must be really there, from that sender, with that wording
+    # the email answers the plan declares must be really there, from that sender, with that wording;
+    # per (person, meeting) only the latest counts, and not if it predates a move of that meeting
+    latest_answer = {}
     for ans in plan["email_answers"]:
         m = by_id.get(ans["message_id"])
         text = json.dumps(m or {}).lower().replace("\\u2019", "'")
         if m is None or ans["from"] not in json.dumps(m.get("from") or {}).lower() or ans["quote"].lower() not in text:
             print(f"MISMATCH email answer {ans['message_id']} not served as declared", file=sys.stderr); bad["email"] = True
-        if ans["answer"] in ("yes", "no"):
-            pending = {p for p in pending if not (p[0] == ans["meeting"] and p[2] == ans["from"])}
+            continue
+        key = (ans["from"], ans["meeting"])
+        if key not in latest_answer or m["receivedDateTime"] > latest_answer[key][0]:
+            latest_answer[key] = (m["receivedDateTime"], ans["answer"])
+    for (who, meeting), (when, answer) in latest_answer.items():
+        if meeting in moved and when < moved[meeting]:
+            continue
+        if answer in ("yes", "no"):
+            pending = {p for p in pending if not (p[0] == meeting and p[2] == who)}
     owed_meetings = {(p[0], p[1]) for p in pending}
     chase = sorted({p[2] for p in pending})
     got = {"meetings_i_am_running": len(run), "meetings_still_owed_an_answer": len(owed_meetings),

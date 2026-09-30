@@ -2,26 +2,33 @@
   "json_path": "metrics.json",
   "json": {
     "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 1,
-    "people_to_chase": 2,
-    "answers_still_owed": 2,
-    "people_to_chase_who_already_emailed_me": 2
+    "meetings_still_owed_an_answer": 3,
+    "people_to_chase": 3,
+    "answers_still_owed": 4,
+    "people_to_chase_who_already_emailed_me": 3
   },
   "gold": {
     "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 1,
-    "people_to_chase": 2,
-    "answers_still_owed": 2,
-    "people_to_chase_who_already_emailed_me": 2
+    "meetings_still_owed_an_answer": 3,
+    "people_to_chase": 3,
+    "answers_still_owed": 4,
+    "people_to_chase_who_already_emailed_me": 3
   },
   "acting_user_email": "jack.spencer@contoso.example",
+  "moves": [
+    {
+      "meeting": "OKR Planning",
+      "moved_at": "2026-04-28T18:00:00Z",
+      "note": "Moved on 28 April"
+    }
+  ],
   "email_answers": [
     {
       "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
       "from": "diego.alvarez@contoso.example",
       "meeting": "OKR Planning",
       "answer": "yes",
-      "quote": "count me in for Thursday's planning session"
+      "quote": "count me in for Wednesday's planning session"
     },
     {
       "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
@@ -38,28 +45,48 @@
       "quote": "I won't be able to make Friday's learning session"
     },
     {
+      "message_id": "AAMk3B9D5F28A1C74E0B6D3F8A2C5E91",
+      "from": "charlotte.palmer@contoso.example",
+      "meeting": "Learning Time",
+      "answer": "maybe",
+      "quote": "maybe I can make the learning session this afternoon after all"
+    },
+    {
       "message_id": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594",
       "from": "jack.miller@contoso.example",
       "meeting": "Brainstorm: New Feature",
       "answer": "maybe",
       "quote": "I'll try to make the feature brainstorm on Friday but I can't promise"
+    },
+    {
+      "message_id": "AAMk7C2E9A41F3B06D8E2A5C9F1B7D30",
+      "from": "jack.miller@contoso.example",
+      "meeting": "Brainstorm: New Feature",
+      "answer": "yes",
+      "quote": "count me in for the feature brainstorm on Friday"
     }
   ],
   "write_back": {
     "chase": [
+      "charlotte.palmer@contoso.example",
       "diego.alvarez@contoso.example",
-      "jack.miller@contoso.example"
+      "jack.henry@contoso.example"
     ],
     "reply_on": {
       "diego.alvarez@contoso.example": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
-      "jack.miller@contoso.example": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594"
+      "jack.henry@contoso.example": "AAMkDDFB4210A30B7656D7D0057D2820",
+      "charlotte.palmer@contoso.example": "AAMkD61867BD0A78844C3815861A41BA"
     },
     "needles": {
       "diego.alvarez@contoso.example": [
-        "Brainstorm"
+        "Brainstorm",
+        "OKR"
       ],
-      "jack.miller@contoso.example": [
-        "Brainstorm"
+      "jack.henry@contoso.example": [
+        "OKR"
+      ],
+      "charlotte.palmer@contoso.example": [
+        "Learning Time"
       ]
     }
   }

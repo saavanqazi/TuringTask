@@ -10,7 +10,10 @@ invited as a required attendee. A required attendee still owes me an answer if t
 responded or have only accepted tentatively. Someone who declined has answered me. Optional
 attendees do not matter here. Some people answer me by email instead of on the invitation: if
 someone has told me in an email that they will or won't be at one of these meetings, that is their
-answer, whatever the invitation shows. A maybe is not an answer.
+answer, whatever the invitation shows. A maybe is not an answer, and if someone has emailed me about
+a meeting more than once, only their latest email about it counts. If I moved a meeting after
+someone answered it, on the invitation or by email, that answer was for the old time and no longer
+counts.
 
 How you work is checked as well as what you answer: I expect to see the attendee responses read off
 the calendar, and my mail checked for each person before anything is drafted.

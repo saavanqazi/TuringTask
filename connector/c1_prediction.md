@@ -64,3 +64,40 @@ The task was solvable with field-level checks alone.
 **How to read the result:**
 - **0/4:** check that every failure is one of W10–W13 and not a tool or data problem (the probe confirms the emails are served).
 - **3–4/4:** the discriminator is still mechanical, and the next lever is precision (exact lists).
+
+---
+
+# Round 3: prediction before the battery on hardening 2 (2026-09-30)
+
+**Battery on hardening 1 (`glm-c1-h1`):** 4/4 strict passes, task_checksum `a6fff530…`. The oracle scored 1.0 on the same checksum.
+
+In every run GLM:
+- read the email bodies;
+- mapped "Thursday's planning session" to OKR Planning;
+- treated "I'll try" as a maybe;
+- split Diego's email into a yes and a maybe;
+- put Jack Miller's draft on his latest email.
+
+The wording-level discriminators were too easy. My prediction of 1–2/4 was wrong.
+
+**Change (hardening 2): a new data relation (Handbook §2.4), not another rule of the same kind.**
+- **The move:** OKR Planning was moved on 28 April. Answers dated before that no longer count, on the invitation (Jack Henry, accepted 27 April) or by email (Diego's "count me in for Wednesday's planning session", 27 April).
+- **Latest email wins:** Charlotte's no (29 April) is followed by a maybe (1 May), so she still owes. Jack Miller's maybe (29 April) is followed by a yes (30 April), so he has answered.
+- **Draft placement:** each draft goes on the person's most recent email of *any* subject. For Charlotte that is the 21 May Privacy Impact Assessments reply, not her Learning Time emails.
+- **New gold:** 5/3/3/4/3, with drafts to Diego (OKR + Brainstorm), Jack Henry (OKR) and Charlotte (Learning Time).
+
+**Why this should bite where round 2 didn't:** it needs temporal reasoning, not reading. The model has to:
+- notice the move note in the event description;
+- compare each attendee's response `time` (a field every earlier run ignored) with the move time;
+- compare email dates with the move time;
+- order a person's emails by date, per meeting and overall.
+
+**Prediction: 1/4 or 2/4, with 0/4 a real risk.** The expected failures:
+- W14: ignores the move or the response times (2/2/2/2 figures, no Jack Henry). **This is the most likely**, since response `time` has never been read.
+- W15: applies the move to invitations but not to Diego's email (answers 3, Diego's draft without OKR).
+- W16: takes Charlotte's firm no instead of her later maybe (2 meetings, Jack Miller instead of Charlotte).
+- W17: puts Charlotte's draft on her Learning Time thread instead of her latest email.
+
+**How to read the result:**
+- **0/4:** check each failure is W14–W17, then soften one lever. The first to soften: say in the instruction that moves are noted in the meeting's description.
+- **3–4/4:** discard the task, as agreed.

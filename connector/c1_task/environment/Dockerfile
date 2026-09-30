@@ -24,12 +24,13 @@ COPY _app/tests/ /app/tests/
 
 COPY mcp/proxy/ /opt/proxy/
 
-# Build-time seed (Handbook 8.1): five inbox messages for the acting user, written into the
-# outlook gym's synthetic snapshot that every /reset copies. The script asserts the snapshot
-# it patches and fails the build on drift or collision; its directory is removed afterwards.
+# Build-time seed (Handbook 8.1): seven inbox messages for the acting user and the move of his
+# OKR Planning meeting, written into the outlook gym's synthetic snapshot that every /reset
+# copies. The script asserts the snapshot it patches and fails the build on drift or collision;
+# its directory is removed afterwards.
 COPY seed/ /tmp/task-seed/
 RUN set -eu; \
-    python3 /tmp/task-seed/seed_outlook_mail.py /gyms/outlook/app/data/Synthetic_db.db; \
+    python3 /tmp/task-seed/seed_outlook_task.py /gyms/outlook/app/data/Synthetic_db.db; \
     rm -rf /tmp/task-seed
 # E2B portability rule 2: E2B boots under systemd, which starts supervisor.service
 # with an EMPTY environment, so GYM_DATASET never reaches the gyms. Must precede the

@@ -2,7 +2,7 @@
   {
     "id": "read_calendar",
     "depends_on": [],
-    "purpose": "Every event between 27 April and 17 May 2026 with isOrganizer and the attendee list. The range is required - an undated search_calendar fails on this gym.",
+    "purpose": "Every event between 27 April and 17 May 2026 with isOrganizer, the description (OKR Planning's move note), lastModifiedDateTime and each attendee's response and response time. The range is required - an undated search_calendar fails on this gym.",
     "name": "search_calendar",
     "server": "outlook-gym",
     "arguments": {
@@ -18,7 +18,7 @@
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Charlotte Palmer still owes an answer on the invitation. Has Charlotte Palmer answered by email, and what is their most recent email? The address comes from the attendee list.",
+    "purpose": "Charlotte has not responded to Learning Time. Her mail: two emails about it (a no, then a later maybe - the maybe counts) and her latest email of all, 21 May.",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -32,7 +32,7 @@
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Diego Alvarez still owes an answer on the invitation. Has Diego Alvarez answered by email, and what is their most recent email? The address comes from the attendee list.",
+    "purpose": "Diego is tentative on OKR Planning and the brainstorm. His only email (27 April) says yes to 'Wednesday's planning session' - before the 28 April move, so it no longer counts - and is still unsure about the brainstorm.",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -42,11 +42,25 @@
     }
   },
   {
+    "id": "mail_from_jack_henry",
+    "depends_on": [
+      "read_calendar"
+    ],
+    "purpose": "Jack Henry accepted OKR Planning on 27 April, before it was moved, so he owes a new answer. Has he emailed, and what is his latest email?",
+    "name": "search_email",
+    "server": "outlook-gym",
+    "arguments": {
+      "queries": [
+        "from:jack.henry@contoso.example"
+      ]
+    }
+  },
+  {
     "id": "mail_from_jack_miller",
     "depends_on": [
       "read_calendar"
     ],
-    "purpose": "Jack Miller still owes an answer on the invitation. Has Jack Miller answered by email, and what is their most recent email? The address comes from the attendee list.",
+    "purpose": "Jack Miller is tentative on the brainstorm. His latest email about it (30 April) says count me in, which answers it.",
     "name": "search_email",
     "server": "outlook-gym",
     "arguments": {
@@ -61,28 +75,43 @@
       "read_calendar",
       "mail_from_diego_alvarez"
     ],
-    "purpose": "Diego answered OKR Planning by email ('count me in for Thursday's planning session') but is still unsure about the brainstorm: chase Brainstorm: New Feature on his latest email",
+    "purpose": "Diego owes OKR Planning (his yes predates the move) and the brainstorm: one draft on his latest email",
     "name": "draft_email",
     "server": "outlook-gym",
     "arguments": {
       "reply_to_email_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
       "subject": "RE: This week",
-      "body": "Hi Diego - thanks for confirming Thursday. I still don't have a firm answer from you on Brainstorm: New Feature on Friday. Could you accept or decline so I know who to expect? Thanks, Jack"
+      "body": "Hi Diego - OKR Planning moved to Thursday 30 April at 13:25 after you wrote, so I need a fresh answer for the new time, and I still don't have one for Brainstorm: New Feature on Friday. Could you accept or decline both so I know who to expect? Thanks, Jack"
     }
   },
   {
-    "id": "draft_jack_miller",
+    "id": "draft_jack_henry",
     "depends_on": [
       "read_calendar",
-      "mail_from_jack_miller"
+      "mail_from_jack_henry"
     ],
-    "purpose": "Jack Miller's 'I'll try' is a maybe: chase Brainstorm: New Feature on his most recent email ('Friday evening'), not the older 'Discovery call prep'",
+    "purpose": "Jack Henry owes OKR Planning (his acceptance predates the move): draft on his latest email",
     "name": "draft_email",
     "server": "outlook-gym",
     "arguments": {
-      "reply_to_email_id": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594",
-      "subject": "RE: Friday evening",
-      "body": "Hi Jack - thanks for letting me know. I still need a firm yes or no from you on Brainstorm: New Feature on Friday so I know who to expect. Thanks, Jack"
+      "reply_to_email_id": "AAMkDDFB4210A30B7656D7D0057D2820",
+      "subject": "RE: Frontend Component Library v2 — weekly status",
+      "body": "Hi Jack - separate from this thread: I moved OKR Planning to Thursday 30 April at 13:25 after you accepted it. Could you confirm you can still make the new time? Thanks, Jack"
+    }
+  },
+  {
+    "id": "draft_charlotte_palmer",
+    "depends_on": [
+      "read_calendar",
+      "mail_from_charlotte_palmer"
+    ],
+    "purpose": "Charlotte's latest word on Learning Time is a maybe: chase it on her most recent email of all (21 May, Privacy Impact Assessments)",
+    "name": "draft_email",
+    "server": "outlook-gym",
+    "arguments": {
+      "reply_to_email_id": "AAMkD61867BD0A78844C3815861A41BA",
+      "subject": "RE: RE: Privacy Impact Assessments — weekly status",
+      "body": "Hi Charlotte - separate from this thread: your last note said maybe for Learning Time on Friday 1 May. Could you give me a firm yes or no? Thanks, Jack"
     }
   }
 ]

@@ -20,6 +20,13 @@
       "name": "search_email"
     },
     {
+      "id": "mail_from_jack_henry",
+      "depends_on": [
+        "read_calendar"
+      ],
+      "name": "search_email"
+    },
+    {
       "id": "mail_from_jack_miller",
       "depends_on": [
         "read_calendar"
@@ -35,16 +42,24 @@
       "name": "draft_email"
     },
     {
-      "id": "draft_jack_miller",
+      "id": "draft_jack_henry",
       "depends_on": [
         "read_calendar",
-        "mail_from_jack_miller"
+        "mail_from_jack_henry"
+      ],
+      "name": "draft_email"
+    },
+    {
+      "id": "draft_charlotte_palmer",
+      "depends_on": [
+        "read_calendar",
+        "mail_from_charlotte_palmer"
       ],
       "name": "draft_email"
     }
   ],
-  "hops": 5,
+  "hops": 7,
   "chain_depth": 3,
-  "n_steps": 6,
-  "note": "hops=5 chain_depth=3 over 6 steps. Each mail search takes an address only the calendar read supplies; each draft replies to the latest message that person's search returns, and whether a person is chased at all depends on what their email says."
+  "n_steps": 8,
+  "note": "hops=7 chain_depth=3 over 8 steps. Each mail search takes an address only the calendar read supplies; whether a person is chased depends on the move note and response times from the calendar read and on the dates and wording of their emails; each draft replies to that person's latest email."
 }

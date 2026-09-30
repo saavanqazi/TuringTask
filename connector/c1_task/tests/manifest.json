@@ -95,7 +95,7 @@
           {
             "name": "metrics_meetings_i_am_running",
             "metadata": {
-              "how_justification": "Reads meetings_i_am_running and requires 5 - the events in the window he organised, none cancelled: OKR Planning 2026-04-30; Learning Time 2026-05-01; Brainstorm: New Feature 2026-05-01 (Pacific); Weekly Pipeline Review 2026-05-02; Weekly Pipeline Review 2026-05-06.",
+              "how_justification": "Reads meetings_i_am_running and requires 5 - the events in the window he organised, none cancelled: OKR Planning 2026-04-30 (moved there from 29 April); Learning Time 2026-05-01; Brainstorm: New Feature 2026-05-01 (Pacific); Weekly Pipeline Review 2026-05-02; Weekly Pipeline Review 2026-05-06.",
               "why_justification": "Counting every event in the window, including invitations from other people, answers 11; collapsing the two Weekly Pipeline Reviews into one answers 4."
             },
             "source": {
@@ -122,7 +122,7 @@
     },
     {
       "name": "metrics_meetings_still_owed_an_answer",
-      "description": "Reads metrics.json key meetings_still_owed_an_answer and requires 1.",
+      "description": "Reads metrics.json key meetings_still_owed_an_answer and requires 3.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -132,7 +132,7 @@
       "requirement_id": "meetings_still_owed_an_answer",
       "evidence_span": "How many of them are still owed an\nanswer by at least one required attendee.",
       "metadata": {
-        "why_justification": "Ignoring the email answers answers 3; treating a maybe as an answer answers 0; counting Jared Ellis's decline as missing adds 1."
+        "why_justification": "Ignoring the move answers 2; taking Charlotte's first email instead of her latest answers 2; counting Jared Ellis's decline as missing adds 1."
       },
       "verifier_spec": {
         "task_id": "metrics_meetings_still_owed_an_answer",
@@ -140,8 +140,8 @@
           {
             "name": "metrics_meetings_still_owed_an_answer",
             "metadata": {
-              "how_justification": "Reads meetings_still_owed_an_answer and requires 1 - Brainstorm: New Feature (Diego Alvarez tentative and 'still not sure' by email; Jack Miller tentative and only 'I'll try' by email). OKR Planning is answered: Diego wrote 'count me in for Thursday's planning session'. Learning Time is answered: Charlotte wrote she won't make Friday's learning session.",
-              "why_justification": "Ignoring the email answers answers 3; treating a maybe as an answer answers 0; counting Jared Ellis's decline as missing adds 1."
+              "how_justification": "Reads meetings_still_owed_an_answer and requires 3 - OKR Planning (moved on 28 April: Jack Henry's acceptance and Diego Alvarez's emailed 'count me in' both came on 27 April, before the move), Learning Time (Charlotte Palmer's latest email is a maybe), Brainstorm: New Feature (Diego Alvarez 'still not sure'). Jack Miller's latest email answers the brainstorm, and Jared Ellis declined.",
+              "why_justification": "Ignoring the move answers 2; taking Charlotte's first email instead of her latest answers 2; counting Jared Ellis's decline as missing adds 1."
             },
             "source": {
               "type": "file",
@@ -155,7 +155,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 1,
+              "expected": 3,
               "deterministic": {
                 "path": "$.meetings_still_owed_an_answer",
                 "comparison": "equals"
@@ -167,7 +167,7 @@
     },
     {
       "name": "metrics_people_to_chase",
-      "description": "Reads metrics.json key people_to_chase and requires 2.",
+      "description": "Reads metrics.json key people_to_chase and requires 3.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -177,7 +177,7 @@
       "requirement_id": "people_to_chase",
       "evidence_span": "How many people I need to chase.",
       "metadata": {
-        "why_justification": "Ignoring the email answers answers 3 (Charlotte Palmer kept); treating Jack Miller's 'I'll try' as an answer answers 1; adding optional attendees or Jared Ellis raises it."
+        "why_justification": "Ignoring the move answers 2 (Jack Henry and Diego's OKR answer kept); ignoring the email answers answers 4 (Jack Miller kept); taking earliest instead of latest emails swaps Charlotte for Jack Miller (same count, wrong drafts)."
       },
       "verifier_spec": {
         "task_id": "metrics_people_to_chase",
@@ -185,8 +185,8 @@
           {
             "name": "metrics_people_to_chase",
             "metadata": {
-              "how_justification": "Reads people_to_chase and requires 2 - Diego Alvarez and Jack Miller, both still owing Brainstorm: New Feature.",
-              "why_justification": "Ignoring the email answers answers 3 (Charlotte Palmer kept); treating Jack Miller's 'I'll try' as an answer answers 1; adding optional attendees or Jared Ellis raises it."
+              "how_justification": "Reads people_to_chase and requires 3 - Diego Alvarez, Jack Henry, Charlotte Palmer.",
+              "why_justification": "Ignoring the move answers 2 (Jack Henry and Diego's OKR answer kept); ignoring the email answers answers 4 (Jack Miller kept); taking earliest instead of latest emails swaps Charlotte for Jack Miller (same count, wrong drafts)."
             },
             "source": {
               "type": "file",
@@ -200,7 +200,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 2,
+              "expected": 3,
               "deterministic": {
                 "path": "$.people_to_chase",
                 "comparison": "equals"
@@ -212,7 +212,7 @@
     },
     {
       "name": "metrics_answers_still_owed",
-      "description": "Reads metrics.json key answers_still_owed and requires 2.",
+      "description": "Reads metrics.json key answers_still_owed and requires 4.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -222,7 +222,7 @@
       "requirement_id": "answers_still_owed",
       "evidence_span": "How many answers are still\nowed, counting a person once for each meeting they have not answered.",
       "metadata": {
-        "why_justification": "Ignoring the email answers answers 4; applying Diego's 'count me in' to both of his meetings answers 1; adding optional attendees raises it."
+        "why_justification": "Ignoring the move answers 2; applying the move to invitation answers but not to Diego's pre-move email answers 3; ignoring the email answers answers 5."
       },
       "verifier_spec": {
         "task_id": "metrics_answers_still_owed",
@@ -230,8 +230,8 @@
           {
             "name": "metrics_answers_still_owed",
             "metadata": {
-              "how_justification": "Reads answers_still_owed and requires 2 - Diego Alvarez on Brainstorm: New Feature; Jack Miller on Brainstorm: New Feature.",
-              "why_justification": "Ignoring the email answers answers 4; applying Diego's 'count me in' to both of his meetings answers 1; adding optional attendees raises it."
+              "how_justification": "Reads answers_still_owed and requires 4 - Diego Alvarez on OKR Planning; Jack Henry on OKR Planning; Charlotte Palmer on Learning Time; Diego Alvarez on Brainstorm: New Feature.",
+              "why_justification": "Ignoring the move answers 2; applying the move to invitation answers but not to Diego's pre-move email answers 3; ignoring the email answers answers 5."
             },
             "source": {
               "type": "file",
@@ -245,7 +245,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 2,
+              "expected": 4,
               "deterministic": {
                 "path": "$.answers_still_owed",
                 "comparison": "equals"
@@ -257,7 +257,7 @@
     },
     {
       "name": "metrics_people_to_chase_who_already_emailed_me",
-      "description": "Reads metrics.json key people_to_chase_who_already_emailed_me and requires 2.",
+      "description": "Reads metrics.json key people_to_chase_who_already_emailed_me and requires 3.",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -267,7 +267,7 @@
       "requirement_id": "people_to_chase_who_already_emailed_me",
       "evidence_span": "how many of the people I\nneed to chase have already emailed me at some point",
       "metadata": {
-        "why_justification": "Keeping Charlotte Palmer in the chase set answers 3; never reading the mailbox answers 0."
+        "why_justification": "Ignoring the move answers 2; never reading the mailbox answers 0."
       },
       "verifier_spec": {
         "task_id": "metrics_people_to_chase_who_already_emailed_me",
@@ -275,8 +275,8 @@
           {
             "name": "metrics_people_to_chase_who_already_emailed_me",
             "metadata": {
-              "how_justification": "Reads people_to_chase_who_already_emailed_me and requires 2 - Diego Alvarez and Jack Miller both have mail in his mailbox.",
-              "why_justification": "Keeping Charlotte Palmer in the chase set answers 3; never reading the mailbox answers 0."
+              "how_justification": "Reads people_to_chase_who_already_emailed_me and requires 3 - Diego Alvarez, Jack Henry and Charlotte Palmer all have mail in his mailbox.",
+              "why_justification": "Ignoring the move answers 2; never reading the mailbox answers 0."
             },
             "source": {
               "type": "file",
@@ -290,7 +290,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 2,
+              "expected": 3,
               "deterministic": {
                 "path": "$.people_to_chase_who_already_emailed_me",
                 "comparison": "equals"
@@ -302,35 +302,52 @@
     },
     {
       "name": "own_draft_to_diego_alvarez_naming_their_meetings",
-      "description": "A draft whose only recipient is Diego Alvarez and whose subject or body names Brainstorm: New Feature. Measured on the seed: 0 rows (the acting user has no drafts).",
+      "description": "A draft whose only recipient is Diego Alvarez and whose subject or body names Brainstorm: New Feature and OKR Planning. Measured on the seed: 0 rows (the acting user has no drafts).",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%')",
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%') AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%')",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_drafts",
       "evidence_span": "draft a note to each person I need to chase, one draft per person, naming the meetings they\nhave not answered",
       "metadata": {
-        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for diego.alvarez@contoso.example. The draft must name the meeting that person has not answered (matched on 'Brainstorm', case-insensitive, in subject or body); other wording is free."
+        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Diego Alvarez. The draft must name the meeting(s) that person has not answered (matched on 'brainstorm', 'okr', case-insensitive, in subject or body); other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
     {
-      "name": "own_draft_to_jack_miller_naming_their_meetings",
-      "description": "A draft whose only recipient is Jack Miller and whose subject or body names Brainstorm: New Feature. Measured on the seed: 0 rows (the acting user has no drafts).",
+      "name": "own_draft_to_jack_henry_naming_their_meetings",
+      "description": "A draft whose only recipient is Jack Henry and whose subject or body names OKR Planning. Measured on the seed: 0 rows (the acting user has no drafts).",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jack.miller@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jack.miller@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%')",
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jack.henry@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jack.henry@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%')",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_drafts",
       "evidence_span": "draft a note to each person I need to chase, one draft per person, naming the meetings they\nhave not answered",
       "metadata": {
-        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for jack.miller@contoso.example. The draft must name the meeting that person has not answered (matched on 'Brainstorm', case-insensitive, in subject or body); other wording is free."
+        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Jack Henry. The draft must name the meeting(s) that person has not answered (matched on 'okr', case-insensitive, in subject or body); other wording is free."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_charlotte_palmer_naming_their_meetings",
+      "description": "A draft whose only recipient is Charlotte Palmer and whose subject or body names Learning Time. Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'charlotte.palmer@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('charlotte.palmer@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%learning time%' OR lower(coalesce(m.body_content,'')) LIKE '%learning time%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "draft a note to each person I need to chase, one draft per person, naming the meetings they\nhave not answered",
+      "metadata": {
+        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Charlotte Palmer. The draft must name the meeting(s) that person has not answered (matched on 'learning time', case-insensitive, in subject or body); other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -347,58 +364,75 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
       "metadata": {
-        "why_justification": "Both people to chase have emailed him, so each draft goes on their latest email. A fresh message to Diego lands on a new conversation and fails."
+        "why_justification": "Diego has one email to him; a fresh message lands on a new conversation and fails."
       },
       "target_gym_server": "outlook-gym"
     },
     {
-      "name": "jack_miller_drafted_on_their_latest_email",
-      "description": "The draft to jack.miller@contoso.example sits on that person's most recent email to him ('Friday evening', conversation CONV4F8D2A63C9E17B05D4A8F2C61E39). Measured on the seed: 0 rows.",
+      "name": "jack_henry_drafted_on_their_latest_email",
+      "description": "The draft to jack.henry@contoso.example sits on that person's most recent email to him ('RE: Frontend Component Library v2 — weekly status', conversation CONVFC26D0917EF2FCC2CD5F81D82832). Measured on the seed: 0 rows.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV4F8D2A63C9E17B05D4A8F2C61E39'",
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONVFC26D0917EF2FCC2CD5F81D82832'",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
       "metadata": {
-        "why_justification": "Both people to chase have emailed him, so each draft goes on their latest email. Jack Miller has two emails; a draft on the older 'Discovery call prep' thread, or a fresh message, fails."
+        "why_justification": "Jack Henry's only email to him is about the component library; the instruction puts the draft on it, not in a new message."
       },
       "target_gym_server": "outlook-gym"
     },
     {
-      "name": "drafts_go_to_exactly_those_two",
-      "description": "Across all his drafts exactly 2 distinct recipients. Measured on the seed: 0.",
+      "name": "charlotte_palmer_drafted_on_their_latest_email",
+      "description": "The draft to charlotte.palmer@contoso.example sits on that person's most recent email to him ('RE: Privacy Impact Assessments — weekly status', conversation CONV4E78FC18AA9735C68D58FD530005). Measured on the seed: 0 rows.",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV4E78FC18AA9735C68D58FD530005'",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_reply_on_thread",
+      "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
+      "metadata": {
+        "why_justification": "Charlotte's latest email to him is the 21 May Privacy Impact Assessments reply, not her two Learning Time emails of 29 April and 1 May; a draft on the Learning Time thread fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "drafts_go_to_exactly_those_three",
+      "description": "Across all his drafts exactly 3 distinct recipients. Measured on the seed: 0.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
       "sql_query": "SELECT COUNT(DISTINCT lower(r.address)) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) <> 'jack.spencer@contoso.example'",
-      "expected_value": 2,
+      "expected_value": 3,
       "comparison_type": "equals",
       "requirement_id": "write_back_nobody_else",
       "evidence_span": "do not draft to\nanyone else",
       "metadata": {
-        "why_justification": "Drafting to Charlotte Palmer, who answered by email, to optional attendees or to Jared Ellis raises this above 2."
+        "why_justification": "Drafting to Jack Miller, whose latest email answers the brainstorm, to optional attendees or to Jared Ellis raises this above 3."
       },
       "target_gym_server": "outlook-gym"
     },
     {
       "name": "exactly_one_draft_per_person",
-      "description": "The acting user ends with exactly 2 drafts. Measured on the seed: 0.",
+      "description": "The acting user ends with exactly 3 drafts. Measured on the seed: 0.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
       "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1",
-      "expected_value": 2,
+      "expected_value": 3,
       "comparison_type": "equals",
       "requirement_id": "write_back_drafts",
       "evidence_span": "one draft per person",
       "metadata": {
-        "why_justification": "With the two sole-recipient rows this pins one draft per person: a combined draft fails those rows, and extra or duplicate drafts raise this count above 2."
+        "why_justification": "With the three sole-recipient rows this pins one draft per person: a combined draft fails those rows, and extra or duplicate drafts raise this count above 3."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -473,5 +507,5 @@
       }
     }
   ],
-  "instruction_sha256": "1c40119d47b3c1db491833fe3b11aaef199d5a986486b7d53204bc54b24dad04"
+  "instruction_sha256": "a4cceb73d475f735de017e3fa3d881ba4c727463e5c466832bf8069b2e819a31"
 }
