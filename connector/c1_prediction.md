@@ -149,3 +149,37 @@ All the earlier traps still apply: latest email of any subject, and "I'll try" i
 **How to read the result:**
 - **0/4:** check that every failure is one of W18–W21, not a tool or data problem, then soften one trap. The first to soften: Charlotte's email names "Friday" instead of "tomorrow".
 - **3–4/4:** stop and discard. Three hardening rounds is the honest limit for this data.
+
+---
+
+# Round 5: result of hardening 3, and prediction for hardening 4 (2026-09-30)
+
+**Battery on hardening 3 (`glm-c1-h3`):** 3/4 strict passes (1.0, 1.0, 1.0, 0.8182), task_checksum `308e0836…`. The oracle scored 1.0 on the same checksum. No crashes.
+
+- **Time zones:** all four runs converted every UTC time correctly and found both moves. **The time zone lever did not bite.** My prediction was wrong a third time.
+- **The one failure (`Q8A9PMP`) is a genuine model failure.**
+  - Its searches returned every email, including Jack Henry's Frontend note and Charlotte's 21 May Privacy reply.
+  - It then decided that "emailed me at some point" and "most recent email to me" meant emails *about the meetings*.
+  - So it wrote `people_to_chase_who_already_emailed_me` = 2, made a new message to Jack Henry, and put Charlotte's draft on her Learning Time thread.
+  - The instruction states both rules plainly. The model confused two similar-sounding rules ("latest email *about a meeting*" versus "most recent email *to me*").
+
+**Change (hardening 4):** more traps of the one kind that actually failed, telling apart rules that look alike. The gold and checks are unchanged except Diego's thread.
+- **Relayed answers don't count** (new sentence): "Only a person's own answer counts; something a colleague tells me on their behalf is not their answer."
+  - Jasmine Porter (29 April, after the OKR move): "Jack Henry … says the new OKR Planning time works for him."
+  - Carson Flores (Friday 1 May, 10:20 Pacific, after Charlotte's maybe): "Charlotte asked me to let you know she'll definitely be at the learning session today."
+
+  Each is the latest word on that meeting but not the person's own, so Jack Henry and Charlotte still owe.
+- **Diego's latest email** is now an unrelated 12 May "Q3 roadmap draft", so his draft goes there, not on "This week".
+
+**Gold:** still 5/4/3/5/3. Diego's thread check now points at the roadmap conversation.
+
+**Prediction: 1/4 or 2/4.** Three kinds of look-alike traps now have to be passed independently:
+- the scope of "latest email" (Charlotte, Diego and Jack Henry placements, plus the "emailed me" count);
+- relayed versus own answers (Jasmine, Carson);
+- the time zone judgments.
+
+The scope trap alone failed 1 of 4 runs.
+
+**How to read the result:**
+- **0/4:** check that every failure is W18–W23 and fair, then soften one trap (drop Diego's roadmap email first).
+- **3–4/4:** stop hardening. Report the 3/4 (or 4/4) honestly and decide with the lead: the client accepts 3/4, and discarding is the alternative.

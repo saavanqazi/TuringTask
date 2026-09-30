@@ -132,7 +132,7 @@
       "requirement_id": "meetings_still_owed_an_answer",
       "evidence_span": "How many of them are still owed an\nanswer by at least one required attendee.",
       "metadata": {
-        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3. Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
       },
       "verifier_spec": {
         "task_id": "metrics_meetings_still_owed_an_answer",
@@ -141,7 +141,7 @@
             "name": "metrics_meetings_still_owed_an_answer",
             "metadata": {
               "how_justification": "Reads meetings_still_owed_an_answer and requires 4 - OKR Planning (moved 28 April 11:00 Pacific; Jack Henry accepted at 17:40Z = 10:40 Pacific and Diego's 'count me in for tomorrow's planning session' was sent at 17:52Z = 10:52 Pacific, both before it), Learning Time (Charlotte's latest email, sent Thursday 30 April 21:30 Pacific, is a maybe about 'tomorrow's learning session'), Brainstorm: New Feature (Diego 'still not sure'), Weekly Pipeline Review 6 May (moved 1 May 16:00 Pacific; Diego accepted at 22:30Z = 15:30 Pacific, before it).",
-              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3."
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring both moves answers 2; ignoring only the 6 May move answers 3. Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
             },
             "source": {
               "type": "file",
@@ -177,7 +177,7 @@
       "requirement_id": "people_to_chase",
       "evidence_span": "How many people I need to chase.",
       "metadata": {
-        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept)."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept). Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
       },
       "verifier_spec": {
         "task_id": "metrics_people_to_chase",
@@ -186,7 +186,7 @@
             "name": "metrics_people_to_chase",
             "metadata": {
               "how_justification": "Reads people_to_chase and requires 3 - Diego Alvarez, Jack Henry, Charlotte Palmer.",
-              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept)."
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1 (Diego only); ignoring the email answers answers 4 (Jack Miller kept). Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
             },
             "source": {
               "type": "file",
@@ -222,7 +222,7 @@
       "requirement_id": "answers_still_owed",
       "evidence_span": "How many answers are still\nowed, counting a person once for each meeting they have not answered.",
       "metadata": {
-        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4."
+        "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4. Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
       },
       "verifier_spec": {
         "task_id": "metrics_answers_still_owed",
@@ -231,7 +231,7 @@
             "name": "metrics_answers_still_owed",
             "metadata": {
               "how_justification": "Reads answers_still_owed and requires 5 - Diego Alvarez on OKR Planning, Brainstorm: New Feature and the 6 May Weekly Pipeline Review; Jack Henry on OKR Planning; Charlotte Palmer on Learning Time.",
-              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4."
+              "why_justification": "Reading the UTC timestamps as Pacific clock times answers 1; ignoring the 6 May move answers 4; reading Charlotte's 'tomorrow' by the UTC date answers 4. Counting relayed answers (Jasmine Porter for Jack Henry, Carson Flores for Charlotte Palmer) as theirs lowers it."
             },
             "source": {
               "type": "file",
@@ -353,18 +353,18 @@
     },
     {
       "name": "diego_alvarez_drafted_on_their_latest_email",
-      "description": "The draft to diego.alvarez@contoso.example sits on that person's most recent email to him ('This week', conversation CONV2E9B4D17A6C05F83E2B9D1C47A68). Measured on the seed: 0 rows.",
+      "description": "The draft to diego.alvarez@contoso.example sits on that person's most recent email to him ('Q3 roadmap draft', 12 May, conversation CONV3F9C6A18E2B57D04F7A3C9E16B58). Measured on the seed: 0 rows.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV2E9B4D17A6C05F83E2B9D1C47A68'",
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV3F9C6A18E2B57D04F7A3C9E16B58'",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
       "metadata": {
-        "why_justification": "Diego has one email to him; a fresh message lands on a new conversation and fails."
+        "why_justification": "Diego's most recent email to him is the 12 May Q3 roadmap note, not his 28 April 'This week' email about the meetings; a draft on 'This week' or a new message fails."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -381,7 +381,7 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
       "metadata": {
-        "why_justification": "Jack Henry's only email to him is about the component library; the instruction puts the draft on it, not in a new message."
+        "why_justification": "Jack Henry's only email to him is about the component library; the instruction puts the draft on it, not in a new message. Jasmine Porter's 29 April note that Jack Henry is fine with the new time is a relayed answer and neither answers for him nor is his email."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -398,7 +398,7 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most recent email\nto me instead of starting a new message",
       "metadata": {
-        "why_justification": "Charlotte's latest email to him is the 21 May Privacy Impact Assessments reply, not her two Learning Time emails of 29 April and 1 May; a draft on the Learning Time thread fails."
+        "why_justification": "Charlotte's latest email to him is the 21 May Privacy Impact Assessments reply, not her two Learning Time emails of 29 April and 1 May; a draft on the Learning Time thread fails. Carson Flores's 1 May note that Charlotte will be there is a relayed answer: it is not hers, so she still owes Learning Time."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -507,5 +507,5 @@
       }
     }
   ],
-  "instruction_sha256": "8e4dbb419817f993a6ddf5c9ff71c6fa1408e6d61638232d477f4ba6648d1e1c"
+  "instruction_sha256": "991a5815440facfec2dc59c25d4442bae6adb7df9ea6556ce57b48b6868bb048"
 }

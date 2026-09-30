@@ -3,7 +3,8 @@
 
 Patches the gym's synthetic snapshot, Synthetic_db.db, which every /reset copies into the
 per-run database, for Jack Spencer (user 46):
-  * seven inbox messages (some people answer meeting invitations by email, some more than once);
+  * ten inbox messages (some people answer meeting invitations by email, some more than once, some
+    relay another person's answer, and some are about something else);
   * his copies of OKR Planning and of the 6 May Weekly Pipeline Review: a note that each was moved
     (with the Pacific time of the move), created/modified times to match, and UTC response times
     on their attendees, some before and some after the move. Every before/after is the same
@@ -87,6 +88,21 @@ MESSAGES = [
      "from_name": "Charlotte Palmer", "from_address": "charlotte.palmer@contoso.example", "subject": "RE: Friday afternoon",
      "text": "Hi Jack, the site visit might be cancelled, so maybe I can make tomorrow's learning session after all. I'll confirm once I hear back. Charlotte",
      "received": "2026-05-01 04:30:00"},
+    {"id": "AAMk9E4A1C73B5D20F8A6C4E1B9D3F57", "conversation_id": "CONV1D8A5F29C3E74B06A9D2F5C81E47",
+     "internet_message_id": "<M948.0@contoso.example>", "reply_to": None,
+     "from_name": "Jasmine Porter", "from_address": "jasmine.porter@contoso.example", "subject": "OKR Planning",
+     "text": "Hi Jack, I bumped into Jack Henry this morning - he says the new OKR Planning time works for him. Jasmine",
+     "received": "2026-04-29 16:10:00"},
+    {"id": "AAMk6A2D8F15C9B34E7A0D6F2C8B4E13", "conversation_id": "CONV8E3B1D74A6F29C05B8E1D4A73F92",
+     "internet_message_id": "<M949.0@contoso.example>", "reply_to": None,
+     "from_name": "Carson Flores", "from_address": "carson.flores@contoso.example", "subject": "Learning session",
+     "text": "Hi Jack, Charlotte asked me to let you know she'll definitely be at the learning session today. Carson",
+     "received": "2026-05-01 17:20:00"},
+    {"id": "AAMkB7F3E1A92C6D58B0F4A7E3C9D261", "conversation_id": "CONV3F9C6A18E2B57D04F7A3C9E16B58",
+     "internet_message_id": "<M950.0@contoso.example>", "reply_to": None,
+     "from_name": "Diego Alvarez", "from_address": "diego.alvarez@contoso.example", "subject": "Q3 roadmap draft",
+     "text": "Hi Jack, the Q3 roadmap draft is in the shared folder. Comments welcome before Friday. Diego",
+     "received": "2026-05-12 16:05:00"},
 ]
 
 

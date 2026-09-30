@@ -79,7 +79,7 @@
       "jack.henry@contoso.example"
     ],
     "reply_on": {
-      "diego.alvarez@contoso.example": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
+      "diego.alvarez@contoso.example": "AAMkB7F3E1A92C6D58B0F4A7E3C9D261",
       "jack.henry@contoso.example": "AAMkDDFB4210A30B7656D7D0057D2820",
       "charlotte.palmer@contoso.example": "AAMkD61867BD0A78844C3815861A41BA"
     },
@@ -96,5 +96,19 @@
         "Learning Time"
       ]
     }
-  }
+  },
+  "relayed": [
+    {
+      "message_id": "AAMk9E4A1C73B5D20F8A6C4E1B9D3F57",
+      "from": "jasmine.porter@contoso.example",
+      "for": "jack.henry@contoso.example",
+      "meeting": "OKR Planning"
+    },
+    {
+      "message_id": "AAMk6A2D8F15C9B34E7A0D6F2C8B4E13",
+      "from": "carson.flores@contoso.example",
+      "for": "charlotte.palmer@contoso.example",
+      "meeting": "Learning Time"
+    }
+  ]
 }
