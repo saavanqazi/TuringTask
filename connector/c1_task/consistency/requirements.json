@@ -1,0 +1,559 @@
+{
+  "method": "One row per graded fact. Every wrong value was computed, not guessed: solution/artifact_plan.json's declared reading of each seeded email is replayed against the REAL payloads the gym served in the oracle run (evaluations/oracle/verifier/golden_trajectory.json: one Pacific-bounded search_calendar and one 100-message search_email), once under the gold rules and once per naive reading, by the same derivation solution/verify_gold_from_oracle.py uses. The gold derivation reproduces artifact_plan.json exactly (31 ledger rows, 12 tracker fixes, 7 people to chase). Rows a naive reading leaves unchanged list no wrong method; rows with no seeded trap are plain reads of an accepted invitation.",
+  "requirements": [
+    {
+      "id": "ledger_row_count",
+      "figure": "rsvp_ledger.csv data rows",
+      "gold": 31,
+      "wrong_methods": [
+        {
+          "method": "bound the window by UTC dates (or search it with UTC bounds): Customer Escalation Sync (Sun 17 May 17:30 Pacific) falls out, Planning Offsite Prep (Sun 26 Apr 21:00 Pacific) falls in",
+          "value": 28
+        },
+        {
+          "method": "keep the cancelled Customer Advisory Board prep",
+          "value": 34
+        },
+        {
+          "method": "keep optional attendees",
+          "value": 37
+        },
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": 26
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Brainstorm: New Feature:2026-05-01:diego.alvarez@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Brainstorm: New Feature:2026-05-01:jack.miller@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "OWES_ANSWER,NONE"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Brainstorm: New Feature:2026-05-01:rogers.catherine@protonmail.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Customer Escalation Sync:2026-05-17:grace.kelley@pemberleybank.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "bound the window by UTC dates (or search it with UTC bounds): Customer Escalation Sync (Sun 17 May 17:30 Pacific) falls out, Planning Offsite Prep (Sun 26 Apr 21:00 Pacific) falls in",
+          "value": "row missing"
+        },
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Customer Escalation Sync:2026-05-17:jenna.white@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [
+        {
+          "method": "bound the window by UTC dates (or search it with UTC bounds): Customer Escalation Sync (Sun 17 May 17:30 Pacific) falls out, Planning Offsite Prep (Sun 26 Apr 21:00 Pacific) falls in",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Customer Escalation Sync:2026-05-17:nora.ford@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [
+        {
+          "method": "bound the window by UTC dates (or search it with UTC bounds): Customer Escalation Sync (Sun 17 May 17:30 Pacific) falls out, Planning Offsite Prep (Sun 26 Apr 21:00 Pacific) falls in",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Hiring Panel Debrief:2026-05-15:cameron.simpson@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "NOT_COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Hiring Panel Debrief:2026-05-15:jack.miller@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Hiring Panel Debrief:2026-05-15:jasmine.porter@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Hiring Panel Debrief:2026-05-15:olivia.myers@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Learning Time:2026-05-01:charlotte.palmer@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [
+        {
+          "method": "count Jasmine's note for Jack Henry and Carson's note for Charlotte as their answers",
+          "value": "COMING,EMAIL"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Learning Time:2026-05-01:edward.clark@forgeco.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:OKR Planning:2026-04-30:diego.alvarez@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [
+        {
+          "method": "ignore the two move notes, so answers given before a meeting moved still count",
+          "value": "COMING,EMAIL"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:OKR Planning:2026-04-30:eugene.dunn@pinwheellabs.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:OKR Planning:2026-04-30:jack.henry@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [
+        {
+          "method": "count Jasmine's note for Jack Henry and Carson's note for Charlotte as their answers",
+          "value": "COMING,EMAIL"
+        },
+        {
+          "method": "ignore the two move notes, so answers given before a meeting moved still count",
+          "value": "COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Q3 Roadmap Review:2026-05-11:cameron.simpson@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "judge 'by Tuesday night' / 'by Friday' against the UTC date of the settling note (Kenneth 6 May 05:40Z, Nora 9 May 02:35Z read as Wednesday / Saturday)",
+          "value": "OWES_ANSWER,NONE"
+        },
+        {
+          "method": "treat a conditional yes as never an answer, even after its condition has happened",
+          "value": "OWES_ANSWER,NONE"
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "OWES_ANSWER,NONE"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Q3 Roadmap Review:2026-05-11:charlotte.palmer@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "NOT_COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Q3 Roadmap Review:2026-05-11:diego.alvarez@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Q3 Roadmap Review:2026-05-11:jenna.white@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Q3 Roadmap Review:2026-05-11:nora.ford@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Vendor Security Review:2026-05-07:jack.henry@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "NOT_COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "take Jack Henry's quoted 'count me in' under his 6 May reply as his latest word on the vendor review",
+          "value": "COMING,EMAIL"
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Vendor Security Review:2026-05-07:jared.ellis@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "OWES_ANSWER,NONE",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Vendor Security Review:2026-05-07:jasmine.porter@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "fail to map Jasmine's 'the 2pm one on Thursday' to the Vendor Security Review",
+          "value": "OWES_ANSWER,NONE"
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "OWES_ANSWER,NONE"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Vendor Security Review:2026-05-07:olivia.myers@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-02:ava.lopez@lumendata.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-02:jared.ellis@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "NOT_COMING,INVITATION"
+        },
+        {
+          "method": "read the mailbox with one default 25-message page, so the oldest 7 messages (the late-April answers, Olivia's only email) are never seen",
+          "value": "NOT_COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-02:jasmine.porter@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "NOT_COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "let any email answer override the invitation whatever their times (the old 'email wins' habit)",
+          "value": "COMING,EMAIL"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-06:diego.alvarez@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "judge 'by Tuesday night' / 'by Friday' against the UTC date of the settling note (Kenneth 6 May 05:40Z, Nora 9 May 02:35Z read as Wednesday / Saturday)",
+          "value": "OWES_ANSWER,NONE"
+        },
+        {
+          "method": "treat a conditional yes as never an answer, even after its condition has happened",
+          "value": "OWES_ANSWER,NONE"
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "OWES_ANSWER,NONE"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-06:jared.ellis@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-06:jenna.white@contoso.example",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "NOT_COMING,EMAIL",
+      "wrong_methods": [
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": "COMING,INVITATION"
+        },
+        {
+          "method": "read Jenna's 'Kenneth will cover the forecast for me' as a relayed note rather than her own no",
+          "value": "COMING,INVITATION"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "ledger:Weekly Pipeline Review:2026-05-06:kenneth.hall@pemberleybank.com",
+      "figure": "rsvp_ledger.csv row (status,source)",
+      "gold": "COMING,INVITATION",
+      "wrong_methods": [
+        {
+          "method": "drop every attendee whose display name is 'Jack Spencer' as if it were him",
+          "value": "row missing"
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "tracker_fixes_row_count",
+      "figure": "tracker_fixes.csv data rows",
+      "gold": 12,
+      "wrong_methods": [
+        {
+          "method": "take Jack Henry's quoted 'count me in' under his 6 May reply as his latest word on the vendor review",
+          "value": 11
+        },
+        {
+          "method": "fail to map Jasmine's 'the 2pm one on Thursday' to the Vendor Security Review",
+          "value": 11
+        },
+        {
+          "method": "let any email answer override the invitation whatever their times (the old 'email wins' habit)",
+          "value": 11
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": 5
+        },
+        {
+          "method": "count Jasmine's note for Jack Henry and Carson's note for Charlotte as their answers",
+          "value": 10
+        },
+        {
+          "method": "read Jenna's 'Kenneth will cover the forecast for me' as a relayed note rather than her own no",
+          "value": 11
+        },
+        {
+          "method": "ignore the two move notes, so answers given before a meeting moved still count",
+          "value": 10
+        },
+        {
+          "method": "read the mailbox with one default 25-message page, so the oldest 7 messages (the late-April answers, Olivia's only email) are never seen",
+          "value": 11
+        },
+        {
+          "method": "list every tracker entry, agreeing or not",
+          "value": 22
+        }
+      ],
+      "collides_with_gold": false
+    },
+    {
+      "id": "chase_set",
+      "figure": "people drafted to (one draft each)",
+      "gold": [
+        "charlotte.palmer@contoso.example",
+        "diego.alvarez@contoso.example",
+        "jack.henry@contoso.example",
+        "jared.ellis@contoso.example",
+        "jenna.white@contoso.example",
+        "nora.ford@contoso.example",
+        "olivia.myers@contoso.example"
+      ],
+      "wrong_methods": [
+        {
+          "method": "bound the window by UTC dates (or search it with UTC bounds): Customer Escalation Sync (Sun 17 May 17:30 Pacific) falls out, Planning Offsite Prep (Sun 26 Apr 21:00 Pacific) falls in",
+          "value": [
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "judge 'by Tuesday night' / 'by Friday' against the UTC date of the settling note (Kenneth 6 May 05:40Z, Nora 9 May 02:35Z read as Wednesday / Saturday)",
+          "value": [
+            "cameron.simpson@contoso.example",
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "treat a conditional yes as never an answer, even after its condition has happened",
+          "value": [
+            "cameron.simpson@contoso.example",
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "fail to map Jasmine's 'the 2pm one on Thursday' to the Vendor Security Review",
+          "value": [
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jared.ellis@contoso.example",
+            "jasmine.porter@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "read only the invitation responses and ignore every email",
+          "value": [
+            "cameron.simpson@contoso.example",
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jack.miller@contoso.example",
+            "jared.ellis@contoso.example",
+            "jasmine.porter@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "count Jasmine's note for Jack Henry and Carson's note for Charlotte as their answers",
+          "value": [
+            "diego.alvarez@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "ignore the two move notes, so answers given before a meeting moved still count",
+          "value": [
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "keep the cancelled Customer Advisory Board prep",
+          "value": [
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jack.miller@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example"
+          ]
+        },
+        {
+          "method": "keep optional attendees",
+          "value": [
+            "charlotte.palmer@contoso.example",
+            "diego.alvarez@contoso.example",
+            "jack.henry@contoso.example",
+            "jack.miller@contoso.example",
+            "jared.ellis@contoso.example",
+            "jenna.white@contoso.example",
+            "nora.ford@contoso.example",
+            "olivia.myers@contoso.example",
+            "rebecca.jackson@live.com"
+          ]
+        }
+      ],
+      "collides_with_gold": false
+    }
+  ]
+}

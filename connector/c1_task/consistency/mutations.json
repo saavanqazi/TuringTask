@@ -1,0 +1,125 @@
+{
+  "method": "Control battery run against the bundle's OWN 47 file_check verifiers, read live from tests/manifest.json and executed by the bundle's own rl_world_verifiers engine (tests/rl_world_verifiers.run_verifier, the same call tests/verifier_engine.py makes), against CSV pairs derived from the real oracle replay (gold) and from the naive readings in requirements.json (mutants).",
+  "positive_control": {
+    "description": "the oracle's own CSVs, written verbatim from solution/artifact_plan.json",
+    "passed": 47,
+    "total": 47,
+    "failed": []
+  },
+  "semantic_mutation": {
+    "description": "judge the two conditional yeses against the UTC date of the note that settles them (Diego's 6 May review, Cameron's roadmap review flip to OWES_ANSWER; tracker fixes recomputed to match)",
+    "passed": 44,
+    "total": 47,
+    "failed": [
+      "ledger_pipeline_6_may_diego_alvarez",
+      "ledger_q3_roadmap_cameron_simpson",
+      "fix_q3_roadmap_cameron_simpson"
+    ]
+  },
+  "granularity_mutation": {
+    "description": "collapse the source column: every answered row written as INVITATION (the 9 EMAIL rows lose their source)",
+    "passed": 38,
+    "total": 47,
+    "failed": [
+      "ledger_brainstorm_jack_miller",
+      "ledger_pipeline_2_may_jared_ellis",
+      "ledger_pipeline_6_may_diego_alvarez",
+      "ledger_pipeline_6_may_jenna_white",
+      "ledger_vendor_security_jack_henry",
+      "ledger_vendor_security_jasmine_porter",
+      "ledger_q3_roadmap_charlotte_palmer",
+      "ledger_q3_roadmap_cameron_simpson",
+      "ledger_hiring_debrief_cameron_simpson"
+    ]
+  },
+  "cosmetic_mutation": {
+    "description": "reversed row order, every field double-quoted, CRLF line endings, OWES_ANSWER written in lower case",
+    "passed": 47,
+    "total": 47,
+    "failed": []
+  },
+  "incompleteness_mutation": {
+    "description": "bound the window in UTC: Customer Escalation Sync (Sun 17 May 17:30 Pacific) and its 3 rows dropped",
+    "passed": 43,
+    "total": 47,
+    "failed": [
+      "ledger_row_count",
+      "ledger_escalation_sync_jenna_white",
+      "ledger_escalation_sync_grace_kelley",
+      "ledger_escalation_sync_nora_ford"
+    ]
+  },
+  "adversarial_acceptance_mutation": {
+    "description": "spray every ledger key with all five status/source pairs and every tracker entry with all three statuses, hoping the per-row regexes each find their row",
+    "passed": 45,
+    "total": 47,
+    "failed": [
+      "ledger_row_count",
+      "tracker_fixes_row_count"
+    ]
+  },
+  "empty_workspace": {
+    "description": "no files written (what an agent that stops before writing gets)",
+    "passed": 0,
+    "total": 47,
+    "failed": [
+      "ledger_header",
+      "ledger_row_count",
+      "ledger_okr_diego_alvarez",
+      "ledger_okr_jack_henry",
+      "ledger_okr_eugene_dunn",
+      "ledger_learning_time_charlotte_palmer",
+      "ledger_learning_time_edward_clark",
+      "ledger_brainstorm_diego_alvarez",
+      "ledger_brainstorm_jack_miller",
+      "ledger_brainstorm_rogers_catherine",
+      "ledger_pipeline_2_may_jasmine_porter",
+      "ledger_pipeline_2_may_jared_ellis",
+      "ledger_pipeline_2_may_ava_lopez",
+      "ledger_pipeline_6_may_diego_alvarez",
+      "ledger_pipeline_6_may_jenna_white",
+      "ledger_pipeline_6_may_jared_ellis",
+      "ledger_pipeline_6_may_kenneth_hall",
+      "ledger_vendor_security_jack_henry",
+      "ledger_vendor_security_jasmine_porter",
+      "ledger_vendor_security_jared_ellis",
+      "ledger_vendor_security_olivia_myers",
+      "ledger_q3_roadmap_diego_alvarez",
+      "ledger_q3_roadmap_charlotte_palmer",
+      "ledger_q3_roadmap_jenna_white",
+      "ledger_q3_roadmap_nora_ford",
+      "ledger_q3_roadmap_cameron_simpson",
+      "ledger_hiring_debrief_jasmine_porter",
+      "ledger_hiring_debrief_cameron_simpson",
+      "ledger_hiring_debrief_olivia_myers",
+      "ledger_hiring_debrief_jack_miller",
+      "ledger_escalation_sync_jenna_white",
+      "ledger_escalation_sync_grace_kelley",
+      "ledger_escalation_sync_nora_ford",
+      "tracker_fixes_header",
+      "tracker_fixes_row_count",
+      "fix_okr_diego_alvarez",
+      "fix_okr_jack_henry",
+      "fix_learning_time_charlotte_palmer",
+      "fix_brainstorm_jack_miller",
+      "fix_pipeline_2_may_jasmine_porter",
+      "fix_pipeline_2_may_jared_ellis",
+      "fix_pipeline_6_may_jenna_white",
+      "fix_vendor_security_jack_henry",
+      "fix_vendor_security_jasmine_porter",
+      "fix_q3_roadmap_charlotte_palmer",
+      "fix_q3_roadmap_cameron_simpson",
+      "fix_hiring_debrief_cameron_simpson"
+    ]
+  },
+  "summary": {
+    "all_controls_pass": true,
+    "strictness": "positive_control: 47/47; semantic_mutation: 44/47; granularity_mutation: 38/47; cosmetic_mutation: 47/47; incompleteness_mutation: 43/47; adversarial_acceptance_mutation: 45/47; empty_workspace: 0/47",
+    "brittleness": "cosmetic mutation scores 47/47: row order, quoting, line endings and label case do not matter (row regexes are case-insensitive, quote-tolerant and line-anchored)",
+    "note_on_write_back_checks": "the 17 database_state checks (7 sole-recipient drafts naming the owed meetings, 7 reply-thread checks, recipient count, draft count, nothing sent), the 2 rubric_check verifiers and the tool_execution floor need a live gym or judge; they were exercised end to end by the real oracle run (reward 1.0, 67/67) and by the GLM battery (two runs 67/67; two runs that wrote nothing pass only nothing_was_sent and the trace-read rubric)"
+  },
+  "rubric_validation_summary": {
+    "method": "pending: written by consistency_llm.py with real calls to the judge endpoint",
+    "cases": []
+  }
+}
