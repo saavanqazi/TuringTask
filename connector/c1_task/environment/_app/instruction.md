@@ -14,12 +14,12 @@ People answer me on the invitation or by email, and some answer more than once. 
 on a meeting is the last thing they told me about it, on the invitation or by email, whichever came
 later. Accepting, or telling me they will be there, means they are coming. Declining, or telling me
 they won't be there, means they are not, and so does telling me that someone else will go in their
-place. A tentative acceptance, a maybe, or a yes that depends on something still unsettled is not an
-answer: if that is the last thing someone told me about a meeting, they owe me an answer. If I moved
-a meeting after someone answered it, that answer was for the old time and no longer counts. Only a
-person's own answer counts; what someone else tells me on their behalf is not their answer. I work
-in Pacific time: any day or time that anyone writes is Pacific, whatever time zone a timestamp is
-shown in.
+place. A tentative acceptance or a maybe is not an answer, and a yes that depends on something is
+not an answer until that thing has happened: if that is the last thing someone told me about a
+meeting, they owe me an answer. If I moved a meeting after someone answered it, that answer was for
+the old time and no longer counts. Only a person's own answer counts; what someone else tells me on
+their behalf is not their answer. I work in Pacific time: any day or time that anyone writes is
+Pacific, whatever time zone a timestamp is shown in.
 
 Write /workspace/rsvp_ledger.csv with exactly the header meeting,date,attendee,status,source and one
 row for each meeting and each of its required attendees other than me, and no other rows. meeting is

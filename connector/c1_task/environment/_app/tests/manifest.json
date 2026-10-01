@@ -128,7 +128,7 @@
     },
     {
       "name": "ledger_row_count",
-      "description": "one ledger row per meeting he runs and required attendee other than him: 15",
+      "description": "one ledger row per meeting he runs and required attendee other than him: 31",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -138,7 +138,7 @@
       "requirement_id": "ledger",
       "evidence_span": "one\nrow for each meeting and each of its required attendees other than me, and no other rows",
       "metadata": {
-        "why_justification": "Gold 15 over five meetings. Including the cancelled Customer Advisory Board prep adds 3; including optional attendees adds 4 (Jack Miller twice, Jack Henry, rebecca.jackson); writing eugene.dunn@pinwheellabs.com twice adds 1; dropping the external attendees whose display name is 'Jack Spencer' removes 5."
+        "why_justification": "Gold 31 over nine meetings. Including the cancelled Customer Advisory Board prep adds 3; including Planning Offsite Prep (Sunday 26 April 21:00 Pacific, 27 April in UTC) adds 2; missing Customer Escalation Sync (Sunday 17 May 17:30 Pacific, 18 May in UTC) removes 3; including optional attendees adds 6; writing eugene.dunn@pinwheellabs.com twice adds 1; dropping the external attendees whose display name is 'Jack Spencer' removes 6."
       },
       "verifier_spec": {
         "task_id": "ledger_row_count",
@@ -147,7 +147,7 @@
             "name": "ledger_row_count",
             "metadata": {
               "how_justification": "csv.inspect_table counts data rows excluding the header.",
-              "why_justification": "Gold 15 over five meetings. Including the cancelled Customer Advisory Board prep adds 3; including optional attendees adds 4 (Jack Miller twice, Jack Henry, rebecca.jackson); writing eugene.dunn@pinwheellabs.com twice adds 1; dropping the external attendees whose display name is 'Jack Spencer' removes 5."
+              "why_justification": "Gold 31 over nine meetings. Including the cancelled Customer Advisory Board prep adds 3; including Planning Offsite Prep (Sunday 26 April 21:00 Pacific, 27 April in UTC) adds 2; missing Customer Escalation Sync (Sunday 17 May 17:30 Pacific, 18 May in UTC) removes 3; including optional attendees adds 6; writing eugene.dunn@pinwheellabs.com twice adds 1; dropping the external attendees whose display name is 'Jack Spencer' removes 6."
             },
             "source": {
               "type": "file",
@@ -161,7 +161,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 15,
+              "expected": 31,
               "deterministic": {
                 "path": "$.row_count",
                 "comparison": "equals"
@@ -183,7 +183,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Diego was tentative (27 April) and emailed 'count me in for tomorrow's planning session' at 17:52Z = 10:52 Pacific on 28 April, both before the move at 11:00 Pacific (18:00Z); neither counts. Reading 17:52 as Pacific puts the email after the move and gives COMING,EMAIL."
+        "why_justification": "Diego was tentative (27 April) and emailed 'count me in for tomorrow's planning session' at 17:52Z = 10:52 Pacific on 28 April, both before the move at 11:00 Pacific (18:00Z); neither counts."
       },
       "verifier_spec": {
         "task_id": "ledger_okr_diego_alvarez",
@@ -192,7 +192,7 @@
             "name": "ledger_okr_diego_alvarez",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Diego was tentative (27 April) and emailed 'count me in for tomorrow's planning session' at 17:52Z = 10:52 Pacific on 28 April, both before the move at 11:00 Pacific (18:00Z); neither counts. Reading 17:52 as Pacific puts the email after the move and gives COMING,EMAIL."
+              "why_justification": "Diego was tentative (27 April) and emailed 'count me in for tomorrow's planning session' at 17:52Z = 10:52 Pacific on 28 April, both before the move at 11:00 Pacific (18:00Z); neither counts."
             },
             "source": {
               "type": "file",
@@ -228,7 +228,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Jack Henry accepted at 17:40Z = 10:40 Pacific, before the 11:00 move. Jasmine Porter's note that the new time works for him is relayed, not his; counting it gives COMING,EMAIL, keeping the stale acceptance gives COMING,INVITATION."
+        "why_justification": "Jack Henry accepted at 17:40Z = 10:40 Pacific, before the 11:00 move. Jasmine Porter's note that the new time works for him is relayed, not his."
       },
       "verifier_spec": {
         "task_id": "ledger_okr_jack_henry",
@@ -237,7 +237,7 @@
             "name": "ledger_okr_jack_henry",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Jack Henry accepted at 17:40Z = 10:40 Pacific, before the 11:00 move. Jasmine Porter's note that the new time works for him is relayed, not his; counting it gives COMING,EMAIL, keeping the stale acceptance gives COMING,INVITATION."
+              "why_justification": "Jack Henry accepted at 17:40Z = 10:40 Pacific, before the 11:00 move. Jasmine Porter's note that the new time works for him is relayed, not his."
             },
             "source": {
               "type": "file",
@@ -273,7 +273,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "eugene.dunn@pinwheellabs.com is listed twice (display names 'Jack Spencer' and 'Isla Hughes'); both acceptances (19:20Z, 19:35Z) are after the move. One row; an agent that drops it because the display name is 'Jack Spencer' or writes it twice fails this row or the row count."
+        "why_justification": "eugene.dunn@pinwheellabs.com is listed twice (display names 'Jack Spencer' and 'Isla Hughes'); both acceptances are after the move. One row."
       },
       "verifier_spec": {
         "task_id": "ledger_okr_eugene_dunn",
@@ -282,7 +282,7 @@
             "name": "ledger_okr_eugene_dunn",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "eugene.dunn@pinwheellabs.com is listed twice (display names 'Jack Spencer' and 'Isla Hughes'); both acceptances (19:20Z, 19:35Z) are after the move. One row; an agent that drops it because the display name is 'Jack Spencer' or writes it twice fails this row or the row count."
+              "why_justification": "eugene.dunn@pinwheellabs.com is listed twice (display names 'Jack Spencer' and 'Isla Hughes'); both acceptances are after the move. One row."
             },
             "source": {
               "type": "file",
@@ -318,7 +318,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Charlotte never answered the invitation; she emailed no (29 April) and then, at 04:30Z on 1 May = Thursday 21:30 Pacific, 'maybe I can make tomorrow's learning session after all' - her last word is a maybe. Carson Flores's 'she'll definitely be at the learning session today' is relayed. Taking her first email gives NOT_COMING,EMAIL; counting Carson gives COMING,EMAIL."
+        "why_justification": "Charlotte emailed no (29 April) and then, Thursday 21:30 Pacific, 'maybe I can make tomorrow's learning session after all'; Carson Flores's note is relayed."
       },
       "verifier_spec": {
         "task_id": "ledger_learning_time_charlotte_palmer",
@@ -327,7 +327,7 @@
             "name": "ledger_learning_time_charlotte_palmer",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Charlotte never answered the invitation; she emailed no (29 April) and then, at 04:30Z on 1 May = Thursday 21:30 Pacific, 'maybe I can make tomorrow's learning session after all' - her last word is a maybe. Carson Flores's 'she'll definitely be at the learning session today' is relayed. Taking her first email gives NOT_COMING,EMAIL; counting Carson gives COMING,EMAIL."
+              "why_justification": "Charlotte emailed no (29 April) and then, Thursday 21:30 Pacific, 'maybe I can make tomorrow's learning session after all'; Carson Flores's note is relayed."
             },
             "source": {
               "type": "file",
@@ -363,7 +363,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "edward.clark@forgeco.com (display name 'Jack Spencer') accepted on 27 April; nothing else."
+        "why_justification": "edward.clark@forgeco.com (display name 'Jack Spencer') accepted."
       },
       "verifier_spec": {
         "task_id": "ledger_learning_time_edward_clark",
@@ -372,7 +372,7 @@
             "name": "ledger_learning_time_edward_clark",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "edward.clark@forgeco.com (display name 'Jack Spencer') accepted on 27 April; nothing else."
+              "why_justification": "edward.clark@forgeco.com (display name 'Jack Spencer') accepted."
             },
             "source": {
               "type": "file",
@@ -408,7 +408,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Tentative on the invitation and 'still not sure about the feature brainstorm on Friday' by email: no answer either way."
+        "why_justification": "Tentative on the invitation and 'still not sure' by email."
       },
       "verifier_spec": {
         "task_id": "ledger_brainstorm_diego_alvarez",
@@ -417,7 +417,7 @@
             "name": "ledger_brainstorm_diego_alvarez",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Tentative on the invitation and 'still not sure about the feature brainstorm on Friday' by email: no answer either way."
+              "why_justification": "Tentative on the invitation and 'still not sure' by email."
             },
             "source": {
               "type": "file",
@@ -453,7 +453,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Tentative on the invitation (28 April 20:00Z), then 'I'll try' (29 April), then 'count me in for the feature brainstorm on Friday' (30 April 17:10Z): the last word is an emailed yes."
+        "why_justification": "Tentative on the invitation, then 'I'll try', then 'count me in for the feature brainstorm on Friday'."
       },
       "verifier_spec": {
         "task_id": "ledger_brainstorm_jack_miller",
@@ -462,7 +462,7 @@
             "name": "ledger_brainstorm_jack_miller",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Tentative on the invitation (28 April 20:00Z), then 'I'll try' (29 April), then 'count me in for the feature brainstorm on Friday' (30 April 17:10Z): the last word is an emailed yes."
+              "why_justification": "Tentative on the invitation, then 'I'll try', then 'count me in for the feature brainstorm on Friday'."
             },
             "source": {
               "type": "file",
@@ -498,7 +498,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "rogers.catherine@protonmail.com (display name 'Jack Spencer') accepted; nothing else."
+        "why_justification": "rogers.catherine@protonmail.com (display name 'Jack Spencer') accepted."
       },
       "verifier_spec": {
         "task_id": "ledger_brainstorm_rogers_catherine",
@@ -507,7 +507,7 @@
             "name": "ledger_brainstorm_rogers_catherine",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "rogers.catherine@protonmail.com (display name 'Jack Spencer') accepted; nothing else."
+              "why_justification": "rogers.catherine@protonmail.com (display name 'Jack Spencer') accepted."
             },
             "source": {
               "type": "file",
@@ -543,7 +543,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Jasmine emailed 'count me in for Saturday's pipeline review' on 30 April 18:34Z and then declined the invitation on 1 May 20:00Z: the decline came later and stands. Letting email override the invitation gives COMING,EMAIL."
+        "why_justification": "Jasmine emailed 'count me in for Saturday's pipeline review' (30 April 18:34Z) and then declined the invitation (1 May 20:00Z): the decline is later."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_2_may_jasmine_porter",
@@ -552,7 +552,7 @@
             "name": "ledger_pipeline_2_may_jasmine_porter",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Jasmine emailed 'count me in for Saturday's pipeline review' on 30 April 18:34Z and then declined the invitation on 1 May 20:00Z: the decline came later and stands. Letting email override the invitation gives COMING,EMAIL."
+              "why_justification": "Jasmine emailed 'count me in for Saturday's pipeline review' (30 April 18:34Z) and then declined the invitation (1 May 20:00Z): the decline is later."
             },
             "source": {
               "type": "file",
@@ -588,7 +588,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Jared declined the invitation on 29 April 23:00Z and then emailed on 30 April 15:20Z that he 'can make the pipeline review on the 2nd': the email is later. Reading the invitation alone gives NOT_COMING,INVITATION."
+        "why_justification": "Jared declined (29 April 23:00Z) and then emailed (30 April 15:20Z) that he can make the pipeline review on the 2nd."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_2_may_jared_ellis",
@@ -597,7 +597,7 @@
             "name": "ledger_pipeline_2_may_jared_ellis",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Jared declined the invitation on 29 April 23:00Z and then emailed on 30 April 15:20Z that he 'can make the pipeline review on the 2nd': the email is later. Reading the invitation alone gives NOT_COMING,INVITATION."
+              "why_justification": "Jared declined (29 April 23:00Z) and then emailed (30 April 15:20Z) that he can make the pipeline review on the 2nd."
             },
             "source": {
               "type": "file",
@@ -633,7 +633,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "ava.lopez@lumendata.com (display name 'Jack Spencer') accepted; nothing else."
+        "why_justification": "ava.lopez@lumendata.com (display name 'Jack Spencer') accepted."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_2_may_ava_lopez",
@@ -642,7 +642,7 @@
             "name": "ledger_pipeline_2_may_ava_lopez",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "ava.lopez@lumendata.com (display name 'Jack Spencer') accepted; nothing else."
+              "why_justification": "ava.lopez@lumendata.com (display name 'Jack Spencer') accepted."
             },
             "source": {
               "type": "file",
@@ -668,7 +668,7 @@
     },
     {
       "name": "ledger_pipeline_6_may_diego_alvarez",
-      "description": "full-row check: Weekly Pipeline Review 2026-05-06, diego.alvarez@contoso.example is OWES_ANSWER (NONE)",
+      "description": "full-row check: Weekly Pipeline Review 2026-05-06, diego.alvarez@contoso.example is COMING (EMAIL)",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -678,7 +678,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Diego accepted at 22:30Z = 15:30 Pacific on 1 May, before the 16:00 Pacific move (23:00Z), so the acceptance no longer counts; his 4 May email says Wednesday's pipeline review works 'as long as the forecast numbers are in by Tuesday night', a yes that depends on something unsettled. Keeping the acceptance gives COMING,INVITATION; taking the conditional yes gives COMING,EMAIL."
+        "why_justification": "Diego's acceptance (22:30Z = 15:30 Pacific on 1 May) predates the 16:00 move. His 4 May email says Wednesday's review works 'as long as the forecast numbers are in by Tuesday night'; Kenneth Hall's 'the forecast numbers are in the shared folder now' came at 2026-05-06T05:40Z = Tuesday 22:40 Pacific, so the condition was met and the yes stands. Reading 05:40Z as Wednesday gives OWES_ANSWER."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_6_may_diego_alvarez",
@@ -687,7 +687,7 @@
             "name": "ledger_pipeline_6_may_diego_alvarez",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Diego accepted at 22:30Z = 15:30 Pacific on 1 May, before the 16:00 Pacific move (23:00Z), so the acceptance no longer counts; his 4 May email says Wednesday's pipeline review works 'as long as the forecast numbers are in by Tuesday night', a yes that depends on something unsettled. Keeping the acceptance gives COMING,INVITATION; taking the conditional yes gives COMING,EMAIL."
+              "why_justification": "Diego's acceptance (22:30Z = 15:30 Pacific on 1 May) predates the 16:00 move. His 4 May email says Wednesday's review works 'as long as the forecast numbers are in by Tuesday night'; Kenneth Hall's 'the forecast numbers are in the shared folder now' came at 2026-05-06T05:40Z = Tuesday 22:40 Pacific, so the condition was met and the yes stands. Reading 05:40Z as Wednesday gives OWES_ANSWER."
             },
             "source": {
               "type": "file",
@@ -701,7 +701,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": "(?im)^[ \\t]*\"?Weekly\\ Pipeline\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-06\"?[ \\t]*,[ \\t]*\"?diego\\.alvarez@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "expected": "(?im)^[ \\t]*\"?Weekly\\ Pipeline\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-06\"?[ \\t]*,[ \\t]*\"?diego\\.alvarez@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
               "deterministic": {
                 "path": "$.text",
                 "comparison": "regex_match"
@@ -723,7 +723,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Jenna accepted after the move, then on 5 May wrote that she is at the customer offsite all day Wednesday and 'Kenneth will cover the forecast for me': someone going in her place means she is not coming. Treating it as a relayed answer gives OWES_ANSWER,NONE; missing the email gives COMING,INVITATION."
+        "why_justification": "Jenna accepted after the move, then wrote she is at the customer offsite all day Wednesday and 'Kenneth will cover the forecast for me': someone in her place means she is not coming."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_6_may_jenna_white",
@@ -732,7 +732,7 @@
             "name": "ledger_pipeline_6_may_jenna_white",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Jenna accepted after the move, then on 5 May wrote that she is at the customer offsite all day Wednesday and 'Kenneth will cover the forecast for me': someone going in her place means she is not coming. Treating it as a relayed answer gives OWES_ANSWER,NONE; missing the email gives COMING,INVITATION."
+              "why_justification": "Jenna accepted after the move, then wrote she is at the customer offsite all day Wednesday and 'Kenneth will cover the forecast for me': someone in her place means she is not coming."
             },
             "source": {
               "type": "file",
@@ -768,7 +768,7 @@
       "requirement_id": "ledger",
       "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
       "metadata": {
-        "why_justification": "Jared accepted the 6 May review after the move (2 May 01:15Z); his 30 April email is about the 2nd."
+        "why_justification": "Jared accepted the 6 May review after the move."
       },
       "verifier_spec": {
         "task_id": "ledger_pipeline_6_may_jared_ellis",
@@ -777,7 +777,7 @@
             "name": "ledger_pipeline_6_may_jared_ellis",
             "metadata": {
               "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Jared accepted the 6 May review after the move (2 May 01:15Z); his 30 April email is about the 2nd."
+              "why_justification": "Jared accepted the 6 May review after the move."
             },
             "source": {
               "type": "file",
@@ -847,6 +847,726 @@
       }
     },
     {
+      "name": "ledger_vendor_security_jack_henry",
+      "description": "full-row check: Vendor Security Review 2026-05-07, jack.henry@contoso.example is NOT_COMING (EMAIL)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Jack Henry accepted (4 May 18:00Z) after emailing 'count me in' (17:15Z), then on 6 May replied 'Scratch that ... I won't make the vendor review'. His earlier yes is quoted under the reply; the reply's own words are the latest."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_vendor_security_jack_henry",
+        "verifiers": [
+          {
+            "name": "ledger_vendor_security_jack_henry",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Jack Henry accepted (4 May 18:00Z) after emailing 'count me in' (17:15Z), then on 6 May replied 'Scratch that ... I won't make the vendor review'. His earlier yes is quoted under the reply; the reply's own words are the latest."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?jack\\.henry@contoso\\.example\"?[ \\t]*,[ \\t]*\"?NOT_COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_vendor_security_jasmine_porter",
+      "description": "full-row check: Vendor Security Review 2026-05-07, jasmine.porter@contoso.example is COMING (EMAIL)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Jasmine never answered the invitation; on Tuesday 5 May she wrote 'I'll be at the 2pm one on Thursday' - Thursday 7 May 14:00 Pacific is the Vendor Security Review."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_vendor_security_jasmine_porter",
+        "verifiers": [
+          {
+            "name": "ledger_vendor_security_jasmine_porter",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Jasmine never answered the invitation; on Tuesday 5 May she wrote 'I'll be at the 2pm one on Thursday' - Thursday 7 May 14:00 Pacific is the Vendor Security Review."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?jasmine\\.porter@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_vendor_security_jared_ellis",
+      "description": "full-row check: Vendor Security Review 2026-05-07, jared.ellis@contoso.example is OWES_ANSWER (NONE)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Tentative on the invitation, then 'Thursday's 2pm clashes with a dentist appointment I'm trying to move. I'll know by this evening' (Wednesday) - and no later word."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_vendor_security_jared_ellis",
+        "verifiers": [
+          {
+            "name": "ledger_vendor_security_jared_ellis",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Tentative on the invitation, then 'Thursday's 2pm clashes with a dentist appointment I'm trying to move. I'll know by this evening' (Wednesday) - and no later word."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?jared\\.ellis@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_vendor_security_olivia_myers",
+      "description": "full-row check: Vendor Security Review 2026-05-07, olivia.myers@contoso.example is COMING (INVITATION)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Olivia accepted."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_vendor_security_olivia_myers",
+        "verifiers": [
+          {
+            "name": "ledger_vendor_security_olivia_myers",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Olivia accepted."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?olivia\\.myers@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_q3_roadmap_diego_alvarez",
+      "description": "full-row check: Q3 Roadmap Review 2026-05-11, diego.alvarez@contoso.example is COMING (INVITATION)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Diego accepted; his 12 May 'Q3 roadmap draft' email is about the document, not the meeting."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_q3_roadmap_diego_alvarez",
+        "verifiers": [
+          {
+            "name": "ledger_q3_roadmap_diego_alvarez",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Diego accepted; his 12 May 'Q3 roadmap draft' email is about the document, not the meeting."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?diego\\.alvarez@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_q3_roadmap_charlotte_palmer",
+      "description": "full-row check: Q3 Roadmap Review 2026-05-11, charlotte.palmer@contoso.example is COMING (EMAIL)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Charlotte declined (7 May 16:00Z) and then wrote 'I can join Monday's 9:30 after all' (8 May 21:05Z)."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_q3_roadmap_charlotte_palmer",
+        "verifiers": [
+          {
+            "name": "ledger_q3_roadmap_charlotte_palmer",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Charlotte declined (7 May 16:00Z) and then wrote 'I can join Monday's 9:30 after all' (8 May 21:05Z)."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?charlotte\\.palmer@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_q3_roadmap_jenna_white",
+      "description": "full-row check: Q3 Roadmap Review 2026-05-11, jenna.white@contoso.example is OWES_ANSWER (NONE)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Never answered."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_q3_roadmap_jenna_white",
+        "verifiers": [
+          {
+            "name": "ledger_q3_roadmap_jenna_white",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Never answered."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?jenna\\.white@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_q3_roadmap_nora_ford",
+      "description": "full-row check: Q3 Roadmap Review 2026-05-11, nora.ford@contoso.example is COMING (INVITATION)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Nora accepted."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_q3_roadmap_nora_ford",
+        "verifiers": [
+          {
+            "name": "ledger_q3_roadmap_nora_ford",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Nora accepted."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?nora\\.ford@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_q3_roadmap_cameron_simpson",
+      "description": "full-row check: Q3 Roadmap Review 2026-05-11, cameron.simpson@contoso.example is COMING (EMAIL)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Cameron was tentative, then wrote he can do Monday's review 'as long as the board deck is signed off by Friday'. Nora Ford's 'the board deck was signed off this evening' came at 2026-05-09T02:35Z = Friday 8 May 19:35 Pacific, so the condition was met in time. Reading 02:35Z as Saturday gives OWES_ANSWER."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_q3_roadmap_cameron_simpson",
+        "verifiers": [
+          {
+            "name": "ledger_q3_roadmap_cameron_simpson",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Cameron was tentative, then wrote he can do Monday's review 'as long as the board deck is signed off by Friday'. Nora Ford's 'the board deck was signed off this evening' came at 2026-05-09T02:35Z = Friday 8 May 19:35 Pacific, so the condition was met in time. Reading 02:35Z as Saturday gives OWES_ANSWER."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?cameron\\.simpson@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_hiring_debrief_jasmine_porter",
+      "description": "full-row check: Hiring Panel Debrief 2026-05-15, jasmine.porter@contoso.example is COMING (INVITATION)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Jasmine accepted."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_hiring_debrief_jasmine_porter",
+        "verifiers": [
+          {
+            "name": "ledger_hiring_debrief_jasmine_porter",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Jasmine accepted."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Hiring\\ Panel\\ Debrief\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-15\"?[ \\t]*,[ \\t]*\"?jasmine\\.porter@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_hiring_debrief_cameron_simpson",
+      "description": "full-row check: Hiring Panel Debrief 2026-05-15, cameron.simpson@contoso.example is COMING (EMAIL)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Cameron declined (11 May 14:00Z), then wrote 'ignore my decline for Friday's debrief ... I'll be there' (12 May 17:10Z)."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_hiring_debrief_cameron_simpson",
+        "verifiers": [
+          {
+            "name": "ledger_hiring_debrief_cameron_simpson",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Cameron declined (11 May 14:00Z), then wrote 'ignore my decline for Friday's debrief ... I'll be there' (12 May 17:10Z)."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Hiring\\ Panel\\ Debrief\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-15\"?[ \\t]*,[ \\t]*\"?cameron\\.simpson@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?EMAIL\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_hiring_debrief_olivia_myers",
+      "description": "full-row check: Hiring Panel Debrief 2026-05-15, olivia.myers@contoso.example is OWES_ANSWER (NONE)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Never answered."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_hiring_debrief_olivia_myers",
+        "verifiers": [
+          {
+            "name": "ledger_hiring_debrief_olivia_myers",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Never answered."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Hiring\\ Panel\\ Debrief\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-15\"?[ \\t]*,[ \\t]*\"?olivia\\.myers@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_hiring_debrief_jack_miller",
+      "description": "full-row check: Hiring Panel Debrief 2026-05-15, jack.miller@contoso.example is COMING (INVITATION)",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Jack Miller accepted."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_hiring_debrief_jack_miller",
+        "verifiers": [
+          {
+            "name": "ledger_hiring_debrief_jack_miller",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Jack Miller accepted."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Hiring\\ Panel\\ Debrief\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-15\"?[ \\t]*,[ \\t]*\"?jack\\.miller@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_escalation_sync_jenna_white",
+      "description": "full-row check: Customer Escalation Sync 2026-05-17, jenna.white@contoso.example is OWES_ANSWER (NONE)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Customer Escalation Sync starts Sunday 17 May 17:30 Pacific = 18 May 00:30 UTC: inside the window. A search bounded in UTC misses it."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_escalation_sync_jenna_white",
+        "verifiers": [
+          {
+            "name": "ledger_escalation_sync_jenna_white",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Customer Escalation Sync starts Sunday 17 May 17:30 Pacific = 18 May 00:30 UTC: inside the window. A search bounded in UTC misses it."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Customer\\ Escalation\\ Sync\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-17\"?[ \\t]*,[ \\t]*\"?jenna\\.white@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_escalation_sync_grace_kelley",
+      "description": "full-row check: Customer Escalation Sync 2026-05-17, grace.kelley@pemberleybank.com is COMING (INVITATION)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "grace.kelley@pemberleybank.com (display name 'Jack Spencer') accepted; the meeting is inside the window only in Pacific time."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_escalation_sync_grace_kelley",
+        "verifiers": [
+          {
+            "name": "ledger_escalation_sync_grace_kelley",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "grace.kelley@pemberleybank.com (display name 'Jack Spencer') accepted; the meeting is inside the window only in Pacific time."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Customer\\ Escalation\\ Sync\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-17\"?[ \\t]*,[ \\t]*\"?grace\\.kelley@pemberleybank\\.com\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?INVITATION\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ledger_escalation_sync_nora_ford",
+      "description": "full-row check: Customer Escalation Sync 2026-05-17, nora.ford@contoso.example is OWES_ANSWER (NONE)",
+      "category": "core",
+      "weight": 1.0,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "ledger",
+      "evidence_span": "status is COMING, NOT_COMING or OWES_ANSWER",
+      "metadata": {
+        "why_justification": "Nora is tentative."
+      },
+      "verifier_spec": {
+        "task_id": "ledger_escalation_sync_nora_ford",
+        "verifiers": [
+          {
+            "name": "ledger_escalation_sync_nora_ford",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Nora is tentative."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "rsvp_ledger.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Customer\\ Escalation\\ Sync\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-17\"?[ \\t]*,[ \\t]*\"?nora\\.ford@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?NONE\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "tracker_fixes_header",
       "description": "tracker_fixes.csv has exactly the header the prompt dictates",
       "category": "core",
@@ -899,7 +1619,7 @@
     },
     {
       "name": "tracker_fixes_row_count",
-      "description": "exactly the 8 tracker entries that disagree with the ledger",
+      "description": "exactly the 12 tracker entries that disagree with the ledger",
       "category": "core",
       "weight": 1.0,
       "target": "workspace_files",
@@ -909,7 +1629,7 @@
       "requirement_id": "tracker_fixes",
       "evidence_span": "Leave out entries that agree with my ledger and entries\nabout anyone or anything that is not on it.",
       "metadata": {
-        "why_justification": "Janice's tracker has 13 entries: 8 disagree with the ledger, 3 agree (Eugene Dunn on OKR Planning, Diego on the brainstorm, Jared on 6 May), and 2 are not on the ledger (Jack Henry is optional on the brainstorm; Customer Advisory Board prep is cancelled). Listing every entry gives 13; listing the off-ledger ones gives 9 or 10."
+        "why_justification": "Janice's tracker has 22 entries: 12 disagree with the ledger, 7 agree, and 3 are not on it (Jack Henry is optional on the brainstorm; Customer Advisory Board prep is cancelled; Planning Offsite Prep is on 26 April Pacific). Listing every entry gives 22; including the off-ledger ones gives up to 15."
       },
       "verifier_spec": {
         "task_id": "tracker_fixes_row_count",
@@ -918,7 +1638,7 @@
             "name": "tracker_fixes_row_count",
             "metadata": {
               "how_justification": "csv.inspect_table counts data rows excluding the header.",
-              "why_justification": "Janice's tracker has 13 entries: 8 disagree with the ledger, 3 agree (Eugene Dunn on OKR Planning, Diego on the brainstorm, Jared on 6 May), and 2 are not on the ledger (Jack Henry is optional on the brainstorm; Customer Advisory Board prep is cancelled). Listing every entry gives 13; listing the off-ledger ones gives 9 or 10."
+              "why_justification": "Janice's tracker has 22 entries: 12 disagree with the ledger, 7 agree, and 3 are not on it (Jack Henry is optional on the brainstorm; Customer Advisory Board prep is cancelled; Planning Offsite Prep is on 26 April Pacific). Listing every entry gives 22; including the off-ledger ones gives up to 15."
             },
             "source": {
               "type": "file",
@@ -932,7 +1652,7 @@
             },
             "assertion": {
               "type": "deterministic",
-              "expected": 8,
+              "expected": 12,
               "deterministic": {
                 "path": "$.row_count",
                 "comparison": "equals"
@@ -1213,51 +1933,6 @@
       }
     },
     {
-      "name": "fix_pipeline_6_may_diego_alvarez",
-      "description": "full-row check: Janice has diego.alvarez@contoso.example as COMING on Weekly Pipeline Review 2026-05-06; the ledger says OWES_ANSWER",
-      "category": "core",
-      "weight": 0.5,
-      "target": "workspace_files",
-      "verifier_type": "file_check",
-      "type": "file_check",
-      "pass_threshold": 1.0,
-      "requirement_id": "tracker_fixes",
-      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
-      "metadata": {
-        "why_justification": "Janice's entry says COMING; where things stand is OWES_ANSWER. The row needs both, exactly as the prompt's columns ask."
-      },
-      "verifier_spec": {
-        "task_id": "fix_pipeline_6_may_diego_alvarez",
-        "verifiers": [
-          {
-            "name": "fix_pipeline_6_may_diego_alvarez",
-            "metadata": {
-              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
-              "why_justification": "Janice's entry says COMING; where things stand is OWES_ANSWER. The row needs both, exactly as the prompt's columns ask."
-            },
-            "source": {
-              "type": "file",
-              "file": {
-                "type": "csv",
-                "command": "extract_text",
-                "arguments": {
-                  "path": "tracker_fixes.csv"
-                }
-              }
-            },
-            "assertion": {
-              "type": "deterministic",
-              "expected": "(?im)^[ \\t]*\"?Weekly\\ Pipeline\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-06\"?[ \\t]*,[ \\t]*\"?diego\\.alvarez@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*\\r?$",
-              "deterministic": {
-                "path": "$.text",
-                "comparison": "regex_match"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "fix_pipeline_6_may_jenna_white",
       "description": "full-row check: Janice has jenna.white@contoso.example as COMING on Weekly Pipeline Review 2026-05-06; the ledger says NOT_COMING",
       "category": "core",
@@ -1303,59 +1978,250 @@
       }
     },
     {
+      "name": "fix_vendor_security_jack_henry",
+      "description": "full-row check: Janice has jack.henry@contoso.example as COMING on Vendor Security Review 2026-05-07; the ledger says NOT_COMING",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "tracker_fixes",
+      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
+      "metadata": {
+        "why_justification": "Janice's entry says COMING; where things stand is NOT_COMING. The row needs both, exactly as the prompt's columns ask."
+      },
+      "verifier_spec": {
+        "task_id": "fix_vendor_security_jack_henry",
+        "verifiers": [
+          {
+            "name": "fix_vendor_security_jack_henry",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Janice's entry says COMING; where things stand is NOT_COMING. The row needs both, exactly as the prompt's columns ask."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "tracker_fixes.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?jack\\.henry@contoso\\.example\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*,[ \\t]*\"?NOT_COMING\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fix_vendor_security_jasmine_porter",
+      "description": "full-row check: Janice has jasmine.porter@contoso.example as OWES_ANSWER on Vendor Security Review 2026-05-07; the ledger says COMING",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "tracker_fixes",
+      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
+      "metadata": {
+        "why_justification": "Janice's entry says OWES_ANSWER; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+      },
+      "verifier_spec": {
+        "task_id": "fix_vendor_security_jasmine_porter",
+        "verifiers": [
+          {
+            "name": "fix_vendor_security_jasmine_porter",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Janice's entry says OWES_ANSWER; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "tracker_fixes.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Vendor\\ Security\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-07\"?[ \\t]*,[ \\t]*\"?jasmine\\.porter@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fix_q3_roadmap_charlotte_palmer",
+      "description": "full-row check: Janice has charlotte.palmer@contoso.example as NOT_COMING on Q3 Roadmap Review 2026-05-11; the ledger says COMING",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "tracker_fixes",
+      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
+      "metadata": {
+        "why_justification": "Janice's entry says NOT_COMING; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+      },
+      "verifier_spec": {
+        "task_id": "fix_q3_roadmap_charlotte_palmer",
+        "verifiers": [
+          {
+            "name": "fix_q3_roadmap_charlotte_palmer",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Janice's entry says NOT_COMING; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "tracker_fixes.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?charlotte\\.palmer@contoso\\.example\"?[ \\t]*,[ \\t]*\"?NOT_COMING\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fix_q3_roadmap_cameron_simpson",
+      "description": "full-row check: Janice has cameron.simpson@contoso.example as OWES_ANSWER on Q3 Roadmap Review 2026-05-11; the ledger says COMING",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "tracker_fixes",
+      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
+      "metadata": {
+        "why_justification": "Janice's entry says OWES_ANSWER; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+      },
+      "verifier_spec": {
+        "task_id": "fix_q3_roadmap_cameron_simpson",
+        "verifiers": [
+          {
+            "name": "fix_q3_roadmap_cameron_simpson",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Janice's entry says OWES_ANSWER; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "tracker_fixes.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Q3\\ Roadmap\\ Review\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-11\"?[ \\t]*,[ \\t]*\"?cameron\\.simpson@contoso\\.example\"?[ \\t]*,[ \\t]*\"?OWES_ANSWER\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fix_hiring_debrief_cameron_simpson",
+      "description": "full-row check: Janice has cameron.simpson@contoso.example as NOT_COMING on Hiring Panel Debrief 2026-05-15; the ledger says COMING",
+      "category": "core",
+      "weight": 0.5,
+      "target": "workspace_files",
+      "verifier_type": "file_check",
+      "type": "file_check",
+      "pass_threshold": 1.0,
+      "requirement_id": "tracker_fixes",
+      "evidence_span": "her entry put into the same three\nstatus labels, and the status from my ledger",
+      "metadata": {
+        "why_justification": "Janice's entry says NOT_COMING; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+      },
+      "verifier_spec": {
+        "task_id": "fix_hiring_debrief_cameron_simpson",
+        "verifiers": [
+          {
+            "name": "fix_hiring_debrief_cameron_simpson",
+            "metadata": {
+              "how_justification": "csv.extract_text returns the raw file; a case-insensitive, line-anchored regex requires the whole row - every field at once, each optionally quoted, spaces around commas allowed - so a row with the right meeting and attendee but the wrong status or source fails.",
+              "why_justification": "Janice's entry says NOT_COMING; where things stand is COMING. The row needs both, exactly as the prompt's columns ask."
+            },
+            "source": {
+              "type": "file",
+              "file": {
+                "type": "csv",
+                "command": "extract_text",
+                "arguments": {
+                  "path": "tracker_fixes.csv"
+                }
+              }
+            },
+            "assertion": {
+              "type": "deterministic",
+              "expected": "(?im)^[ \\t]*\"?Hiring\\ Panel\\ Debrief\"?[ \\t]*,[ \\t]*\"?2026\\-05\\-15\"?[ \\t]*,[ \\t]*\"?cameron\\.simpson@contoso\\.example\"?[ \\t]*,[ \\t]*\"?NOT_COMING\"?[ \\t]*,[ \\t]*\"?COMING\"?[ \\t]*\\r?$",
+              "deterministic": {
+                "path": "$.text",
+                "comparison": "regex_match"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "own_draft_to_diego_alvarez_naming_their_meetings",
-      "description": "A draft whose only recipient is Diego Alvarez and whose subject or body names OKR Planning, Brainstorm: New Feature and the Weekly Pipeline Review. Measured on the seed: 0 rows (the acting user has no drafts).",
+      "description": "A draft whose only recipient is diego.alvarez@contoso.example and whose subject or body names OKR Planning (2026-04-30), Brainstorm: New Feature (2026-05-01). Measured on the seed: 0 rows (the acting user has no drafts).",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%') AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%') AND (lower(coalesce(m.subject,'')) LIKE '%pipeline%' OR lower(coalesce(m.body_content,'')) LIKE '%pipeline%')",
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'diego.alvarez@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('diego.alvarez@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%') AND (lower(coalesce(m.subject,'')) LIKE '%brainstorm%' OR lower(coalesce(m.body_content,'')) LIKE '%brainstorm%')",
       "expected_value": 1,
       "comparison_type": "greater_or_equal",
       "requirement_id": "write_back_drafts",
       "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
       "metadata": {
-        "why_justification": "Diego owes OKR Planning (his answers predate the move), the brainstorm (still unsure) and the 6 May Weekly Pipeline Review (his acceptance predates the move and his 4 May yes depends on the forecast numbers). One draft, matched on 'brainstorm', 'okr' and 'pipeline'."
-      },
-      "target_gym_server": "outlook-gym"
-    },
-    {
-      "name": "own_draft_to_jack_henry_naming_their_meetings",
-      "description": "A draft whose only recipient is Jack Henry and whose subject or body names OKR Planning. Measured on the seed: 0 rows (the acting user has no drafts).",
-      "category": "core",
-      "verifier_type": "database_state",
-      "type": "database_state",
-      "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jack.henry@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jack.henry@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%')",
-      "expected_value": 1,
-      "comparison_type": "greater_or_equal",
-      "requirement_id": "write_back_drafts",
-      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
-      "metadata": {
-        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Jack Henry. The draft must name the meeting(s) that person has not answered (matched on 'okr', case-insensitive, in subject or body); other wording is free."
-      },
-      "target_gym_server": "outlook-gym"
-    },
-    {
-      "name": "own_draft_to_charlotte_palmer_naming_their_meetings",
-      "description": "A draft whose only recipient is Charlotte Palmer and whose subject or body names Learning Time. Measured on the seed: 0 rows (the acting user has no drafts).",
-      "category": "core",
-      "verifier_type": "database_state",
-      "type": "database_state",
-      "weight": 1.0,
-      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'charlotte.palmer@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('charlotte.palmer@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%learning time%' OR lower(coalesce(m.body_content,'')) LIKE '%learning time%')",
-      "expected_value": 1,
-      "comparison_type": "greater_or_equal",
-      "requirement_id": "write_back_drafts",
-      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
-      "metadata": {
-        "why_justification": "One draft per person: a combined draft that also addresses anyone else does not count for Charlotte Palmer. The draft must name the meeting(s) that person has not answered (matched on 'learning time', case-insensitive, in subject or body); other wording is free."
+        "why_justification": "diego.alvarez@contoso.example owes OKR Planning (2026-04-30); Brainstorm: New Feature (2026-05-01). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'okr', 'brainstorm', case-insensitive, in subject or body; other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
     {
       "name": "diego_alvarez_drafted_on_their_latest_email",
-      "description": "The draft to diego.alvarez@contoso.example sits on that person's most recent email to him ('Q3 roadmap draft', 12 May, conversation CONV3F9C6A18E2B57D04F7A3C9E16B58). Measured on the seed: 0 rows.",
+      "description": "The draft to diego.alvarez@contoso.example sits on that person's most recent email to him (conversation CONV3F9C6A18E2B57D04F7A3C9E16B58). Measured on the seed: 0 rows.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
@@ -1366,13 +2232,30 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
       "metadata": {
-        "why_justification": "Diego's most recent email to him is the 12 May Q3 roadmap note, not his 28 April 'This week' email about the meetings; a draft on 'This week' or a new message fails."
+        "why_justification": "diego.alvarez@contoso.example's most recent email to him of any subject is AAMkB7F3E1A92C6D58B0F4A7E3C9D261; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_jack_henry_naming_their_meetings",
+      "description": "A draft whose only recipient is jack.henry@contoso.example and whose subject or body names OKR Planning (2026-04-30). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jack.henry@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jack.henry@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%okr%' OR lower(coalesce(m.body_content,'')) LIKE '%okr%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "jack.henry@contoso.example owes OKR Planning (2026-04-30). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'okr', case-insensitive, in subject or body; other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
     {
       "name": "jack_henry_drafted_on_their_latest_email",
-      "description": "The draft to jack.henry@contoso.example sits on that person's most recent email to him ('RE: Frontend Component Library v2 — weekly status', conversation CONVFC26D0917EF2FCC2CD5F81D82832). Measured on the seed: 0 rows.",
+      "description": "The draft to jack.henry@contoso.example sits on that person's most recent email to him (conversation CONVFC26D0917EF2FCC2CD5F81D82832). Measured on the seed: 0 rows.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
@@ -1383,13 +2266,30 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
       "metadata": {
-        "why_justification": "Jack Henry's only email to him is about the component library; the instruction puts the draft on it, not in a new message. Jasmine Porter's 29 April note that Jack Henry is fine with the new time is a relayed answer and neither answers for him nor is his email."
+        "why_justification": "jack.henry@contoso.example's most recent email to him of any subject is AAMkDDFB4210A30B7656D7D0057D2820; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_charlotte_palmer_naming_their_meetings",
+      "description": "A draft whose only recipient is charlotte.palmer@contoso.example and whose subject or body names Learning Time (2026-05-01). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'charlotte.palmer@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('charlotte.palmer@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%learning time%' OR lower(coalesce(m.body_content,'')) LIKE '%learning time%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "charlotte.palmer@contoso.example owes Learning Time (2026-05-01). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'learning time', case-insensitive, in subject or body; other wording is free."
       },
       "target_gym_server": "outlook-gym"
     },
     {
       "name": "charlotte_palmer_drafted_on_their_latest_email",
-      "description": "The draft to charlotte.palmer@contoso.example sits on that person's most recent email to him ('RE: Privacy Impact Assessments — weekly status', conversation CONV4E78FC18AA9735C68D58FD530005). Measured on the seed: 0 rows.",
+      "description": "The draft to charlotte.palmer@contoso.example sits on that person's most recent email to him (conversation CONV4E78FC18AA9735C68D58FD530005). Measured on the seed: 0 rows.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
@@ -1400,41 +2300,177 @@
       "requirement_id": "write_back_reply_on_thread",
       "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
       "metadata": {
-        "why_justification": "Charlotte's latest email to him is the 21 May Privacy Impact Assessments reply, not her two Learning Time emails of 29 April and 1 May; a draft on the Learning Time thread fails. Carson Flores's 1 May note that Charlotte will be there is a relayed answer: it is not hers, so she still owes Learning Time."
+        "why_justification": "charlotte.palmer@contoso.example's most recent email to him of any subject is AAMkD61867BD0A78844C3815861A41BA; a draft on an older thread or a new message fails."
       },
       "target_gym_server": "outlook-gym"
     },
     {
-      "name": "drafts_go_to_exactly_those_three",
-      "description": "Across all his drafts exactly 3 distinct recipients. Measured on the seed: 0.",
+      "name": "own_draft_to_jared_ellis_naming_their_meetings",
+      "description": "A draft whose only recipient is jared.ellis@contoso.example and whose subject or body names Vendor Security Review (2026-05-07). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jared.ellis@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jared.ellis@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%vendor%' OR lower(coalesce(m.body_content,'')) LIKE '%vendor%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "jared.ellis@contoso.example owes Vendor Security Review (2026-05-07). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'vendor', case-insensitive, in subject or body; other wording is free."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "jared_ellis_drafted_on_their_latest_email",
+      "description": "The draft to jared.ellis@contoso.example sits on that person's most recent email to him (conversation CONV4C8E1A73D5B96F02C8E1A73D5F96). Measured on the seed: 0 rows.",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV4C8E1A73D5B96F02C8E1A73D5F96'",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_reply_on_thread",
+      "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
+      "metadata": {
+        "why_justification": "jared.ellis@contoso.example's most recent email to him of any subject is AAMk2A7F5D19C3E84B6A7F5D19C3B84E; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_jenna_white_naming_their_meetings",
+      "description": "A draft whose only recipient is jenna.white@contoso.example and whose subject or body names Q3 Roadmap Review (2026-05-11), Customer Escalation Sync (2026-05-17). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'jenna.white@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('jenna.white@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%roadmap%' OR lower(coalesce(m.body_content,'')) LIKE '%roadmap%') AND (lower(coalesce(m.subject,'')) LIKE '%escalation%' OR lower(coalesce(m.body_content,'')) LIKE '%escalation%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "jenna.white@contoso.example owes Q3 Roadmap Review (2026-05-11); Customer Escalation Sync (2026-05-17). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'roadmap', 'escalation', case-insensitive, in subject or body; other wording is free."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "jenna_white_drafted_on_their_latest_email",
+      "description": "The draft to jenna.white@contoso.example sits on that person's most recent email to him (conversation CONV2B7E4A96D1F38C05B2E7A4D96F13). Measured on the seed: 0 rows.",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV2B7E4A96D1F38C05B2E7A4D96F13'",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_reply_on_thread",
+      "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
+      "metadata": {
+        "why_justification": "jenna.white@contoso.example's most recent email to him of any subject is AAMk4E9B6C23F8A15D7E4B9C6F23A851; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_olivia_myers_naming_their_meetings",
+      "description": "A draft whose only recipient is olivia.myers@contoso.example and whose subject or body names Hiring Panel Debrief (2026-05-15). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'olivia.myers@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('olivia.myers@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%hiring%' OR lower(coalesce(m.body_content,'')) LIKE '%hiring%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "olivia.myers@contoso.example owes Hiring Panel Debrief (2026-05-15). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'hiring', case-insensitive, in subject or body; other wording is free."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "olivia_myers_drafted_on_their_latest_email",
+      "description": "The draft to olivia.myers@contoso.example sits on that person's most recent email to him (conversation CONVC30B44AF91B7334536743123A7BD). Measured on the seed: 0 rows.",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONVC30B44AF91B7334536743123A7BD'",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_reply_on_thread",
+      "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
+      "metadata": {
+        "why_justification": "olivia.myers@contoso.example's most recent email to him of any subject is AAMkC1B1A49DD2E7AC344BA18643FFAD; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "own_draft_to_nora_ford_naming_their_meetings",
+      "description": "A draft whose only recipient is nora.ford@contoso.example and whose subject or body names Customer Escalation Sync (2026-05-17). Measured on the seed: 0 rows (the acting user has no drafts).",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(DISTINCT m.id) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) = 'nora.ford@contoso.example' AND NOT EXISTS (SELECT 1 FROM message_recipients r2 WHERE r2.message_id = m.id AND lower(r2.address) NOT IN ('nora.ford@contoso.example', 'jack.spencer@contoso.example')) AND (lower(coalesce(m.subject,'')) LIKE '%escalation%' OR lower(coalesce(m.body_content,'')) LIKE '%escalation%')",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_drafts",
+      "evidence_span": "Then draft a note to each person who owes me at least one answer, one draft per person, naming every\nmeeting they owe me an answer for",
+      "metadata": {
+        "why_justification": "nora.ford@contoso.example owes Customer Escalation Sync (2026-05-17). One draft per person: a combined draft that also addresses anyone else does not count. Matched on 'escalation', case-insensitive, in subject or body; other wording is free."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "nora_ford_drafted_on_their_latest_email",
+      "description": "The draft to nora.ford@contoso.example sits on that person's most recent email to him (conversation CONV6F1C9E27B4D58A03F1C9E27B4A58). Measured on the seed: 0 rows.",
+      "category": "core",
+      "verifier_type": "database_state",
+      "type": "database_state",
+      "weight": 1.0,
+      "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1 AND conversation_id = 'CONV6F1C9E27B4D58A03F1C9E27B4A58'",
+      "expected_value": 1,
+      "comparison_type": "greater_or_equal",
+      "requirement_id": "write_back_reply_on_thread",
+      "evidence_span": "put the draft on their most\nrecent email to me instead of starting a new message",
+      "metadata": {
+        "why_justification": "nora.ford@contoso.example's most recent email to him of any subject is AAMk9E5B2D84A7F16C3E5B2D84A7C16F; a draft on an older thread or a new message fails."
+      },
+      "target_gym_server": "outlook-gym"
+    },
+    {
+      "name": "drafts_go_to_exactly_the_people_who_owe",
+      "description": "Across all his drafts exactly 7 distinct recipients. Measured on the seed: 0.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
       "sql_query": "SELECT COUNT(DISTINCT lower(r.address)) FROM messages m JOIN message_recipients r ON r.message_id = m.id WHERE m.user_id = 46 AND m.is_draft = 1 AND lower(r.address) <> 'jack.spencer@contoso.example'",
-      "expected_value": 3,
+      "expected_value": 7,
       "comparison_type": "equals",
       "requirement_id": "write_back_nobody_else",
       "evidence_span": "do not\ndraft to anyone else",
       "metadata": {
-        "why_justification": "Drafting to Jenna White (her stand-in note means she is not coming), Jasmine Porter, Jared Ellis, Jack Miller (answered the brainstorm by email; unanswered only on the cancelled Customer Advisory Board prep), optional attendees or Janice raises this above 3."
+        "why_justification": "Drafting to anyone who has answered every meeting (Jasmine, Jack Miller, Cameron), to someone whose only unanswered meeting is cancelled or outside the window, to optional attendees or to Janice changes this count; missing Customer Escalation Sync drops Nora Ford."
       },
       "target_gym_server": "outlook-gym"
     },
     {
       "name": "exactly_one_draft_per_person",
-      "description": "The acting user ends with exactly 3 drafts. Measured on the seed: 0.",
+      "description": "The acting user ends with exactly 7 drafts. Measured on the seed: 0.",
       "category": "core",
       "verifier_type": "database_state",
       "type": "database_state",
       "weight": 1.0,
       "sql_query": "SELECT COUNT(*) FROM messages WHERE user_id = 46 AND is_draft = 1",
-      "expected_value": 3,
+      "expected_value": 7,
       "comparison_type": "equals",
       "requirement_id": "write_back_drafts",
       "evidence_span": "one draft per person",
       "metadata": {
-        "why_justification": "With the three sole-recipient rows this pins one draft per person: a combined draft fails those rows, and extra or duplicate drafts raise this count above 3."
+        "why_justification": "With the sole-recipient rows this pins one draft per person."
       },
       "target_gym_server": "outlook-gym"
     },
@@ -1509,5 +2545,5 @@
       }
     }
   ],
-  "instruction_sha256": "7e3b19a07d5760c0d58aae58be33a5177060b995845002af6ea36d3c5d1b57f9"
+  "instruction_sha256": "edbd96bc827cf108c0af694bf4037049b23f2b30b1dfc953af04022d6b3c4db9"
 }

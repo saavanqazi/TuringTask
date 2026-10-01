@@ -1,7 +1,7 @@
 {
   "csv": {
-    "rsvp_ledger.csv": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@forgeco.com,COMING,INVITATION\nBrainstorm: New Feature,2026-05-01,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,COMING,EMAIL\nBrainstorm: New Feature,2026-05-01,rogers.catherine@protonmail.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,NOT_COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,COMING,EMAIL\nWeekly Pipeline Review,2026-05-02,ava.lopez@lumendata.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,NOT_COMING,EMAIL\nWeekly Pipeline Review,2026-05-06,jared.ellis@contoso.example,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,kenneth.hall@pemberleybank.com,COMING,INVITATION\n",
-    "tracker_fixes.csv": "meeting,date,attendee,tracker_status,status\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,COMING,OWES_ANSWER\nOKR Planning,2026-04-30,jack.henry@contoso.example,COMING,OWES_ANSWER\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,COMING,OWES_ANSWER\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,OWES_ANSWER,COMING\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,COMING,NOT_COMING\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,NOT_COMING,COMING\nWeekly Pipeline Review,2026-05-06,diego.alvarez@contoso.example,COMING,OWES_ANSWER\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,COMING,NOT_COMING\n"
+    "rsvp_ledger.csv": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@forgeco.com,COMING,INVITATION\nBrainstorm: New Feature,2026-05-01,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,COMING,EMAIL\nBrainstorm: New Feature,2026-05-01,rogers.catherine@protonmail.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,NOT_COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,COMING,EMAIL\nWeekly Pipeline Review,2026-05-02,ava.lopez@lumendata.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,diego.alvarez@contoso.example,COMING,EMAIL\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,NOT_COMING,EMAIL\nWeekly Pipeline Review,2026-05-06,jared.ellis@contoso.example,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,kenneth.hall@pemberleybank.com,COMING,INVITATION\nVendor Security Review,2026-05-07,jack.henry@contoso.example,NOT_COMING,EMAIL\nVendor Security Review,2026-05-07,jasmine.porter@contoso.example,COMING,EMAIL\nVendor Security Review,2026-05-07,jared.ellis@contoso.example,OWES_ANSWER,NONE\nVendor Security Review,2026-05-07,olivia.myers@contoso.example,COMING,INVITATION\nQ3 Roadmap Review,2026-05-11,diego.alvarez@contoso.example,COMING,INVITATION\nQ3 Roadmap Review,2026-05-11,charlotte.palmer@contoso.example,COMING,EMAIL\nQ3 Roadmap Review,2026-05-11,jenna.white@contoso.example,OWES_ANSWER,NONE\nQ3 Roadmap Review,2026-05-11,nora.ford@contoso.example,COMING,INVITATION\nQ3 Roadmap Review,2026-05-11,cameron.simpson@contoso.example,COMING,EMAIL\nHiring Panel Debrief,2026-05-15,jasmine.porter@contoso.example,COMING,INVITATION\nHiring Panel Debrief,2026-05-15,cameron.simpson@contoso.example,COMING,EMAIL\nHiring Panel Debrief,2026-05-15,olivia.myers@contoso.example,OWES_ANSWER,NONE\nHiring Panel Debrief,2026-05-15,jack.miller@contoso.example,COMING,INVITATION\nCustomer Escalation Sync,2026-05-17,jenna.white@contoso.example,OWES_ANSWER,NONE\nCustomer Escalation Sync,2026-05-17,grace.kelley@pemberleybank.com,COMING,INVITATION\nCustomer Escalation Sync,2026-05-17,nora.ford@contoso.example,OWES_ANSWER,NONE\n",
+    "tracker_fixes.csv": "meeting,date,attendee,tracker_status,status\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,COMING,OWES_ANSWER\nOKR Planning,2026-04-30,jack.henry@contoso.example,COMING,OWES_ANSWER\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,COMING,OWES_ANSWER\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,OWES_ANSWER,COMING\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,COMING,NOT_COMING\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,NOT_COMING,COMING\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,COMING,NOT_COMING\nVendor Security Review,2026-05-07,jack.henry@contoso.example,COMING,NOT_COMING\nVendor Security Review,2026-05-07,jasmine.porter@contoso.example,OWES_ANSWER,COMING\nQ3 Roadmap Review,2026-05-11,charlotte.palmer@contoso.example,NOT_COMING,COMING\nQ3 Roadmap Review,2026-05-11,cameron.simpson@contoso.example,OWES_ANSWER,COMING\nHiring Panel Debrief,2026-05-15,cameron.simpson@contoso.example,NOT_COMING,COMING\n"
   },
   "acting_user_email": "jack.spencer@contoso.example",
   "window": [
@@ -90,8 +90,8 @@
       "meeting": "Weekly Pipeline Review",
       "date": "2026-05-06",
       "attendee": "diego.alvarez@contoso.example",
-      "status": "OWES_ANSWER",
-      "source": "NONE"
+      "status": "COMING",
+      "source": "EMAIL"
     },
     {
       "meeting": "Weekly Pipeline Review",
@@ -113,6 +113,118 @@
       "attendee": "kenneth.hall@pemberleybank.com",
       "status": "COMING",
       "source": "INVITATION"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "jack.henry@contoso.example",
+      "status": "NOT_COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "jasmine.porter@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "jared.ellis@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "olivia.myers@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "diego.alvarez@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "charlotte.palmer@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "jenna.white@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "nora.ford@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "cameron.simpson@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "attendee": "jasmine.porter@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "attendee": "cameron.simpson@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "attendee": "olivia.myers@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "attendee": "jack.miller@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Customer Escalation Sync",
+      "date": "2026-05-17",
+      "attendee": "jenna.white@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Customer Escalation Sync",
+      "date": "2026-05-17",
+      "attendee": "grace.kelley@pemberleybank.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Customer Escalation Sync",
+      "date": "2026-05-17",
+      "attendee": "nora.ford@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
     }
   ],
   "tracker_fixes": [
@@ -161,18 +273,47 @@
     {
       "meeting": "Weekly Pipeline Review",
       "date": "2026-05-06",
-      "attendee": "diego.alvarez@contoso.example",
-      "tracker_status": "COMING",
-      "status": "OWES_ANSWER"
-    },
-    {
-      "meeting": "Weekly Pipeline Review",
-      "date": "2026-05-06",
       "attendee": "jenna.white@contoso.example",
       "tracker_status": "COMING",
       "status": "NOT_COMING"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "jack.henry@contoso.example",
+      "tracker_status": "COMING",
+      "status": "NOT_COMING"
+    },
+    {
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "attendee": "jasmine.porter@contoso.example",
+      "tracker_status": "OWES_ANSWER",
+      "status": "COMING"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "charlotte.palmer@contoso.example",
+      "tracker_status": "NOT_COMING",
+      "status": "COMING"
+    },
+    {
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "attendee": "cameron.simpson@contoso.example",
+      "tracker_status": "OWES_ANSWER",
+      "status": "COMING"
+    },
+    {
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "attendee": "cameron.simpson@contoso.example",
+      "tracker_status": "NOT_COMING",
+      "status": "COMING"
     }
   ],
+  "window_note": "start date in Pacific time",
   "moves": [
     {
       "meeting": "OKR Planning",
@@ -191,6 +332,10 @@
     "meeting": "Customer Advisory Board prep",
     "start": "2026-05-12",
     "note": "Cancelled on 4 May"
+  },
+  "outside_window": {
+    "meeting": "Planning Offsite Prep",
+    "start": "2026-04-26"
   },
   "email_answers": [
     {
@@ -263,7 +408,13 @@
       "meeting": "Weekly Pipeline Review",
       "date": "2026-05-06",
       "answer": "conditional",
-      "quote": "works for me as long as the forecast numbers are in by Tuesday night"
+      "quote": "works for me as long as the forecast numbers are in by Tuesday night",
+      "settled_by": {
+        "message_id": "AAMk3E7C1A95D2B48F6E3C1A95D2F48B",
+        "from": "kenneth.hall@pemberleybank.com",
+        "quote": "the forecast numbers are in",
+        "deadline": "2026-05-06T06:59:59Z"
+      }
     },
     {
       "message_id": "AAMk4E9B6C23F8A15D7E4B9C6F23A851",
@@ -272,6 +423,68 @@
       "date": "2026-05-06",
       "answer": "no",
       "quote": "Kenneth will cover the forecast for me at the pipeline review"
+    },
+    {
+      "message_id": "AAMk6D2A9F4E81B3C07D6A2F9E4B81C3",
+      "from": "jack.henry@contoso.example",
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "answer": "yes",
+      "quote": "count me in for the vendor security review on Thursday"
+    },
+    {
+      "message_id": "AAMk8F1B6D37A2E94C0F8B6D37A2C94E",
+      "from": "jack.henry@contoso.example",
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "answer": "no",
+      "quote": "Scratch that - a customer call has landed on Thursday afternoon, so I won't make the vendor review"
+    },
+    {
+      "message_id": "AAMk5C9E3B71F4A26D8C5E3B71F4D26A",
+      "from": "jasmine.porter@contoso.example",
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "answer": "yes",
+      "quote": "I'll be at the 2pm one on Thursday"
+    },
+    {
+      "message_id": "AAMk2A7F5D19C3E84B6A7F5D19C3B84E",
+      "from": "jared.ellis@contoso.example",
+      "meeting": "Vendor Security Review",
+      "date": "2026-05-07",
+      "answer": "maybe",
+      "quote": "I'll know by this evening"
+    },
+    {
+      "message_id": "AAMk1D8A4C62F9B35E7D8A4C62F9E35B",
+      "from": "charlotte.palmer@contoso.example",
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "answer": "yes",
+      "quote": "I can join Monday's 9:30 after all"
+    },
+    {
+      "message_id": "AAMk7B3D9F25E1C64A0B3D9F25E1A64C",
+      "from": "cameron.simpson@contoso.example",
+      "meeting": "Q3 Roadmap Review",
+      "date": "2026-05-11",
+      "answer": "conditional",
+      "quote": "as long as the board deck is signed off by Friday",
+      "settled_by": {
+        "message_id": "AAMk9E5B2D84A7F16C3E5B2D84A7C16F",
+        "from": "nora.ford@contoso.example",
+        "quote": "the board deck was signed off this evening",
+        "deadline": "2026-05-09T06:59:59Z"
+      }
+    },
+    {
+      "message_id": "AAMk4F2E8B51D6A93C7F2E8B51D6C93A",
+      "from": "cameron.simpson@contoso.example",
+      "meeting": "Hiring Panel Debrief",
+      "date": "2026-05-15",
+      "answer": "yes",
+      "quote": "ignore my decline for Friday's debrief"
     }
   ],
   "relayed": [
@@ -393,10 +606,82 @@
         "tracker_status": "COMING"
       },
       {
+        "line": "Vendor Security Review (Thu 7 May):",
+        "says": "Jack Henry - coming",
+        "meeting": "Vendor Security Review",
+        "date": "2026-05-07",
+        "attendee": "jack.henry@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Vendor Security Review (Thu 7 May):",
+        "says": "Jasmine Porter - no answer yet",
+        "meeting": "Vendor Security Review",
+        "date": "2026-05-07",
+        "attendee": "jasmine.porter@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Vendor Security Review (Thu 7 May):",
+        "says": "Olivia Myers - coming",
+        "meeting": "Vendor Security Review",
+        "date": "2026-05-07",
+        "attendee": "olivia.myers@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Q3 Roadmap Review (Mon 11 May):",
+        "says": "Charlotte Palmer - not coming",
+        "meeting": "Q3 Roadmap Review",
+        "date": "2026-05-11",
+        "attendee": "charlotte.palmer@contoso.example",
+        "tracker_status": "NOT_COMING"
+      },
+      {
+        "line": "Q3 Roadmap Review (Mon 11 May):",
+        "says": "Cameron Simpson - no answer yet",
+        "meeting": "Q3 Roadmap Review",
+        "date": "2026-05-11",
+        "attendee": "cameron.simpson@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Q3 Roadmap Review (Mon 11 May):",
+        "says": "Jenna White - no answer yet",
+        "meeting": "Q3 Roadmap Review",
+        "date": "2026-05-11",
+        "attendee": "jenna.white@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Hiring Panel Debrief (Fri 15 May):",
+        "says": "Cameron Simpson - not coming",
+        "meeting": "Hiring Panel Debrief",
+        "date": "2026-05-15",
+        "attendee": "cameron.simpson@contoso.example",
+        "tracker_status": "NOT_COMING"
+      },
+      {
+        "line": "Hiring Panel Debrief (Fri 15 May):",
+        "says": "Olivia Myers - no answer yet",
+        "meeting": "Hiring Panel Debrief",
+        "date": "2026-05-15",
+        "attendee": "olivia.myers@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
         "line": "Customer Advisory Board prep (Tue 12 May):",
         "says": "Jack Miller - no answer yet",
         "meeting": "Customer Advisory Board prep",
         "date": "2026-05-12",
+        "attendee": null,
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Planning Offsite Prep (Sun 26 Apr):",
+        "says": "Diego Alvarez - no answer yet",
+        "meeting": "Planning Offsite Prep",
+        "date": "2026-04-26",
         "attendee": null,
         "tracker_status": "OWES_ANSWER"
       }
@@ -406,24 +691,44 @@
     "chase": [
       "charlotte.palmer@contoso.example",
       "diego.alvarez@contoso.example",
-      "jack.henry@contoso.example"
+      "jack.henry@contoso.example",
+      "jared.ellis@contoso.example",
+      "jenna.white@contoso.example",
+      "nora.ford@contoso.example",
+      "olivia.myers@contoso.example"
     ],
     "reply_on": {
       "diego.alvarez@contoso.example": "AAMkB7F3E1A92C6D58B0F4A7E3C9D261",
       "jack.henry@contoso.example": "AAMkDDFB4210A30B7656D7D0057D2820",
-      "charlotte.palmer@contoso.example": "AAMkD61867BD0A78844C3815861A41BA"
+      "charlotte.palmer@contoso.example": "AAMkD61867BD0A78844C3815861A41BA",
+      "jared.ellis@contoso.example": "AAMk2A7F5D19C3E84B6A7F5D19C3B84E",
+      "jenna.white@contoso.example": "AAMk4E9B6C23F8A15D7E4B9C6F23A851",
+      "olivia.myers@contoso.example": "AAMkC1B1A49DD2E7AC344BA18643FFAD",
+      "nora.ford@contoso.example": "AAMk9E5B2D84A7F16C3E5B2D84A7C16F"
     },
     "needles": {
       "diego.alvarez@contoso.example": [
-        "Brainstorm",
         "OKR",
-        "Pipeline"
+        "Brainstorm"
       ],
       "jack.henry@contoso.example": [
         "OKR"
       ],
       "charlotte.palmer@contoso.example": [
         "Learning Time"
+      ],
+      "jared.ellis@contoso.example": [
+        "Vendor"
+      ],
+      "jenna.white@contoso.example": [
+        "Roadmap",
+        "Escalation"
+      ],
+      "olivia.myers@contoso.example": [
+        "Hiring"
+      ],
+      "nora.ford@contoso.example": [
+        "Escalation"
       ]
     }
   }

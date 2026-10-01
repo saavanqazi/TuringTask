@@ -35,10 +35,42 @@
         "read_mailbox"
       ],
       "name": "draft_email"
+    },
+    {
+      "id": "draft_jared_ellis",
+      "depends_on": [
+        "read_calendar",
+        "read_mailbox"
+      ],
+      "name": "draft_email"
+    },
+    {
+      "id": "draft_jenna_white",
+      "depends_on": [
+        "read_calendar",
+        "read_mailbox"
+      ],
+      "name": "draft_email"
+    },
+    {
+      "id": "draft_olivia_myers",
+      "depends_on": [
+        "read_calendar",
+        "read_mailbox"
+      ],
+      "name": "draft_email"
+    },
+    {
+      "id": "draft_nora_ford",
+      "depends_on": [
+        "read_calendar",
+        "read_mailbox"
+      ],
+      "name": "draft_email"
     }
   ],
-  "hops": 6,
+  "hops": 10,
   "chain_depth": 3,
-  "n_steps": 5,
-  "note": "hops=6 chain_depth=3 over 5 steps. The calendar read gives the meetings he runs, their required attendees and every invitation answer with its UTC time; the mailbox read gives the emailed answers, the relayed notes and Janice's tracker, which are only placed against the invitation answers and the move notes once both are in hand; each draft goes to a person the two reads together show still owing an answer, as a reply to that person's latest email."
+  "n_steps": 9,
+  "note": "hops=10 chain_depth=3 over 9 steps. A Pacific-bounded calendar read gives the nine meetings, their required attendees and every invitation answer with its UTC time; a full mailbox read (more than one default page) gives the emailed answers, the notes that settle two conditional yeses, the relayed notes and Janice's tracker; each of the seven drafts goes to a person both reads together show still owing an answer, as a reply to that person's latest email."
 }

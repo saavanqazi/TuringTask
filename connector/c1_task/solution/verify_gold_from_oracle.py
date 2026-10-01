@@ -2,7 +2,7 @@
 """Re-verify the === GOLD === block THROUGH THE SERVED GYM, from the oracle replay's own records.
 
 The interpretation of each seeded email (which meeting it is about, and whether it is a yes, a no, a maybe or a
-yes on a condition) and of each entry in Janice Gray's tracker is declared in artifact_plan.json; this script
+yes on a condition, and which later note settles that condition by when) and of each entry in Janice Gray's tracker is declared in artifact_plan.json; this script
 checks every declared email and tracker entry is really served, from that sender, with that wording, and then
 recomputes the ledger, the tracker fixes, the chase set and the reply threads from the payloads.
 
@@ -122,7 +122,16 @@ def main():
         k = (ans["meeting"], ans["date"], ans["from"])
         if k not in people:
             mismatch("email", f"email answer {ans['message_id']} is about {k}, which is not a ledger row")
-        answers[k].append((norm_ts(m["receivedDateTime"]), ans["answer"], "EMAIL"))
+        kind = ans["answer"]
+        sb = ans.get("settled_by")
+        if kind == "conditional" and sb:
+            sm = mail.get(sb["message_id"])
+            if sm is None or sender(sm) != sb["from"] or sb["quote"].lower() not in text_of(sm):
+                mismatch("settled", f"note settling {ans['message_id']} not served as declared")
+            # the condition counts as met only if the note came by the deadline (both UTC)
+            elif norm_ts(sm["receivedDateTime"]) <= norm_ts(sb["deadline"]):
+                kind = "yes"
+        answers[k].append((norm_ts(m["receivedDateTime"]), kind, "EMAIL"))
     for rel in plan["relayed"]:
         m = mail.get(rel["message_id"])
         if m is None or sender(m) != rel["from"] or sender(m) == rel["for"] or rel["quote"].lower() not in text_of(m):

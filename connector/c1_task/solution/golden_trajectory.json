@@ -4,14 +4,14 @@
     "depends_on": [],
     "name": "search_calendar",
     "server": "outlook-gym",
-    "purpose": "Every event between 27 April and 17 May 2026 with isOrganizer, isCancelled, the description (the move notes on OKR Planning and the 6 May Weekly Pipeline Review, the cancellation note on Customer Advisory Board prep), and each attendee's type, response and UTC response time. The range is required - an undated search_calendar fails on this gym.",
+    "purpose": "Every event between 27 April and 17 May 2026 Pacific (the range must be Pacific: Customer Escalation Sync starts 18 May in UTC) with isOrganizer, isCancelled, the move and cancellation notes, and each attendee's type, response and UTC response time.",
     "arguments": {
       "start_date": "2026-04-27T00:00:00-07:00",
       "end_date": "2026-05-17T23:59:59-07:00",
       "queries": [
         ""
       ],
-      "top": 50
+      "top": 100
     }
   },
   {
@@ -21,12 +21,12 @@
     ],
     "name": "search_email",
     "server": "outlook-gym",
-    "purpose": "The whole mailbox (23 messages): the emailed answers (Diego x3, Charlotte x2, Jack Miller x2, Jared, Jasmine, Jenna), the two relayed notes (Jasmine for Jack Henry, Carson for Charlotte), Janice Gray's RSVP tracker, and each chased person's most recent email of any subject.",
+    "purpose": "The whole mailbox (32 messages - more than the 25-message default page): the emailed answers, the relayed notes, the two notes that settle conditional yeses, Janice Gray's RSVP tracker, and each chased person's most recent email of any subject.",
     "arguments": {
       "queries": [
         ""
       ],
-      "top": 50
+      "top": 100
     }
   },
   {
@@ -37,11 +37,11 @@
     ],
     "name": "draft_email",
     "server": "outlook-gym",
-    "purpose": "Diego owes OKR Planning (answers predate the move), Brainstorm: New Feature (still unsure) and the 6 May Weekly Pipeline Review (acceptance predates the move; his 4 May yes is conditional): one draft on his latest email (12 May, Q3 roadmap draft).",
+    "purpose": "diego.alvarez@contoso.example owes OKR Planning (2026-04-30); Brainstorm: New Feature (2026-05-01): one draft on their latest email (AAMkB7F3E1A92C6D58B0F4A7E3C9D261).",
     "arguments": {
       "reply_to_email_id": "AAMkB7F3E1A92C6D58B0F4A7E3C9D261",
       "subject": "RE: Q3 roadmap draft",
-      "body": "Hi Diego - separate from the roadmap: I still need firm answers from you on three meetings. OKR Planning moved to Thursday 30 April at 13:25 just after you wrote, and the Weekly Pipeline Review on Wednesday 6 May moved to 08:00 after you accepted it; I know that one depends on the forecast numbers, so let me know once they're in. And I don't have a yes or no yet for Brainstorm: New Feature on Friday 1 May. Could you accept or decline all three? Thanks, Jack"
+      "body": "Hi Diego - separate from the roadmap: I still need a yes or no from you on two meetings. OKR Planning moved to Thursday 30 April at 13:25 just after you wrote, so your earlier answer was for the old slot; and I don't have a firm answer for Brainstorm: New Feature on Friday 1 May. Could you accept or decline both? Thanks, Jack"
     }
   },
   {
@@ -52,7 +52,7 @@
     ],
     "name": "draft_email",
     "server": "outlook-gym",
-    "purpose": "Jack Henry owes OKR Planning (his acceptance predates the move; Jasmine's note is relayed): draft on his latest email.",
+    "purpose": "jack.henry@contoso.example owes OKR Planning (2026-04-30): one draft on their latest email (AAMkDDFB4210A30B7656D7D0057D2820).",
     "arguments": {
       "reply_to_email_id": "AAMkDDFB4210A30B7656D7D0057D2820",
       "subject": "RE: Frontend Component Library v2 — weekly status",
@@ -67,11 +67,71 @@
     ],
     "name": "draft_email",
     "server": "outlook-gym",
-    "purpose": "Charlotte's last word on Learning Time is a maybe (Carson's note is relayed): chase it on her most recent email of all (21 May, Privacy Impact Assessments).",
+    "purpose": "charlotte.palmer@contoso.example owes Learning Time (2026-05-01): one draft on their latest email (AAMkD61867BD0A78844C3815861A41BA).",
     "arguments": {
       "reply_to_email_id": "AAMkD61867BD0A78844C3815861A41BA",
       "subject": "RE: RE: Privacy Impact Assessments — weekly status",
       "body": "Hi Charlotte - separate from this thread: your last note said maybe for Learning Time on Friday 1 May. Could you give me a firm yes or no? Thanks, Jack"
+    }
+  },
+  {
+    "id": "draft_jared_ellis",
+    "depends_on": [
+      "read_calendar",
+      "read_mailbox"
+    ],
+    "name": "draft_email",
+    "server": "outlook-gym",
+    "purpose": "jared.ellis@contoso.example owes Vendor Security Review (2026-05-07): one draft on their latest email (AAMk2A7F5D19C3E84B6A7F5D19C3B84E).",
+    "arguments": {
+      "reply_to_email_id": "AAMk2A7F5D19C3E84B6A7F5D19C3B84E",
+      "subject": "RE: Thursday clash",
+      "body": "Hi Jared - did the dentist move? I still need a yes or no for the Vendor Security Review on Thursday 7 May at 14:00. Thanks, Jack"
+    }
+  },
+  {
+    "id": "draft_jenna_white",
+    "depends_on": [
+      "read_calendar",
+      "read_mailbox"
+    ],
+    "name": "draft_email",
+    "server": "outlook-gym",
+    "purpose": "jenna.white@contoso.example owes Q3 Roadmap Review (2026-05-11); Customer Escalation Sync (2026-05-17): one draft on their latest email (AAMk4E9B6C23F8A15D7E4B9C6F23A851).",
+    "arguments": {
+      "reply_to_email_id": "AAMk4E9B6C23F8A15D7E4B9C6F23A851",
+      "subject": "RE: Wednesday's review",
+      "body": "Hi Jenna - two invitations still need an answer from you: the Q3 Roadmap Review on Monday 11 May at 9:30 and the Customer Escalation Sync on Sunday 17 May at 17:30. Could you accept or decline both? Thanks, Jack"
+    }
+  },
+  {
+    "id": "draft_olivia_myers",
+    "depends_on": [
+      "read_calendar",
+      "read_mailbox"
+    ],
+    "name": "draft_email",
+    "server": "outlook-gym",
+    "purpose": "olivia.myers@contoso.example owes Hiring Panel Debrief (2026-05-15): one draft on their latest email (AAMkC1B1A49DD2E7AC344BA18643FFAD).",
+    "arguments": {
+      "reply_to_email_id": "AAMkC1B1A49DD2E7AC344BA18643FFAD",
+      "subject": "RE: [Onboarding Program Refresh] risk log update",
+      "body": "Hi Olivia - separate from this thread: could you accept or decline the Hiring Panel Debrief on Friday 15 May at 15:00? Thanks, Jack"
+    }
+  },
+  {
+    "id": "draft_nora_ford",
+    "depends_on": [
+      "read_calendar",
+      "read_mailbox"
+    ],
+    "name": "draft_email",
+    "server": "outlook-gym",
+    "purpose": "nora.ford@contoso.example owes Customer Escalation Sync (2026-05-17): one draft on their latest email (AAMk9E5B2D84A7F16C3E5B2D84A7C16F).",
+    "arguments": {
+      "reply_to_email_id": "AAMk9E5B2D84A7F16C3E5B2D84A7C16F",
+      "subject": "RE: Board deck",
+      "body": "Hi Nora - thanks for the board deck news. You're still tentative on the Customer Escalation Sync on Sunday 17 May at 17:30; could you give me a firm yes or no? Thanks, Jack"
     }
   }
 ]

@@ -249,3 +249,41 @@ The product is about 0.2 per run.
   2. or let `tracker_fixes` include agreeing entries;
   3. or remove the cancelled meeting.
 - **3–4/4:** the per-row structure did not bite; next lever is more meetings/rows.
+
+---
+
+# Round 7: result of hardening 5, and the rethink behind hardening 6 (2026-10-01)
+
+**Battery on hardening 5 (`glm-c1-h5`):** 4/4 strict passes, 11–14 calls and 3–4k completion tokens each. The oracle scored 1.0 (117/0) and the gym data was served exactly as seeded.
+
+**Why the hardening rounds kept failing:**
+- Every lever so far was a **rule stated in the prompt**, applied to data that fits in **two tool responses**. GLM reads both, then applies the rules like a checklist, one row at a time.
+- Per-row accuracy was essentially 100%, so more rules of the same kind, or 15 rows instead of 5 numbers, change nothing.
+
+**The rethink (hardening 6):** keep the rules (QC requires them stated) but make the **data** hard to read correctly. Each trap needs more than looking up one row:
+1. **Answers that resolve across two messages, judged in Pacific time.**
+   - Diego's yes depends on "the forecast numbers … in by Tuesday night". Kenneth's note arrives at 05:40Z on 6 May, which is Tuesday 22:40 Pacific.
+   - Cameron's yes depends on "the board deck … signed off by Friday". Nora's note arrives at 02:35Z on 9 May, which is Friday 19:35 Pacific.
+
+   Read in UTC, both notes land on the next day.
+2. **Quoted text.** Jack Henry's reply ("Scratch that … I won't make the vendor review") sits above his own quoted yes.
+3. **An indirect reference.** "I'll be at the 2pm one on Thursday" has to be matched to the Vendor Security Review by day and time.
+4. **Window edges that differ between Pacific and UTC.**
+   - Customer Escalation Sync is Sunday 17 May 17:30 Pacific (18 May in UTC): in.
+   - Planning Offsite Prep is Sunday 26 April 21:00 Pacific (27 April in UTC): out.
+
+   A UTC-bounded search misses the first, and reading UTC dates keeps the second.
+5. **A mailbox bigger than one page.** It holds 32 messages, but `search_email` returns 25 by default. Olivia's only email (1 April) is on the second page.
+6. **Scale and the write-back:**
+   - 9 meetings, 31 ledger rows and 12 tracker fixes (Janice's tracker grows to 22 entries).
+   - 7 drafts, each on a different person's latest email: two are notes about other things, one from 1 April and one from the board-deck thread.
+   - 67 checks.
+
+**Prediction: 0–1/4.** Each of the cross-message and time zone traps is roughly a coin-flip-plus for a model that reads UTC dates literally. The window edge and pagination traps hit any run that takes shortcuts.
+
+**How to read the result:**
+- **0/4:** confirm every failure is one of the traps above, then ease them in this order:
+  1. move Nora's note to Friday afternoon, so it is Friday in UTC too;
+  2. give Kenneth's note a Tuesday UTC time;
+  3. drop the source column.
+- **2+/4:** the remaining lever is volume. Add a second week of meetings, so the calendar response no longer fits in one view.
