@@ -6,6 +6,7 @@ disk -- but the `file_check` verifier grades files in the workspace. Without thi
 oracle scores less than 1.0 on a task that is not actually broken, which is what happened
 on the first round of this batch (github 0.8, notion 0.6667, slack 0.8333).
 
+The CSV files are written verbatim from artifact_plan.json, the same rows the row checks are generated from.
 The xlsx workbook is built FROM THE ASSERTIONS (sheet + cell -> expected), so the cells
 the grader reads and the cells the oracle writes cannot drift apart.
 """
@@ -20,6 +21,10 @@ plan = json.loads((sol / "artifact_plan.json").read_text())
 if plan.get("report_path"):
     (ws / plan["report_path"]).write_text(plan["report"])
     print("wrote", plan["report_path"])
+
+for path, text in (plan.get("csv") or {}).items():
+    (ws / path).write_text(text)
+    print("wrote", path, "rows", text.count("\n") - 1)
 
 if plan.get("json_path"):
     (ws / plan["json_path"]).write_text(json.dumps(plan["json"], indent=2) + "\n")

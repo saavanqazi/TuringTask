@@ -1,23 +1,182 @@
 {
-  "json_path": "metrics.json",
-  "json": {
-    "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 4,
-    "people_to_chase": 3,
-    "answers_still_owed": 5,
-    "people_to_chase_who_already_emailed_me": 3
-  },
-  "gold": {
-    "meetings_i_am_running": 5,
-    "meetings_still_owed_an_answer": 4,
-    "people_to_chase": 3,
-    "answers_still_owed": 5,
-    "people_to_chase_who_already_emailed_me": 3
+  "csv": {
+    "rsvp_ledger.csv": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@forgeco.com,COMING,INVITATION\nBrainstorm: New Feature,2026-05-01,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,COMING,EMAIL\nBrainstorm: New Feature,2026-05-01,rogers.catherine@protonmail.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,NOT_COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,COMING,EMAIL\nWeekly Pipeline Review,2026-05-02,ava.lopez@lumendata.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,NOT_COMING,EMAIL\nWeekly Pipeline Review,2026-05-06,jared.ellis@contoso.example,COMING,INVITATION\nWeekly Pipeline Review,2026-05-06,kenneth.hall@pemberleybank.com,COMING,INVITATION\n",
+    "tracker_fixes.csv": "meeting,date,attendee,tracker_status,status\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,COMING,OWES_ANSWER\nOKR Planning,2026-04-30,jack.henry@contoso.example,COMING,OWES_ANSWER\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,COMING,OWES_ANSWER\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,OWES_ANSWER,COMING\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,COMING,NOT_COMING\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,NOT_COMING,COMING\nWeekly Pipeline Review,2026-05-06,diego.alvarez@contoso.example,COMING,OWES_ANSWER\nWeekly Pipeline Review,2026-05-06,jenna.white@contoso.example,COMING,NOT_COMING\n"
   },
   "acting_user_email": "jack.spencer@contoso.example",
+  "window": [
+    "2026-04-27",
+    "2026-05-17"
+  ],
+  "ledger": [
+    {
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "attendee": "diego.alvarez@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "attendee": "jack.henry@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "attendee": "eugene.dunn@pinwheellabs.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Learning Time",
+      "date": "2026-05-01",
+      "attendee": "charlotte.palmer@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Learning Time",
+      "date": "2026-05-01",
+      "attendee": "edward.clark@forgeco.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
+      "attendee": "diego.alvarez@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
+      "attendee": "jack.miller@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
+      "attendee": "rogers.catherine@protonmail.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "attendee": "jasmine.porter@contoso.example",
+      "status": "NOT_COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "attendee": "jared.ellis@contoso.example",
+      "status": "COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "attendee": "ava.lopez@lumendata.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "diego.alvarez@contoso.example",
+      "status": "OWES_ANSWER",
+      "source": "NONE"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "jenna.white@contoso.example",
+      "status": "NOT_COMING",
+      "source": "EMAIL"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "jared.ellis@contoso.example",
+      "status": "COMING",
+      "source": "INVITATION"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "kenneth.hall@pemberleybank.com",
+      "status": "COMING",
+      "source": "INVITATION"
+    }
+  ],
+  "tracker_fixes": [
+    {
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "attendee": "diego.alvarez@contoso.example",
+      "tracker_status": "COMING",
+      "status": "OWES_ANSWER"
+    },
+    {
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "attendee": "jack.henry@contoso.example",
+      "tracker_status": "COMING",
+      "status": "OWES_ANSWER"
+    },
+    {
+      "meeting": "Learning Time",
+      "date": "2026-05-01",
+      "attendee": "charlotte.palmer@contoso.example",
+      "tracker_status": "COMING",
+      "status": "OWES_ANSWER"
+    },
+    {
+      "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
+      "attendee": "jack.miller@contoso.example",
+      "tracker_status": "OWES_ANSWER",
+      "status": "COMING"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "attendee": "jasmine.porter@contoso.example",
+      "tracker_status": "COMING",
+      "status": "NOT_COMING"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "attendee": "jared.ellis@contoso.example",
+      "tracker_status": "NOT_COMING",
+      "status": "COMING"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "diego.alvarez@contoso.example",
+      "tracker_status": "COMING",
+      "status": "OWES_ANSWER"
+    },
+    {
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "attendee": "jenna.white@contoso.example",
+      "tracker_status": "COMING",
+      "status": "NOT_COMING"
+    }
+  ],
   "moves": [
     {
       "meeting": "OKR Planning",
+      "start": "2026-04-30",
       "moved_at": "2026-04-28T18:00:00Z",
       "note": "Moved on 28 April at 11:00 Pacific"
     },
@@ -28,11 +187,17 @@
       "note": "Moved on 1 May at 16:00 Pacific"
     }
   ],
+  "cancelled": {
+    "meeting": "Customer Advisory Board prep",
+    "start": "2026-05-12",
+    "note": "Cancelled on 4 May"
+  },
   "email_answers": [
     {
       "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
       "from": "diego.alvarez@contoso.example",
       "meeting": "OKR Planning",
+      "date": "2026-04-30",
       "answer": "yes",
       "quote": "count me in for tomorrow's planning session"
     },
@@ -40,6 +205,7 @@
       "message_id": "AAMk8B3F6D20E1A94C7B5E0F2A9C6D14",
       "from": "diego.alvarez@contoso.example",
       "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
       "answer": "maybe",
       "quote": "Still not sure about the feature brainstorm on Friday"
     },
@@ -47,6 +213,7 @@
       "message_id": "AAMkC4E7A19B2D6F038E5A7C1B9D2F63",
       "from": "charlotte.palmer@contoso.example",
       "meeting": "Learning Time",
+      "date": "2026-05-01",
       "answer": "no",
       "quote": "I won't be able to make Friday's learning session"
     },
@@ -54,6 +221,7 @@
       "message_id": "AAMk3B9D5F28A1C74E0B6D3F8A2C5E91",
       "from": "charlotte.palmer@contoso.example",
       "meeting": "Learning Time",
+      "date": "2026-05-01",
       "answer": "maybe",
       "quote": "maybe I can make tomorrow's learning session after all"
     },
@@ -61,6 +229,7 @@
       "message_id": "AAMkE2A9C5F71B3D48A6E0C2F7B1D594",
       "from": "jack.miller@contoso.example",
       "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
       "answer": "maybe",
       "quote": "I'll try to make the feature brainstorm on Friday but I can't promise"
     },
@@ -68,10 +237,171 @@
       "message_id": "AAMk7C2E9A41F3B06D8E2A5C9F1B7D30",
       "from": "jack.miller@contoso.example",
       "meeting": "Brainstorm: New Feature",
+      "date": "2026-05-01",
       "answer": "yes",
       "quote": "count me in for the feature brainstorm on Friday"
+    },
+    {
+      "message_id": "AAMk1F6B8E3A20C9D74B1F5E8A3C0D72",
+      "from": "jared.ellis@contoso.example",
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "answer": "yes",
+      "quote": "I can make the pipeline review on the 2nd"
+    },
+    {
+      "message_id": "AAMk2C8F4A61D9E37B05C2F8A4D16E93",
+      "from": "jasmine.porter@contoso.example",
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-02",
+      "answer": "yes",
+      "quote": "count me in for Saturday's pipeline review"
+    },
+    {
+      "message_id": "AAMkF5B2D9E64A1C38F0B5D2E9A47C16",
+      "from": "diego.alvarez@contoso.example",
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "answer": "conditional",
+      "quote": "works for me as long as the forecast numbers are in by Tuesday night"
+    },
+    {
+      "message_id": "AAMk4E9B6C23F8A15D7E4B9C6F23A851",
+      "from": "jenna.white@contoso.example",
+      "meeting": "Weekly Pipeline Review",
+      "date": "2026-05-06",
+      "answer": "no",
+      "quote": "Kenneth will cover the forecast for me at the pipeline review"
     }
   ],
+  "relayed": [
+    {
+      "message_id": "AAMk9E4A1C73B5D20F8A6C4E1B9D3F57",
+      "from": "jasmine.porter@contoso.example",
+      "for": "jack.henry@contoso.example",
+      "meeting": "OKR Planning",
+      "date": "2026-04-30",
+      "quote": "he says the new OKR Planning time works for him"
+    },
+    {
+      "message_id": "AAMk6A2D8F15C9B34E7A0D6F2C8B4E13",
+      "from": "carson.flores@contoso.example",
+      "for": "charlotte.palmer@contoso.example",
+      "meeting": "Learning Time",
+      "date": "2026-05-01",
+      "quote": "she'll definitely be at the learning session today"
+    }
+  ],
+  "tracker": {
+    "message_id": "AAMk9A3D7F52B1E84C6A9D3F7B52E1C4",
+    "from": "janice.gray@contoso.example",
+    "entries": [
+      {
+        "line": "OKR Planning (Thu 30 Apr):",
+        "says": "Diego Alvarez - coming",
+        "meeting": "OKR Planning",
+        "date": "2026-04-30",
+        "attendee": "diego.alvarez@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "OKR Planning (Thu 30 Apr):",
+        "says": "Jack Henry - coming (Jasmine passed it on)",
+        "meeting": "OKR Planning",
+        "date": "2026-04-30",
+        "attendee": "jack.henry@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "OKR Planning (Thu 30 Apr):",
+        "says": "Eugene Dunn - coming",
+        "meeting": "OKR Planning",
+        "date": "2026-04-30",
+        "attendee": "eugene.dunn@pinwheellabs.com",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Learning Time (Fri 1 May):",
+        "says": "Charlotte Palmer - coming (Carson let me know)",
+        "meeting": "Learning Time",
+        "date": "2026-05-01",
+        "attendee": "charlotte.palmer@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Brainstorm: New Feature (Fri 1 May):",
+        "says": "Diego Alvarez - no answer yet",
+        "meeting": "Brainstorm: New Feature",
+        "date": "2026-05-01",
+        "attendee": "diego.alvarez@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Brainstorm: New Feature (Fri 1 May):",
+        "says": "Jack Miller - no answer yet",
+        "meeting": "Brainstorm: New Feature",
+        "date": "2026-05-01",
+        "attendee": "jack.miller@contoso.example",
+        "tracker_status": "OWES_ANSWER"
+      },
+      {
+        "line": "Brainstorm: New Feature (Fri 1 May):",
+        "says": "Jack Henry - coming",
+        "meeting": "Brainstorm: New Feature",
+        "date": "2026-05-01",
+        "attendee": null,
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Weekly Pipeline Review (Sat 2 May):",
+        "says": "Jasmine Porter - coming",
+        "meeting": "Weekly Pipeline Review",
+        "date": "2026-05-02",
+        "attendee": "jasmine.porter@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Weekly Pipeline Review (Sat 2 May):",
+        "says": "Jared Ellis - not coming",
+        "meeting": "Weekly Pipeline Review",
+        "date": "2026-05-02",
+        "attendee": "jared.ellis@contoso.example",
+        "tracker_status": "NOT_COMING"
+      },
+      {
+        "line": "Weekly Pipeline Review (Wed 6 May):",
+        "says": "Diego Alvarez - coming",
+        "meeting": "Weekly Pipeline Review",
+        "date": "2026-05-06",
+        "attendee": "diego.alvarez@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Weekly Pipeline Review (Wed 6 May):",
+        "says": "Jenna White - coming",
+        "meeting": "Weekly Pipeline Review",
+        "date": "2026-05-06",
+        "attendee": "jenna.white@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Weekly Pipeline Review (Wed 6 May):",
+        "says": "Jared Ellis - coming",
+        "meeting": "Weekly Pipeline Review",
+        "date": "2026-05-06",
+        "attendee": "jared.ellis@contoso.example",
+        "tracker_status": "COMING"
+      },
+      {
+        "line": "Customer Advisory Board prep (Tue 12 May):",
+        "says": "Jack Miller - no answer yet",
+        "meeting": "Customer Advisory Board prep",
+        "date": "2026-05-12",
+        "attendee": null,
+        "tracker_status": "OWES_ANSWER"
+      }
+    ]
+  },
   "write_back": {
     "chase": [
       "charlotte.palmer@contoso.example",
@@ -96,19 +426,5 @@
         "Learning Time"
       ]
     }
-  },
-  "relayed": [
-    {
-      "message_id": "AAMk9E4A1C73B5D20F8A6C4E1B9D3F57",
-      "from": "jasmine.porter@contoso.example",
-      "for": "jack.henry@contoso.example",
-      "meeting": "OKR Planning"
-    },
-    {
-      "message_id": "AAMk6A2D8F15C9B34E7A0D6F2C8B4E13",
-      "from": "carson.flores@contoso.example",
-      "for": "charlotte.palmer@contoso.example",
-      "meeting": "Learning Time"
-    }
-  ]
+  }
 }

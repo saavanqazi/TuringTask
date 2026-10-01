@@ -6,28 +6,7 @@
       "name": "search_calendar"
     },
     {
-      "id": "mail_from_charlotte_palmer",
-      "depends_on": [
-        "read_calendar"
-      ],
-      "name": "search_email"
-    },
-    {
-      "id": "mail_from_diego_alvarez",
-      "depends_on": [
-        "read_calendar"
-      ],
-      "name": "search_email"
-    },
-    {
-      "id": "mail_from_jack_henry",
-      "depends_on": [
-        "read_calendar"
-      ],
-      "name": "search_email"
-    },
-    {
-      "id": "mail_from_jack_miller",
+      "id": "read_mailbox",
       "depends_on": [
         "read_calendar"
       ],
@@ -37,7 +16,7 @@
       "id": "draft_diego_alvarez",
       "depends_on": [
         "read_calendar",
-        "mail_from_diego_alvarez"
+        "read_mailbox"
       ],
       "name": "draft_email"
     },
@@ -45,7 +24,7 @@
       "id": "draft_jack_henry",
       "depends_on": [
         "read_calendar",
-        "mail_from_jack_henry"
+        "read_mailbox"
       ],
       "name": "draft_email"
     },
@@ -53,13 +32,13 @@
       "id": "draft_charlotte_palmer",
       "depends_on": [
         "read_calendar",
-        "mail_from_charlotte_palmer"
+        "read_mailbox"
       ],
       "name": "draft_email"
     }
   ],
-  "hops": 7,
+  "hops": 6,
   "chain_depth": 3,
-  "n_steps": 8,
-  "note": "hops=7 chain_depth=3 over 8 steps. Each mail search takes an address only the calendar read supplies; whether a person is chased depends on the move notes (Pacific) against the UTC response times from the calendar read and on the Pacific-time dates and wording of their emails; each draft replies to that person's latest email."
+  "n_steps": 5,
+  "note": "hops=6 chain_depth=3 over 5 steps. The calendar read gives the meetings he runs, their required attendees and every invitation answer with its UTC time; the mailbox read gives the emailed answers, the relayed notes and Janice's tracker, which are only placed against the invitation answers and the move notes once both are in hand; each draft goes to a person the two reads together show still owing an answer, as a reply to that person's latest email."
 }

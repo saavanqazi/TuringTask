@@ -183,3 +183,69 @@ The scope trap alone failed 1 of 4 runs.
 **How to read the result:**
 - **0/4:** check that every failure is W18–W23 and fair, then soften one trap (drop Diego's roadmap email first).
 - **3–4/4:** stop hardening. Report the 3/4 (or 4/4) honestly and decide with the lead: the client accepts 3/4, and discarding is the alternative.
+
+---
+
+# Round 6: result of hardening 4, the accepted reference, and prediction for hardening 5 (2026-10-01)
+
+**Battery on hardening 4 (`glm-c1-h4`):** 4/4 strict passes, 12–14 calls and about 3k completion tokens each. The oracle scored 1.0. No crashes.
+- Every run did one ranged calendar read and one to four mail searches. Then it applied the five stated rules correctly, including both relayed notes.
+- **Lesson:** with five numbers to report and every fact in two tool responses, GLM gets every rule right. More rules of the same kind will not change that.
+
+**What the accepted reference (`the-pin-that-never-got-closed-out`) shows:**
+- The gold is an exact per-item list: 11 rows, 4 labels, each row checked on its own.
+- QC made the trainer disclose every hidden rule in the prompt (rounds 5–9), so the rules have to be stated.
+- Its GLM battery came out 1/4.
+- The hardness comes from many independently checked rows, not from secret rules.
+
+**Change (hardening 5):** applies all five of the user's levers.
+- **Exact lists instead of counts.** `metrics.json` is gone.
+  - `rsvp_ledger.csv` has one row for every required attendee of every meeting he runs: 15 rows, each with a status (COMING / NOT_COMING / OWES_ANSWER) and a source (INVITATION / EMAIL / NONE). Every row is checked on its own with a whole-row regex.
+  - Every attendee now matters, not just the ones who owe, so the agent has to read everyone's mail.
+- **A second source to reconcile.** Janice Gray's RSVP tracker email has 13 entries. `tracker_fixes.csv` must list exactly the 8 that are wrong, with her status and the correct one. It leaves out 3 entries that agree with the ledger and 2 that are not on it: an optional attendee and a cancelled meeting.
+- **Interpretive rules instead of thresholds** (all stated):
+  - the last answer on either channel wins;
+  - a yes that depends on something still unsettled is not an answer;
+  - someone else going in your place means you are not coming;
+  - a person is their email address, not their display name.
+- **Decoys with the exclusion rule stated:**
+  - **Cancelled meeting:** a new meeting, Customer Advisory Board prep, organised by him with three people unanswered or tentative.
+  - **Display names:** five external attendees are shown as "Jack Spencer".
+  - **Duplicate address:** eugene.dunn is listed twice on OKR Planning.
+  - **Optional attendees** appear in Janice's tracker.
+- **No hints:** dropped the "How you work is checked" paragraph and the worked examples ("tomorrow", "11:00").
+- **New seeded traps:**
+
+  | Who | Meeting | What was seeded | Correct row | Most likely wrong answer |
+  |---|---|---|---|---|
+  | Jasmine Porter | 2 May review | emailed yes on 30 Apr, then declined the invitation on 1 May | NOT_COMING, INVITATION | the h4 habit "email overrides the invitation" |
+  | Jared Ellis | 2 May review | declined on 29 Apr, then emailed yes on 30 Apr | COMING, EMAIL | (reads both channels in time order) |
+  | Diego | 6 May review | 4 May email: "works for me as long as the forecast numbers are in" | OWES_ANSWER | treating the conditional yes as an answer |
+  | Jenna White | 6 May review | 5 May email: "Kenneth will cover the forecast for me" | NOT_COMING, EMAIL | reading her own note as a relayed one |
+
+  Jenna's case also adds a fourth draft if the agent gets it wrong.
+- **Gold:**
+  - the 15 ledger rows and 8 fixes are in `task.toml`;
+  - the same 3 drafts as before (Diego, Jack Henry, Charlotte, each on their latest email);
+  - 39 checks, weight 28.75.
+
+**Prediction: 1/4 (range 0–2).**
+
+| Point to get right | Chance per run |
+|---|---|
+| 15-row enumeration | about 0.85 |
+| Jasmine | about 0.75 |
+| Jenna | about 0.8 |
+| Diego conditional | about 0.85 |
+| source column | about 0.85 |
+| tracker fixes | about 0.8 |
+| the older traps | about 0.9 |
+
+The product is about 0.2 per run.
+
+**How to read the result:**
+- **0/4:** check that every failure is one of the traps above and fair, then ease one lever. In order:
+  1. drop the source column;
+  2. or let `tracker_fixes` include agreeing entries;
+  3. or remove the cancelled meeting.
+- **3–4/4:** the per-row structure did not bite; next lever is more meetings/rows.

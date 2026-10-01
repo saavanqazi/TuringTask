@@ -3,13 +3,17 @@
 
 Patches the gym's synthetic snapshot, Synthetic_db.db, which every /reset copies into the
 per-run database, for Jack Spencer (user 46):
-  * ten inbox messages (some people answer meeting invitations by email, some more than once, some
-    relay another person's answer, and some are about something else);
+  * fourteen inbox messages: people answering meeting invitations by email (some more than once,
+    one with a yes that depends on something unsettled, one sending someone in their place), two
+    colleagues relaying someone else's answer, his assistant's RSVP tracker, and mail about other things;
   * his copies of OKR Planning and of the 6 May Weekly Pipeline Review: a note that each was moved
-    (with the Pacific time of the move), created/modified times to match, and UTC response times
-    on their attendees, some before and some after the move. Every before/after is the same
-    whether Pacific time is taken as UTC-7 (correct, daylight time) or UTC-8; it only flips if the
-    UTC clock time is read as if it were Pacific.
+    (with the Pacific time of the move), created/modified times to match;
+  * UTC response times on the attendees of all five meetings he runs in the window (so an answer on the
+    invitation can be ordered against an email), Jasmine Porter's decline of the 2 May Weekly Pipeline
+    Review, and created/modified times on the three unmoved meetings that predate every answer;
+  * one more meeting he organised and then cancelled (Customer Advisory Board prep, 12 May).
+Every before/after is the same whether Pacific time is taken as UTC-7 (correct, daylight time) or
+UTC-8; it only flips if the UTC clock time is read as if it were Pacific.
 The build fails (non-zero exit) if the snapshot has drifted from the rows this task was
 designed against, if any new id or timestamp collides, or if the rows are not visible
 afterwards. Re-running it on an already patched snapshot also fails.
@@ -25,6 +29,10 @@ TEMPLATE_ID = "AAMkD61867BD0A78844C3815861A41BA"  # Charlotte's existing message
 JACK_HENRY_MSG = "AAMkDDFB4210A30B7656D7D0057D2820"
 OKR = "AE3EC3B6C974C7331A84246F23D559"
 WPR6 = "AE0B85738C75DE79357B3C2BCF0910"
+WPR2 = "AE59394F0B3DD5862F926865364621"
+LT = "AEEC8DE4AA60FE12696483F21D7BCC"
+BS = "AEE3F39B45109EF1AA29F2F9C5D6F9"
+CAB = "AE7C2F19B4D03E86A5C1F7B92D4E68"   # new: organised by him, then cancelled
 
 # event id -> (subject, body, created UTC, modified UTC = the move, {(name, address): response time UTC})
 MOVES = {
@@ -49,6 +57,54 @@ MOVES = {
                ("Jack Spencer", "kenneth.hall@pemberleybank.com"): "2026-05-02 01:30:00",  # accepted 18:30 PDT: after
            }),
 }
+
+# the three meetings that were never moved: created/modified before every answer, and a UTC time on each
+# answer; (name, address) -> (response or None to keep it, time)
+UNMOVED = {
+    LT: ("Learning Time", "2026-04-24 17:10:00", {
+        ("Jack Spencer", "jack.spencer@contoso.example"): (None, "2026-04-24 17:10:00"),
+        ("Jack Spencer", "edward.clark@forgeco.com"): (None, "2026-04-27 15:00:00"),
+    }),
+    BS: ("Brainstorm: New Feature", "2026-04-24 17:20:00", {
+        ("Jack Spencer", "jack.spencer@contoso.example"): (None, "2026-04-24 17:20:00"),
+        ("Diego Alvarez", "diego.alvarez@contoso.example"): (None, "2026-04-27 18:00:00"),    # tentative
+        ("Jack Henry", "jack.henry@contoso.example"): (None, "2026-04-27 19:10:00"),          # optional
+        ("Jack Miller", "jack.miller@contoso.example"): (None, "2026-04-28 20:00:00"),        # tentative, then two emails
+        ("Jack Spencer", "rogers.catherine@protonmail.com"): (None, "2026-04-27 21:00:00"),
+        ("Isla Hughes", "rebecca.jackson@live.com"): (None, "2026-04-28 16:30:00"),           # optional
+    }),
+    WPR2: ("Weekly Pipeline Review", "2026-04-24 17:30:00", {
+        ("Jack Spencer", "jack.spencer@contoso.example"): (None, "2026-04-24 17:30:00"),
+        ("Jasmine Porter", "jasmine.porter@contoso.example"): ("declined", "2026-05-01 20:00:00"),  # after her emailed yes
+        ("Jared Ellis", "jared.ellis@contoso.example"): (None, "2026-04-29 23:00:00"),        # declined, before his emailed yes
+        ("Jack Miller", "jack.miller@contoso.example"): (None, "2026-04-28 15:00:00"),        # optional
+        ("Jack Spencer", "ava.lopez@lumendata.com"): (None, "2026-04-28 16:00:00"),
+    }),
+}
+
+# a meeting he organised in the window and then cancelled; attendees (name, address, type, response, time)
+CAB_EVENT = {
+    "subject": "Customer Advisory Board prep",
+    "body": "Customer Advisory Board prep for Jack Spencer. Cancelled on 4 May: we will cover this at the June offsite instead.",
+    "start": "2026-05-12 17:00:00", "end": "2026-05-12 17:45:00",
+    "created": "2026-04-24 18:00:00", "modified": "2026-05-04 16:00:00",
+    "ical_uid": "c4b7e2a9-5d13-4f86-a0c2-7e9b1d3f5a64@contoso.example",
+    "attendees": [
+        ("Jack Spencer", ME, "required", "organizer", "2026-04-24 18:00:00"),
+        ("Jack Miller", "jack.miller@contoso.example", "required", "notResponded", None),
+        ("Jenna White", "jenna.white@contoso.example", "required", "notResponded", None),
+        ("Charlotte Palmer", "charlotte.palmer@contoso.example", "required", "tentativelyAccepted", "2026-04-27 16:20:00"),
+    ],
+}
+
+TRACKER = ("Hi Jack, here is my RSVP tracker for your meetings as of this morning.\n"
+           "OKR Planning (Thu 30 Apr): Diego Alvarez - coming; Jack Henry - coming (Jasmine passed it on); Eugene Dunn - coming.\n"
+           "Learning Time (Fri 1 May): Charlotte Palmer - coming (Carson let me know).\n"
+           "Brainstorm: New Feature (Fri 1 May): Diego Alvarez - no answer yet; Jack Miller - no answer yet; Jack Henry - coming.\n"
+           "Weekly Pipeline Review (Sat 2 May): Jasmine Porter - coming; Jared Ellis - not coming.\n"
+           "Weekly Pipeline Review (Wed 6 May): Diego Alvarez - coming; Jenna White - coming; Jared Ellis - coming.\n"
+           "Customer Advisory Board prep (Tue 12 May): Jack Miller - no answer yet.\n"
+           "Janice")
 
 CH_CONV = "CONV9C1F7E32B5A48D06C3F1A9E52D87"
 JM_CONV = "CONV4F8D2A63C9E17B05D4A8F2C61E39"
@@ -103,6 +159,26 @@ MESSAGES = [
      "from_name": "Diego Alvarez", "from_address": "diego.alvarez@contoso.example", "subject": "Q3 roadmap draft",
      "text": "Hi Jack, the Q3 roadmap draft is in the shared folder. Comments welcome before Friday. Diego",
      "received": "2026-05-12 16:05:00"},
+    {"id": "AAMk2C8F4A61D9E37B05C2F8A4D16E93", "conversation_id": "CONV5A1E8C42F7D39B06A1E5C8F42D71",
+     "internet_message_id": "<M951.0@contoso.example>", "reply_to": None,
+     "from_name": "Jasmine Porter", "from_address": "jasmine.porter@contoso.example", "subject": "Saturday review",
+     "text": "Hi Jack, count me in for Saturday's pipeline review, I'll bring the partner numbers. Jasmine",
+     "received": "2026-04-30 18:34:00"},
+    {"id": "AAMkF5B2D9E64A1C38F0B5D2E9A47C16", "conversation_id": "CONV7D4A1F85C2E96B03D7A4F1C85E29",
+     "internet_message_id": "<M952.0@contoso.example>", "reply_to": None,
+     "from_name": "Diego Alvarez", "from_address": "diego.alvarez@contoso.example", "subject": "Wednesday",
+     "text": "Hi Jack, Wednesday's pipeline review works for me as long as the forecast numbers are in by Tuesday night. I'll confirm once they are. Diego",
+     "received": "2026-05-04 17:03:00"},
+    {"id": "AAMk9A3D7F52B1E84C6A9D3F7B52E1C4", "conversation_id": "CONV6E2B9D53A8F14C07E6B2D9A53F84",
+     "internet_message_id": "<M954.0@contoso.example>", "reply_to": None,
+     "from_name": "Janice Gray", "from_address": "janice.gray@contoso.example", "subject": "RSVP tracker",
+     "text": TRACKER,
+     "received": "2026-05-05 16:02:00"},
+    {"id": "AAMk4E9B6C23F8A15D7E4B9C6F23A851", "conversation_id": "CONV2B7E4A96D1F38C05B2E7A4D96F13",
+     "internet_message_id": "<M953.0@contoso.example>", "reply_to": None,
+     "from_name": "Jenna White", "from_address": "jenna.white@contoso.example", "subject": "Wednesday's review",
+     "text": "Hi Jack, I'm at the customer offsite all day Wednesday, so Kenneth will cover the forecast for me at the pipeline review. Jenna",
+     "received": "2026-05-05 20:07:00"},
 ]
 
 
@@ -138,12 +214,27 @@ EXPECTED_ATTENDEES = {
            ("Jenna White", "jenna.white@contoso.example", "required", "accepted"),
            ("Jared Ellis", "jared.ellis@contoso.example", "required", "accepted"),
            ("Jack Spencer", "kenneth.hall@pemberleybank.com", "required", "accepted")},
+    LT: {("Jack Spencer", ME, "required", "organizer"),
+         ("Charlotte Palmer", "charlotte.palmer@contoso.example", "required", "notResponded"),
+         ("Jack Spencer", "edward.clark@forgeco.com", "required", "accepted")},
+    BS: {("Jack Spencer", ME, "required", "organizer"),
+         ("Diego Alvarez", "diego.alvarez@contoso.example", "required", "tentativelyAccepted"),
+         ("Jack Henry", "jack.henry@contoso.example", "optional", "accepted"),
+         ("Jack Miller", "jack.miller@contoso.example", "required", "tentativelyAccepted"),
+         ("Jack Spencer", "rogers.catherine@protonmail.com", "required", "accepted"),
+         ("Isla Hughes", "rebecca.jackson@live.com", "optional", "tentativelyAccepted")},
+    WPR2: {("Jack Spencer", ME, "required", "organizer"),
+           ("Jasmine Porter", "jasmine.porter@contoso.example", "required", "accepted"),
+           ("Jared Ellis", "jared.ellis@contoso.example", "required", "declined"),
+           ("Jack Miller", "jack.miller@contoso.example", "optional", "accepted"),
+           ("Jack Spencer", "ava.lopez@lumendata.com", "required", "accepted")},
 }
-for ev_id, (subject, _, _, _, _) in MOVES.items():
+SUBJECTS = {**{k: v[0] for k, v in MOVES.items()}, **{k: v[0] for k, v in UNMOVED.items()}}
+for ev_id, subject in SUBJECTS.items():
     ev = cur.execute("SELECT subject, user_id, is_organizer, is_cancelled, body_content FROM events WHERE id=?", (ev_id,)).fetchone()
     if ev is None or ev["subject"] != subject or ev["user_id"] != USER_ID or not ev["is_organizer"] or ev["is_cancelled"]:
         fail(f"{subject} event {ev_id} drifted")
-    if "Moved on" in (ev["body_content"] or ""):
+    if "Moved on" in (ev["body_content"] or "") or "Cancelled on" in (ev["body_content"] or ""):
         fail(f"{subject} already patched")
     got = {(r[0], r[1].lower(), r[2], r[3]) for r in
            cur.execute("SELECT name, address, attendee_type, response FROM event_attendees WHERE event_id=?", (ev_id,))}
@@ -166,6 +257,12 @@ for m in MESSAGES:
         fail(f"timestamp collision at {m['received']}")
 
 
+if cur.execute("SELECT 1 FROM events WHERE id=? OR ical_uid=?", (CAB, CAB_EVENT["ical_uid"])).fetchone():
+    fail("cancelled meeting id or iCalUId collision")
+if cur.execute("SELECT 1 FROM events WHERE user_id=? AND subject=?", (USER_ID, CAB_EVENT["subject"])).fetchone():
+    fail("cancelled meeting subject already present")
+
+
 def ts_like(sample, s):
     return s.replace(" ", "T") if "T" in str(sample) else s + ".000000"
 
@@ -180,7 +277,7 @@ for m in MESSAGES:
         "internet_message_id": m["internet_message_id"],
         "in_reply_to_message_id": m["reply_to"], "forwarded_from_message_id": None,
         "subject": m["subject"], "body_preview": m["text"][:255],
-        "body_content": f"<html><body><p>{m['text']}</p></body></html>", "body_content_type": "html", "body_text": m["text"],
+        "body_content": "<html><body><p>" + m["text"].replace("\n", "<br>\n") + "</p></body></html>", "body_content_type": "html", "body_text": m["text"],
         "sender_name": m["from_name"], "sender_address": m["from_address"],
         "from_name": m["from_name"], "from_address": m["from_address"],
         "importance": "normal", "is_read": 1, "is_draft": 0, "has_attachments": 0,
@@ -205,6 +302,51 @@ for ev_id, (subject, note, created, modified, times) in MOVES.items():
                         (ts_like(ev_tpl, when), ev_id, name, addr)).rowcount
         if n != 1:
             fail(f"{subject}: response time for {name} <{addr}> matched {n} rows")
+
+# 3c. the unmoved meetings: created/modified before every answer, a time on each answer, Jasmine's decline
+for ev_id, (subject, created, times) in UNMOVED.items():
+    cur.execute("UPDATE events SET created_datetime=?, last_modified_datetime=?, response_status_time=? WHERE id=?",
+                (ts_like(ev_tpl, created), ts_like(ev_tpl, created), ts_like(ev_tpl, created), ev_id))
+    for (name, addr), (resp, when) in times.items():
+        if resp is None:
+            n = cur.execute("UPDATE event_attendees SET response_time=? WHERE event_id=? AND name=? AND lower(address)=?",
+                            (ts_like(ev_tpl, when), ev_id, name, addr)).rowcount
+        else:
+            n = cur.execute("UPDATE event_attendees SET response=?, response_time=? WHERE event_id=? AND name=? AND lower(address)=?",
+                            (resp, ts_like(ev_tpl, when), ev_id, name, addr)).rowcount
+        if n != 1:
+            fail(f"{subject}: response time for {name} <{addr}> matched {n} rows")
+
+# 3d. the cancelled meeting: every column copied from OKR Planning's row, then overridden
+ev_row = dict(cur.execute("SELECT * FROM events WHERE id=?", (OKR,)).fetchone())
+ev_row.update({
+    "id": CAB, "subject": CAB_EVENT["subject"], "body_preview": CAB_EVENT["body"][:512],
+    "body_content": CAB_EVENT["body"], "body_content_type": "text",
+    "start_datetime": ts_like(ev_tpl, CAB_EVENT["start"]), "end_datetime": ts_like(ev_tpl, CAB_EVENT["end"]),
+    "is_cancelled": 1, "is_organizer": 1, "series_master_id": None, "recurrence": None,
+    "ical_uid": CAB_EVENT["ical_uid"], "transaction_id": None,
+    "web_link": f"https://outlook.office.com/calendar/item/{CAB}",
+    "online_meeting_join_url": None, "online_meeting_conference_id": None,
+    "response_status": "organizer", "response_status_time": ts_like(ev_tpl, CAB_EVENT["created"]),
+    "created_datetime": ts_like(ev_tpl, CAB_EVENT["created"]),
+    "last_modified_datetime": ts_like(ev_tpl, CAB_EVENT["modified"]),
+})
+ev_cols = list(ev_row.keys())
+cur.execute(f"INSERT INTO events ({', '.join(ev_cols)}) VALUES ({', '.join('?' for _ in ev_cols)})", [ev_row[c] for c in ev_cols])
+att_tpl = dict(cur.execute("SELECT * FROM event_attendees WHERE event_id=? ORDER BY id LIMIT 1", (OKR,)).fetchone())
+next_id = cur.execute("SELECT MAX(id) FROM event_attendees").fetchone()[0] + 1
+for i, (name, addr, kind, resp, when) in enumerate(CAB_EVENT["attendees"]):
+    row = dict(att_tpl)
+    row.update({"id": next_id + i, "event_id": CAB, "attendee_type": kind, "name": name, "address": addr,
+                "response": resp, "response_time": ts_like(ev_tpl, when) if when else att_tpl["response_time"],
+                "proposed_new_time": None})
+    if when is None:
+        # the gym's own unanswered rows: copy the time column from one of them
+        un = cur.execute("SELECT response_time FROM event_attendees WHERE response='notResponded' LIMIT 1").fetchone()
+        row["response_time"] = un[0] if un else None
+    a_cols = list(row.keys())
+    cur.execute(f"INSERT INTO event_attendees ({', '.join(a_cols)}) VALUES ({', '.join('?' for _ in a_cols)})",
+                [row[c] for c in a_cols])
 con.commit()
 
 # 4. post-conditions
@@ -218,7 +360,16 @@ for m in MESSAGES:
 for ev_id, (subject, note, *_rest) in MOVES.items():
     if cur.execute("SELECT body_content FROM events WHERE id=?", (ev_id,)).fetchone()[0] != note:
         fail(f"post-check: move note on {subject}")
+if cur.execute("SELECT response FROM event_attendees WHERE event_id=? AND lower(address)='jasmine.porter@contoso.example'",
+               (WPR2,)).fetchone()[0] != "declined":
+    fail("post-check: Jasmine Porter's decline")
+cab = cur.execute("SELECT is_cancelled, is_organizer, user_id FROM events WHERE id=?", (CAB,)).fetchone()
+if cab is None or tuple(cab) != (1, 1, USER_ID):
+    fail("post-check: cancelled meeting")
+if cur.execute("SELECT COUNT(*) FROM event_attendees WHERE event_id=?", (CAB,)).fetchone()[0] != len(CAB_EVENT["attendees"]):
+    fail("post-check: cancelled meeting attendees")
 if cur.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
     fail("integrity_check")
 con.close()
-print(f"seeded {len(MESSAGES)} messages and {len(MOVES)} meeting moves into user {USER_ID}'s data in {DB}")
+print(f"seeded {len(MESSAGES)} messages, {len(MOVES)} meeting moves, answer times on {len(MOVES) + len(UNMOVED)} meetings "
+      f"and 1 cancelled meeting into user {USER_ID}'s data in {DB}")
