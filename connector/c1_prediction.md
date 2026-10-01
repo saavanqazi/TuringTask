@@ -287,3 +287,26 @@ The product is about 0.2 per run.
   2. give Kenneth's note a Tuesday UTC time;
   3. drop the source column.
 - **2+/4:** the remaining lever is volume. Add a second week of meetings, so the calendar response no longer fits in one view.
+
+---
+
+# Round 8: result of hardening 6 (2026-10-01)
+
+**Battery on hardening 6 (`glm-c1-h6`):** **2/4 strict passes** (1.0, 1.0, 0.0293, 0.0293). Task checksum `b35c3f8d…`. The oracle scored 1.0 (201 passed / 0 failed) and the gold verify script re-derived 9 meetings, 31 rows and 12 fixes. The probe showed every seeded item exactly as designed. No exceptions.
+
+**The two passes (`BaFoQu9`, `EqJ6FyU`) are clean:**
+- every ledger row, fix row and draft was right, so every trap (cross-message conditions in Pacific time, quoted reply, "2pm one on Thursday", window edges, 7 latest-email threads) was solved;
+- 8 steps each, about 520–560k prompt tokens and 4.6–4.9k completion tokens.
+
+**The two failures (`b9EiDKv`, `xEfZG6g`) are not wrong answers. Both are output-length cut-offs:**
+- After reading the calendar and the mail, each run tried to work out all 31 rows, 22 tracker entries and 7 drafts in one turn.
+- That turn hit the 32k-token reasoning limit. opencode logs `step_finish reason: "length"` with about 32,000 reasoning tokens and an empty message.
+- No file was written and no draft was made, so only the "nothing sent" and trace-read checks passed (0.0293).
+- Their reasoning up to the cut-off was correct; one had already listed all 12 tracker fixes.
+
+**What this means:**
+- The h6 data no longer fits in GLM's one-turn reasoning budget. Even a passing run used 31,638 reasoning tokens in its biggest turn, 362 under the limit.
+- So the difficulty now comes from **volume**: an agent has to work in steps (write the ledger, then the fixes, then the drafts) rather than reason through everything at once.
+- That is a real agent skill, but the failure shows up as `length`, not as a wrong row. **This has to be disclosed in review.csv and the README.** A QC reviewer may class `length` failures as a model or config limit rather than task difficulty.
+
+**Calibration status:** 2/4 is inside the client band (1–3) and the team preference (1–2).
