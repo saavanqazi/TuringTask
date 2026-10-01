@@ -51,6 +51,49 @@ def first_json(text):
     return None
 
 
+# ---------------------------------------------------------------- engine (checked on the gold files first)
+sys.path.insert(0, str(TASK / "tests"))
+from rl_world_verifiers import run_verifier
+FC = [v for v in MAN["verifier_configs"] if v["verifier_type"] == "file_check"]
+GRADE_ERRORS = []
+def grade(files):
+    ws = Path(tempfile.mkdtemp())
+    for p, t in files.items():
+        (ws / p).write_bytes(t.encode("utf-8"))
+    failed = []
+    for v in FC:
+        out = Path(tempfile.mkdtemp()); sp = out / "verifier.json"; sp.write_text(json.dumps(v["verifier_spec"]), encoding="utf-8")
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                ok = run_verifier(sp, workspace_dir=ws, verifier_dir=out).get("reward", 0) >= 1.0
+        except Exception as e:
+            ok = False
+            if len(GRADE_ERRORS) < 3:
+                GRADE_ERRORS.append(f"{v['name']}: {type(e).__name__}: {e}"[:400])
+        if not ok:
+            failed.append(v["name"])
+    return failed
+
+# the engine itself must accept the gold files before any rendering is judged by it
+GOLD_FAILED = grade({"rsvp_ledger.csv": PLAN["csv"]["rsvp_ledger.csv"], "tracker_fixes.csv": PLAN["csv"]["tracker_fixes.csv"]})
+if GOLD_FAILED:
+    raise SystemExit(f"the engine rejects the gold files on this machine ({len(GOLD_FAILED)} checks): {GRADE_ERRORS}")
+
+HEADERS = {"meeting,date,attendee,status,source": "rsvp_ledger.csv", "meeting,date,attendee,tracker_status,status": "tracker_fixes.csv"}
+def extract_files(text):
+    """Each file is the run of non-empty lines starting at its header line, wherever the writer put it."""
+    lines = text.replace("\r", "").split("\n")
+    files = {}
+    for i, line in enumerate(lines):
+        key = line.strip().strip("`").replace(" ", "").replace('"', "")
+        if key in HEADERS and HEADERS[key] not in files:
+            body = []
+            for l in lines[i + 1:]:
+                if not l.strip() or l.strip().startswith("```"):
+                    break
+                body.append(l.strip())
+            files[HEADERS[key]] = line.strip().strip("`") + "\n" + "".join(b + "\n" for b in body)
+    return files
 # ---------------------------------------------------------------- readers
 PERSONAS = {
     "new executive assistant on their first day": 0.7,
@@ -75,13 +118,16 @@ for p, temp in PERSONAS.items():
 def has(j, *words):
     t = json.dumps(j).lower()
     return all(w.lower() in t for w in words)
+def hasre(j, *patterns):
+    t = json.dumps(j, ensure_ascii=False).lower()
+    return all(re.search(p, t) for p in patterns)
 checks = {
-    "population: organised, window 27 April-17 May, cancelled excluded, required attendees other than him, by address":
-        [has(r.get("population", ""), "organi", "27 april", "17 may", "cancel", "required") for r in readings],
+    "population: organised by him, starting 27 April-17 May, cancelled excluded, required attendees other than him":
+        [hasre(r.get("population", ""), r"organi[sz]", r"\b27\b", r"\b17\b", r"cancel", r"required") for r in readings],
     "deliverables: rsvp_ledger.csv, tracker_fixes.csv, drafts (not sent)":
-        [has(r.get("deliverables", ""), "rsvp_ledger.csv", "tracker_fixes.csv", "draft") for r in readings],
-    "decision rule: latest answer on either channel, moves, conditional, relayed":
-        [has(r.get("decision_rule", ""), "last", "moved", "depend") for r in readings],
+        [hasre(r.get("deliverables", ""), r"rsvp_ledger", r"tracker_fixes", r"draft") for r in readings],
+    "decision rule: latest answer on either channel, moved meetings, conditional yes":
+        [hasre(r.get("decision_rule", ""), r"\blast\b|latest|most recent|later", r"mov|reschedul", r"depend|condition") for r in readings],
 }
 (CONS / "readers.json").write_text(json.dumps({
     "method": (f"Four readers, each given ONLY instruction.md (no corpus, gold or verifiers), asked in one shot for goal, population, "
@@ -97,24 +143,6 @@ checks = {
     }}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- envelope
-sys.path.insert(0, str(TASK / "tests"))
-from rl_world_verifiers import run_verifier
-FC = [v for v in MAN["verifier_configs"] if v["verifier_type"] == "file_check"]
-def grade(files):
-    ws = Path(tempfile.mkdtemp())
-    for p, t in files.items():
-        (ws / p).write_bytes(t.encode("utf-8"))
-    failed = []
-    for v in FC:
-        out = Path(tempfile.mkdtemp()); sp = out / "verifier.json"; sp.write_text(json.dumps(v["verifier_spec"]))
-        try:
-            with contextlib.redirect_stdout(io.StringIO()):
-                ok = run_verifier(sp, workspace_dir=ws, verifier_dir=out).get("reward", 0) >= 1.0
-        except Exception:
-            ok = False
-        if not ok:
-            failed.append(v["name"])
-    return failed
 WORD = {"COMING": "is coming", "NOT_COMING": "is not coming", "OWES_ANSWER": "still owes an answer"}
 SRC = {"INVITATION": "going by their answer on the invitation", "EMAIL": "going by their email", "NONE": "with no answer that counts"}
 prose = ["Findings for each meeting he runs (meeting subject exactly as on the calendar, Pacific start date):"]
@@ -134,17 +162,13 @@ for name, temp in WRITERS.items():
                 f"{STYLE[name]} Using the findings below, produce the two files the specification asks for. Give each file in its own "
                 f"fenced code block whose first line is the file's header.\n\nSPECIFICATION:\n{spec}\nFINDINGS:\n" + "\n".join(prose),
                 temp, max_tokens=16000)
-    blocks = re.findall(r"```[a-zA-Z]*\n(.*?)```", text, re.S)
-    files = {}
-    for b in blocks:
-        if b.startswith("meeting,date,attendee,status,source"):
-            files["rsvp_ledger.csv"] = b
-        elif b.startswith("meeting,date,attendee,tracker_status,status"):
-            files["tracker_fixes.csv"] = b
+    files = extract_files(text)
     failed = grade(files)
     renderings.append({"rendering": name, "temperature": temp,
                        "csv_first_two_lines": "\n".join(files.get("rsvp_ledger.csv", "").splitlines()[:2]),
-                       "verifiers_passed": len(FC) - len(failed), "verifiers_total": len(FC), "failed": failed})
+                       "files_found": sorted(files), "rows": {k: v.count("\n") - 1 for k, v in files.items()},
+                       "verifiers_passed": len(FC) - len(failed), "verifiers_total": len(FC), "failed": failed,
+                       "writer_output_head": text[:800]})
 (CONS / "envelope.json").write_text(json.dumps({
     "method": (f"Three renderings of the SAME findings (31 ledger rows, 12 tracker fixes) by three differently-instructed writers "
                f"(terse / verbose / report-style, temperatures 0.2 / 0.9 / 0.6), model {os.environ['JUDGE_MODEL']} through the project judge "
@@ -226,5 +250,7 @@ m["rubric_validation_summary"] = {
     "cases": out, "all_as_expected": all(c["as_expected"] for c in out)}
 (CONS / "mutations.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print("readers:", {k: f"{sum(v)}/{len(v)}" for k, v in checks.items()})
-print("envelope:", [f"{r['rendering']}: {r['verifiers_passed']}/{r['verifiers_total']}" for r in renderings])
+print("envelope:", [f"{r['rendering']}: {r['verifiers_passed']}/{r['verifiers_total']} files={r['files_found']} rows={r['rows']}" for r in renderings])
+if GRADE_ERRORS:
+    print("grading errors:", GRADE_ERRORS)
 print("rubric cases as expected:", sum(c["as_expected"] for c in out), "/", len(out))
