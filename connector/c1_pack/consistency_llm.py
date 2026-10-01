@@ -23,6 +23,12 @@ URL = os.environ["OPENAI_BASE_URL"].rstrip("/") + "/chat/completions"
 KEY = os.environ["OPENAI_API_KEY"]
 
 
+def write_lf(path, text, encoding="utf-8"):
+    """Write with LF line endings on every OS (Windows text mode would turn them into CRLF)."""
+    with open(path, "w", encoding=encoding, newline="\n") as f:
+        f.write(text)
+
+
 def chat(system, user, temperature, max_tokens=12000):
     body = json.dumps({"model": MODEL, "temperature": temperature, "max_tokens": max_tokens,
                        "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}).encode()
@@ -129,7 +135,7 @@ checks = {
     "decision rule: latest answer on either channel, moved meetings, conditional yes":
         [hasre(r.get("decision_rule", ""), r"\blast\b|latest|most recent|later", r"mov|reschedul", r"depend|condition") for r in readings],
 }
-(CONS / "readers.json").write_text(json.dumps({
+write_lf(CONS / "readers.json", json.dumps({
     "method": (f"Four readers, each given ONLY instruction.md (no corpus, gold or verifiers), asked in one shot for goal, population, "
                f"decision rule, deliverables, ambiguities and unstated requirements. Model {os.environ['JUDGE_MODEL']} through the project "
                f"judge endpoint, temperature 0.7, four personas. Run against the shipped instruction.md."),
@@ -169,7 +175,7 @@ for name, temp in WRITERS.items():
                        "files_found": sorted(files), "rows": {k: v.count("\n") - 1 for k, v in files.items()},
                        "verifiers_passed": len(FC) - len(failed), "verifiers_total": len(FC), "failed": failed,
                        "writer_output_head": text[:800]})
-(CONS / "envelope.json").write_text(json.dumps({
+write_lf(CONS / "envelope.json", json.dumps({
     "method": (f"Three renderings of the SAME findings (31 ledger rows, 12 tracker fixes) by three differently-instructed writers "
                f"(terse / verbose / report-style, temperatures 0.2 / 0.9 / 0.6), model {os.environ['JUDGE_MODEL']} through the project judge "
                f"endpoint, given the findings in prose plus the instruction's own file specification - never a ready-made CSV. Each "
@@ -248,7 +254,7 @@ m["rubric_validation_summary"] = {
                f"tests/manifest.json, and gold or adversarial evidence (the trace of passing GLM trial {TRIAL.name}, the same trace with "
                f"one source's calls removed, solution/final_answer.md, a steps-only reply, an empty reply)."),
     "cases": out, "all_as_expected": all(c["as_expected"] for c in out)}
-(CONS / "mutations.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+write_lf(CONS / "mutations.json", json.dumps(m, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print("readers:", {k: f"{sum(v)}/{len(v)}" for k, v in checks.items()})
 print("envelope:", [f"{r['rendering']}: {r['verifiers_passed']}/{r['verifiers_total']} files={r['files_found']} rows={r['rows']}" for r in renderings])
 if GRADE_ERRORS:
