@@ -1,0 +1,451 @@
+{
+  "method": "Four readers, each given ONLY instruction.md (no corpus, gold or verifiers), asked in one shot for goal, population, decision rule, deliverables, ambiguities and unstated requirements. Model openai/glm-5.2 through the project judge endpoint, temperature 0.7, four personas. Run against the shipped instruction.md.",
+  "instruction_sha256": "edbd96bc827cf108c0af694bf4037049b23f2b30b1dfc953af04022d6b3c4db9",
+  "readings": [
+    {
+      "goal": "Create an RSVP ledger for meetings organized by the user between April 27 and May 17, 2026, determine attendee statuses based on their latest responses, compare with Janice Gray's tracker to produce a fixes file, and draft emails to attendees who owe answers.",
+      "population": "Meetings organized by the user that start between April 27 and May 17, 2026, excluding cancelled ones. The people covered are the required attendees other than the user, identified by email address.",
+      "decision_rule": "Status (COMING, NOT_COMING, OWES_ANSWER) is based on the person's own latest response via invitation or email, whichever is later. COMING means accepting/will be there. NOT_COMING means declining/won't be there or someone else will go. OWES_ANSWER means tentative/maybe, conditional yes (condition unmet), or no valid answer. If the meeting was moved after an answer, it no longer counts. Source is INVITATION or EMAIL based on where the standing answer came from, or NONE if OWES_ANSWER.",
+      "deliverables": [
+        "/workspace/rsvp_ledger.csv with header meeting,date,attendee,status,source",
+        "/workspace/tracker_fixes.csv with header meeting,date,attendee,tracker_status,status",
+        "Draft emails to each person who owes at least one answer (one per person, naming all such meetings, replying to their most recent email if one exists)"
+      ],
+      "ambiguities": [
+        "How to verify if a condition for a 'yes that depends on something' has been met.",
+        "How to distinguish a 'moved' meeting from a standard update.",
+        "How Janice Gray's tracker is provided/accessed (email attachment, file, etc.).",
+        "Whether 'date' in the ledger refers to the original or current meeting start date if moved.",
+        "How to map Janice's tracker statuses to the three required labels if they differ.",
+        "How to handle responses with identical timestamps from different sources."
+      ],
+      "unstated_requirements": [
+        "How to identify which meetings were 'organised' by the user vs merely invited to.",
+        "How to handle recurring meetings (which instances fall in the range).",
+        "How to handle automated responses or non-delivery reports.",
+        "The exact method for saving 'drafts' in the mail system.",
+        "How to handle meetings with no required attendees other than the user."
+      ],
+      "reader": "new executive assistant on their first day"
+    },
+    {
+      "goal": "Reconstruct, from the user's calendar and mailbox, the current standing of every required attendee (other than the user) on every non-cancelled meeting the user organised that starts between 27 April and 17 May 2026; emit a ledger CSV, a CSV of disagreements with Janice Gray's tracker, and one draft follow-up per person who still owes an answer.",
+      "population": "Every meeting on the user's calendar that (a) the user organised, (b) starts on/after 27 April 2026 and on/before 17 May 2026 in Pacific time, and (c) has not been cancelled. For each such meeting, every distinct required-attendee email address other than the user's own address; an address appearing twice on one meeting counts as one person, and display names are ignored in favour of email addresses.",
+      "decision_rule": "For each (meeting, attendee) pair, find the latest communication from that attendee about that meeting, considering both invitation responses and emails, whichever timestamp is later (all timestamps interpreted as Pacific regardless of displayed zone). Accept/\"will be there\" => COMING. Decline/\"won't be there\"/\"someone else will go in my place\" => NOT_COMING. Tentative/maybe, and a conditional yes whose condition has not yet occurred, are not answers. If the user moved the meeting after the attendee answered, that answer is void. Only the attendee's own statement counts; third-party statements on their behalf do not. If no standing answer remains, status is OWES_ANSWER. source is INVITATION if the standing answer came via the calendar invitation, EMAIL if it came via email, and NONE when status is OWES_ANSWER.",
+      "deliverables": [
+        "/workspace/rsvp_ledger.csv with exact header meeting,date,attendee,status,source; one row per meeting × per required attendee other than the user; no other rows. meeting = calendar subject verbatim; date = meeting start day in Pacific time as YYYY-MM-DD; attendee = email address; status ∈ {COMING, NOT_COMING, OWES_ANSWER}; source ∈ {INVITATION, EMAIL, NONE}.",
+        "/workspace/tracker_fixes.csv with exact header meeting,date,attendee,tracker_status,status; one row per Janice Gray tracker entry that corresponds to a ledger row and whose status disagrees with the ledger; meeting/date/attendee copied from the ledger, tracker_status = her entry mapped to COMING/NOT_COMING/OWES_ANSWER, status = the ledger's status. Omit agreeing entries and entries about people/meetings not in the ledger.",
+        "One draft message per person who owes at least one answer, each draft naming every meeting that person owes an answer for. If that person has emailed the user before, the draft must be placed on their most recent email to the user rather than as a new message. Drafts only — nothing is sent, and no drafts are created for anyone else.",
+        "A final reply stating the conclusion and the evidence supporting it."
+      ],
+      "ambiguities": [
+        "Whether 'between 27 April and 17 May 2026' is inclusive of both endpoints.",
+        "How to identify the user's own email address so it can be excluded from required attendees.",
+        "Whether email addresses should be normalized for case/whitespace when deduplicating or matching across invitation and mailbox.",
+        "What distinguishes a 'moved' meeting from a newly created one or a rescheduled series, i.e., how to detect that a meeting was moved after an answer.",
+        "How to determine whether a conditional yes's dependency 'has happened' — what evidence counts as the condition being satisfied.",
+        "Whether 'most recent email to me' means the most recent email received from that person, and whether the draft should be a reply on that thread.",
+        "Where drafts should be stored — no file path or mailbox folder is specified for the drafts.",
+        "How to map Janice Gray's free-text tracker labels onto the three status labels COMING/NOT_COMING/OWES_ANSWER.",
+        "Whether 'disagrees with it' refers only to status or also to meeting/date/attendee identity.",
+        "Whether a meeting with no required attendees other than the user should appear in the ledger with zero rows or be omitted entirely.",
+        "How all-day or recurring meetings contribute their 'start' day for the date-range and date column.",
+        "The instruction 'any day or time that anyone writes is Pacific, whatever time zone a timestamp is shown in' could mean either 'convert displayed timestamps to Pacific' or 'ignore any displayed zone and treat the literal wall-clock value as Pacific.'"
+      ],
+      "unstated_requirements": [
+        "Which calendar and mailbox are 'mine' and how to access them via the configured gym tools.",
+        "How to detect that a meeting was cancelled versus simply removed.",
+        "How to detect that the user organised a given meeting (organizer field vs. attendance).",
+        "How to pair an email in the mailbox to a specific meeting (subject matching, thread references, etc.).",
+        "How to order invitation responses versus emails chronologically when they come from different systems with potentially different clock domains.",
+        "How to resolve the user's own identity/email for exclusion and for 'emailed me before'.",
+        "How to handle attendees whose email address cannot be determined (display name only).",
+        "What format the final reply's 'conclusion and evidence' should take (prose, table, citations).",
+        "Whether the ledger should be sorted in any particular order.",
+        "How to handle the same person appearing on multiple meetings in the drafts (one draft per person listing multiple meetings implies aggregation across meetings).",
+        "Whether Janice Gray's tracker is a single email, an attachment, or multiple messages, and how to locate it.",
+        "Whether 'one draft per person' must be persisted as a mailbox draft, a file, or merely described in the final reply."
+      ],
+      "reader": "QA engineer who reads every sentence literally"
+    },
+    {
+      "goal": "Create an RSVP status ledger for the user's meetings, compare it against Janice Gray's tracker to find disagreements, and draft follow-up notes to people who still owe answers.",
+      "population": "Meetings the user organized that start between 27 April and 17 May 2026, excluding cancelled meetings. For each meeting, its required attendees other than the user, identified by email address (display names ignored, duplicate email addresses on one meeting counted as one person).",
+      "decision_rule": "For each attendee on each meeting, find the last thing they personally told the user about that meeting, whether via invitation response or email, whichever came later. Accepting or saying they will attend = COMING. Declining, saying they will not attend, or saying someone else will go in their place = NOT_COMING. Tentative or maybe responses are not answers. A conditional yes is not an answer until the condition has occurred. If the user moved the meeting after an answer was given, that answer no longer counts. Only the person's own answer counts; someone else answering on their behalf does not. If no valid answer stands, status = OWES_ANSWER. Source = INVITATION or EMAIL based on where the standing answer came from, or NONE if OWES_ANSWER. All dates and times are interpreted in Pacific time.",
+      "deliverables": [
+        "/workspace/rsvp_ledger.csv — header meeting,date,attendee,status,source; one row per meeting per required attendee other than the user; meeting = calendar subject, date = meeting start day in Pacific time as YYYY-MM-DD, attendee = email address, status = COMING/NOT_COMING/OWES_ANSWER, source = INVITATION/EMAIL/NONE",
+        "/workspace/tracker_fixes.csv — header meeting,date,attendee,tracker_status,status; one row per Janice Gray tracker entry that corresponds to a ledger row and has a different status; tracker_status = her status mapped to COMING/NOT_COMING/OWES_ANSWER, status = ledger status; entries that agree or are not in the ledger are omitted",
+        "Draft note per person who owes at least one answer, naming every meeting they owe an answer for; if the person has emailed the user before, draft as a reply on their most recent email to the user; draft only, do not send, do not draft to anyone else",
+        "Final reply stating conclusion and evidence"
+      ],
+      "ambiguities": [
+        "Whether 'start between 27 April and 17 May 2026' includes both endpoint dates or is exclusive",
+        "What counts as a 'cancelled' meeting — currently cancelled status vs. ever cancelled even if rescheduled",
+        "How to determine the user 'organised' a meeting — calendar organizer field or another indicator",
+        "Whether 'moved a meeting' means only date/time changes or also includes location or other modifications",
+        "Whether 'most recent email to me' means the most recent email thread or the most recent individual message within a thread",
+        "What constitutes a condition 'happening' for a conditional yes to become a real answer",
+        "Whether a tracker entry with a slightly different meeting name but same date and attendee counts as 'about a row of my ledger'",
+        "Whether 'whatever time zone a timestamp is shown in' means convert displayed timestamps to Pacific or treat displayed times as if already Pacific"
+      ],
+      "unstated_requirements": [
+        "Exact wording and format of draft notes (subject line, greeting, body content)",
+        "Mechanism for creating or saving drafts (mailbox drafts, files, etc.)",
+        "Row ordering within each CSV file",
+        "How to handle meetings with no required attendees other than the user",
+        "How to parse Janice Gray's tracker and map her status labels to COMING/NOT_COMING/OWES_ANSWER",
+        "Level of detail expected in the final reply's conclusion and evidence",
+        "Whether to include meeting time (not just date) in draft notes",
+        "How to handle an attendee with no email address listed"
+      ],
+      "reader": "busy project manager skimming before a meeting"
+    },
+    {
+      "goal": "Build an RSVP ledger for meetings the user organized in a date window, reconcile it against Janice Gray's tracker, and draft (not send) follow-up notes to attendees who still owe answers.",
+      "population": "Every non-cancelled meeting the user organized that starts between 27 April and 17 May 2026 (Pacific time); for each, every distinct required attendee other than the user, identified by email address (display names ignored, duplicate addresses on one meeting collapsed to one person).",
+      "decision_rule": "For each (meeting, attendee) pair, take the latest communication from that attendee about that meeting, comparing invitation responses and emails by timestamp (all times interpreted in Pacific). COMING if they accepted or said they will be there; NOT_COMING if they declined, said they won't be there, or said someone else will go in their place; OWES_ANSWER if the latest communication is a tentative/maybe, a conditional yes whose condition has not yet occurred, or no answer. An answer given before the meeting was moved no longer counts. Only the attendee's own answer counts; third-party statements on their behalf are ignored. source is INVITATION or EMAIL based on where the standing answer came from, or NONE when status is OWES_ANSWER.",
+      "deliverables": [
+        "/workspace/rsvp_ledger.csv with header meeting,date,attendee,status,source; one row per meeting per required attendee other than the user; no other rows.",
+        "/workspace/tracker_fixes.csv with header meeting,date,attendee,tracker_status,status; one row per Janice Gray tracker entry that maps to a ledger row and disagrees with it; agreeing or non-ledger entries omitted.",
+        "One draft (not sent) per person who owes at least one answer, naming every meeting they owe an answer for; reply on their most recent email to the user if one exists, otherwise a new message; draft only to those people, no one else.",
+        "A final reply stating the conclusion and evidence."
+      ],
+      "ambiguities": [
+        "What defines 'a meeting I organised' — calendar organizer, invite sender, or something else?",
+        "Whether a meeting cancelled then reinstated/rescheduled counts as cancelled or not.",
+        "How to identify 'me' (the user's own email address) for exclusion.",
+        "Whether 'Pacific time' means local Pacific time with DST (PDT in this window) or fixed UTC-8.",
+        "What counts as 'moved' — only time changes, or also date/location/attendee changes?",
+        "How to order invitation responses vs emails when timestamps are missing or only one channel has a timestamp.",
+        "What counts as a communication 'about' a meeting in email (subject match, forwarded invite, body reference).",
+        "Whether 'someone else will go in their place' is NOT_COMING even if the original person might also attend.",
+        "How to determine whether a conditional yes's condition has been met.",
+        "How to map Janice Gray's status labels to COMING/NOT_COMING/OWES_ANSWER if her terminology differs.",
+        "Whether 'most recent email to me' is by sent date and how to break ties.",
+        "What draft content/subject line is expected, and whether to include meeting dates.",
+        "How to handle duplicate meetings with the same subject but different instances."
+      ],
+      "unstated_requirements": [
+        "Exact CSV formatting (commas, quoting, line endings, no extra whitespace).",
+        "Row ordering within each CSV file.",
+        "Identifying the user's own email address from the mailbox/calendar.",
+        "Identifying which email is Janice Gray's tracker among the mailbox.",
+        "Converting timestamps shown in non-Pacific zones to Pacific.",
+        "Deduplicating attendees whose same email appears with different display names.",
+        "Where/how drafts are stored (as mailbox drafts vs files) and their exact recipient/subject/body.",
+        "Evidence citation format in the final reply.",
+        "Excluding optional attendees and resource rooms (only required attendees count).",
+        "Determining the meeting start date in Pacific when the invite timestamp is in another zone."
+      ],
+      "reader": "data analyst who will have to build the CSV files"
+    }
+  ],
+  "result": {
+    "keyword_agreement": {
+      "population: organised by him, starting 27 April-17 May, cancelled excluded, required attendees other than him": "4/4",
+      "deliverables: rsvp_ledger.csv, tracker_fixes.csv, drafts (not sent)": "4/4",
+      "decision rule: latest answer on either channel, moved meetings, conditional yes": "4/4"
+    },
+    "residual_ambiguities": [
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to verify if a condition for a 'yes that depends on something' has been met."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to distinguish a 'moved' meeting from a standard update."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How Janice Gray's tracker is provided/accessed (email attachment, file, etc.)."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "Whether 'date' in the ledger refers to the original or current meeting start date if moved."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to map Janice's tracker statuses to the three required labels if they differ."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to handle responses with identical timestamps from different sources."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether 'between 27 April and 17 May 2026' is inclusive of both endpoints."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to identify the user's own email address so it can be excluded from required attendees."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether email addresses should be normalized for case/whitespace when deduplicating or matching across invitation and mailbox."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "What distinguishes a 'moved' meeting from a newly created one or a rescheduled series, i.e., how to detect that a meeting was moved after an answer."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to determine whether a conditional yes's dependency 'has happened' — what evidence counts as the condition being satisfied."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether 'most recent email to me' means the most recent email received from that person, and whether the draft should be a reply on that thread."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Where drafts should be stored — no file path or mailbox folder is specified for the drafts."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to map Janice Gray's free-text tracker labels onto the three status labels COMING/NOT_COMING/OWES_ANSWER."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether 'disagrees with it' refers only to status or also to meeting/date/attendee identity."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether a meeting with no required attendees other than the user should appear in the ledger with zero rows or be omitted entirely."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How all-day or recurring meetings contribute their 'start' day for the date-range and date column."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "The instruction 'any day or time that anyone writes is Pacific, whatever time zone a timestamp is shown in' could mean either 'convert displayed timestamps to Pacific' or 'ignore any displayed zone and treat the literal wall-clock value as Pacific.'"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether 'start between 27 April and 17 May 2026' includes both endpoint dates or is exclusive"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "What counts as a 'cancelled' meeting — currently cancelled status vs. ever cancelled even if rescheduled"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "How to determine the user 'organised' a meeting — calendar organizer field or another indicator"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether 'moved a meeting' means only date/time changes or also includes location or other modifications"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether 'most recent email to me' means the most recent email thread or the most recent individual message within a thread"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "What constitutes a condition 'happening' for a conditional yes to become a real answer"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether a tracker entry with a slightly different meeting name but same date and attendee counts as 'about a row of my ledger'"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether 'whatever time zone a timestamp is shown in' means convert displayed timestamps to Pacific or treat displayed times as if already Pacific"
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "What defines 'a meeting I organised' — calendar organizer, invite sender, or something else?"
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Whether a meeting cancelled then reinstated/rescheduled counts as cancelled or not."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "How to identify 'me' (the user's own email address) for exclusion."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Whether 'Pacific time' means local Pacific time with DST (PDT in this window) or fixed UTC-8."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "What counts as 'moved' — only time changes, or also date/location/attendee changes?"
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "How to order invitation responses vs emails when timestamps are missing or only one channel has a timestamp."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "What counts as a communication 'about' a meeting in email (subject match, forwarded invite, body reference)."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Whether 'someone else will go in their place' is NOT_COMING even if the original person might also attend."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "How to determine whether a conditional yes's condition has been met."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "How to map Janice Gray's status labels to COMING/NOT_COMING/OWES_ANSWER if her terminology differs."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Whether 'most recent email to me' is by sent date and how to break ties."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "What draft content/subject line is expected, and whether to include meeting dates."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "How to handle duplicate meetings with the same subject but different instances."
+      }
+    ],
+    "unstated_requirements_flagged_by_readers": [
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to identify which meetings were 'organised' by the user vs merely invited to."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to handle recurring meetings (which instances fall in the range)."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to handle automated responses or non-delivery reports."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "The exact method for saving 'drafts' in the mail system."
+      },
+      {
+        "reader": "new executive assistant on their first day",
+        "item": "How to handle meetings with no required attendees other than the user."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Which calendar and mailbox are 'mine' and how to access them via the configured gym tools."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to detect that a meeting was cancelled versus simply removed."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to detect that the user organised a given meeting (organizer field vs. attendance)."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to pair an email in the mailbox to a specific meeting (subject matching, thread references, etc.)."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to order invitation responses versus emails chronologically when they come from different systems with potentially different clock domains."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to resolve the user's own identity/email for exclusion and for 'emailed me before'."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to handle attendees whose email address cannot be determined (display name only)."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "What format the final reply's 'conclusion and evidence' should take (prose, table, citations)."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether the ledger should be sorted in any particular order."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "How to handle the same person appearing on multiple meetings in the drafts (one draft per person listing multiple meetings implies aggregation across meetings)."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether Janice Gray's tracker is a single email, an attachment, or multiple messages, and how to locate it."
+      },
+      {
+        "reader": "QA engineer who reads every sentence literally",
+        "item": "Whether 'one draft per person' must be persisted as a mailbox draft, a file, or merely described in the final reply."
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Exact wording and format of draft notes (subject line, greeting, body content)"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Mechanism for creating or saving drafts (mailbox drafts, files, etc.)"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Row ordering within each CSV file"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "How to handle meetings with no required attendees other than the user"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "How to parse Janice Gray's tracker and map her status labels to COMING/NOT_COMING/OWES_ANSWER"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Level of detail expected in the final reply's conclusion and evidence"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "Whether to include meeting time (not just date) in draft notes"
+      },
+      {
+        "reader": "busy project manager skimming before a meeting",
+        "item": "How to handle an attendee with no email address listed"
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Exact CSV formatting (commas, quoting, line endings, no extra whitespace)."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Row ordering within each CSV file."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Identifying the user's own email address from the mailbox/calendar."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Identifying which email is Janice Gray's tracker among the mailbox."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Converting timestamps shown in non-Pacific zones to Pacific."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Deduplicating attendees whose same email appears with different display names."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Where/how drafts are stored (as mailbox drafts vs files) and their exact recipient/subject/body."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Evidence citation format in the final reply."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Excluding optional attendees and resource rooms (only required attendees count)."
+      },
+      {
+        "reader": "data analyst who will have to build the CSV files",
+        "item": "Determining the meeting start date in Pacific when the invite timestamp is in another zone."
+      }
+    ],
+    "note": "keyword_agreement is a mechanical check of each reading; residual items are quoted verbatim for the reviewer to judge."
+  }
+}

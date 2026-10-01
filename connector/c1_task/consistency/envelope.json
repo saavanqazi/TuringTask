@@ -1,0 +1,65 @@
+{
+  "method": "Three renderings of the SAME findings (31 ledger rows, 12 tracker fixes) by three differently-instructed writers (terse / verbose / report-style, temperatures 0.2 / 0.9 / 0.6), model openai/glm-5.2 through the project judge endpoint, given the findings in prose plus the instruction's own file specification - never a ready-made CSV. Each rendering is scored by the bundle's OWN 47 file_check verifiers (tests/manifest.json) through tests/rl_world_verifiers.",
+  "renderings": [
+    {
+      "rendering": "V1 terse",
+      "temperature": 0.2,
+      "csv_first_two_lines": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE",
+      "files_found": [
+        "rsvp_ledger.csv",
+        "tracker_fixes.csv"
+      ],
+      "rows": {
+        "rsvp_ledger.csv": 31,
+        "tracker_fixes.csv": 12
+      },
+      "verifiers_passed": 47,
+      "verifiers_total": 47,
+      "failed": [],
+      "writer_output_head": "```csv\nmeeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@forgeco.com,COMING,INVITATION\nBrainstorm: New Feature,2026-05-01,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,COMING,EMAIL\nBrainstorm: New Feature,2026-05-01,rogers.catherine@protonmail.com,COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jasmine.porter@contoso.example,NOT_COMING,INVITATION\nWeekly Pipeline Review,2026-05-02,jared.ellis@contoso.example,COMING,EMAIL"
+    },
+    {
+      "rendering": "V2 verbose",
+      "temperature": 0.9,
+      "csv_first_two_lines": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE",
+      "files_found": [
+        "rsvp_ledger.csv",
+        "tracker_fixes.csv"
+      ],
+      "rows": {
+        "rsvp_ledger.csv": 31,
+        "tracker_fixes.csv": 12
+      },
+      "verifiers_passed": 47,
+      "verifiers_total": 47,
+      "failed": [],
+      "writer_output_head": "I analyzed the findings to build an RSVP ledger mapping each meeting's required attendees to their standing status and the source of that answer. For rows where someone still owes an answer, the source is NONE. Then I cross-referenced Janice's tracker entries against my ledger, keeping only the disagreements that correspond to actual ledger rows, and recorded her status alongside my ledger's status.\n\n```csv\n/workspace/rsvp_ledger.csv\nmeeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@for"
+    },
+    {
+      "rendering": "V3 report-style",
+      "temperature": 0.6,
+      "csv_first_two_lines": "meeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE",
+      "files_found": [
+        "rsvp_ledger.csv",
+        "tracker_fixes.csv"
+      ],
+      "rows": {
+        "rsvp_ledger.csv": 31,
+        "tracker_fixes.csv": 12
+      },
+      "verifiers_passed": 47,
+      "verifiers_total": 47,
+      "failed": [],
+      "writer_output_head": "# RSVP Ledger Report\n\nBased on the findings, I produced the ledger of required attendees (excluding me) for each meeting, and a list of corrections to Janice's tracker where her entries disagree with the ledger.\n\n```csv\n/workspace/rsvp_ledger.csv\nmeeting,date,attendee,status,source\nOKR Planning,2026-04-30,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,jack.henry@contoso.example,OWES_ANSWER,NONE\nOKR Planning,2026-04-30,eugene.dunn@pinwheellabs.com,COMING,INVITATION\nLearning Time,2026-05-01,charlotte.palmer@contoso.example,OWES_ANSWER,NONE\nLearning Time,2026-05-01,edward.clark@forgeco.com,COMING,INVITATION\nBrainstorm: New Feature,2026-05-01,diego.alvarez@contoso.example,OWES_ANSWER,NONE\nBrainstorm: New Feature,2026-05-01,jack.miller@contoso.example,COMING,EMAIL\nBrains"
+    }
+  ],
+  "result": {
+    "renderings": 3,
+    "all_score_full": true,
+    "per_rendering": [
+      "V1 terse: 47/47",
+      "V2 verbose: 47/47",
+      "V3 report-style: 47/47"
+    ]
+  }
+}

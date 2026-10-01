@@ -119,7 +119,87 @@
     "note_on_write_back_checks": "the 17 database_state checks (7 sole-recipient drafts naming the owed meetings, 7 reply-thread checks, recipient count, draft count, nothing sent), the 2 rubric_check verifiers and the tool_execution floor need a live gym or judge; they were exercised end to end by the real oracle run (reward 1.0, 67/67) and by the GLM battery (two runs 67/67; two runs that wrote nothing pass only nothing_was_sent and the trace-read rubric)"
   },
   "rubric_validation_summary": {
-    "method": "pending: written by consistency_llm.py with real calls to the judge endpoint",
-    "cases": []
+    "method": "Real calls to the judge endpoint (openai/glm-5.2, temperature 0.0, 3 votes, majority) with tests/verifier_engine.py's _judge_rubric system prompt read from the file, each rubric_check's own rubric read from tests/manifest.json, and gold or adversarial evidence (the trace of passing GLM trial the-meetings-still-waiting-on-a__BaFoQu9, the same trace with one source's calls removed, solution/final_answer.md, a steps-only reply, an empty reply).",
+    "cases": [
+      {
+        "check": "calendar_and_mailbox_were_read",
+        "case": "gold_passing_glm_trace",
+        "expectation": "expected_pass",
+        "verdict": "PASS",
+        "votes": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "motivation": "The calendar was read over 2026-04-27 to 2026-05-18 (covering 27 April to 17 May) and the mailbox was searched multiple times (calls 1, 4, 5) before any drafts were written (calls 6-13), satisfying both conditions of the rubric.",
+        "as_expected": true
+      },
+      {
+        "check": "calendar_and_mailbox_were_read",
+        "case": "adversarial_mailbox_never_read",
+        "expectation": "expected_fail",
+        "verdict": "FAIL",
+        "votes": [
+          "FAIL",
+          "FAIL",
+          "FAIL"
+        ],
+        "motivation": "The calendar was read over the required range (27 April to 18 May 2026), but the mailbox was never searched or listed before the drafts were written — there is no mailbox search/list call in the trace, only search_calendar and draft_email calls, so the email IDs and content could only have been guessed.",
+        "as_expected": true
+      },
+      {
+        "check": "calendar_and_mailbox_were_read",
+        "case": "adversarial_calendar_never_read",
+        "expectation": "expected_fail",
+        "verdict": "FAIL",
+        "votes": [
+          "FAIL",
+          "FAIL",
+          "FAIL"
+        ],
+        "motivation": "The calendar was never read in the trace—only search_email and draft_email calls appear, so the calendar source covering 27 April to 17 May 2026 was never accessed.",
+        "as_expected": true
+      },
+      {
+        "check": "final_reply_states_who_owes_what",
+        "case": "gold_final_answer",
+        "expectation": "expected_pass",
+        "verdict": "PASS",
+        "votes": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "motivation": "The reply explicitly lists the seven people who still owe answers and for which meetings, provides supporting evidence such as dates and message contents, and states that seven drafts were created but nothing was sent.",
+        "as_expected": true
+      },
+      {
+        "check": "final_reply_states_who_owes_what",
+        "case": "adversarial_steps_only",
+        "expectation": "expected_fail",
+        "verdict": "FAIL",
+        "votes": [
+          "FAIL",
+          "FAIL",
+          "FAIL"
+        ],
+        "motivation": "The reply only describes steps taken (searched, wrote files, created drafts) and gives no conclusion about who still owes answers or for which meetings, nor does it explicitly state notes were drafted rather than sent.",
+        "as_expected": true
+      },
+      {
+        "check": "final_reply_states_who_owes_what",
+        "case": "adversarial_empty",
+        "expectation": "expected_fail",
+        "verdict": "FAIL",
+        "votes": [
+          "FAIL",
+          "FAIL",
+          "FAIL"
+        ],
+        "motivation": "The reply is empty, providing no conclusion about who owes answers or any supporting evidence.",
+        "as_expected": true
+      }
+    ],
+    "all_as_expected": true
   }
 }
